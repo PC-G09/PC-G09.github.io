@@ -2,16 +2,509 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="An interactive exploration of weighted multi-skill resource-constrained project scheduling and the Greedy and Parallel Scheduling method.">
-  <meta name="theme-color" content="#071a2f">
-  <title>GPS Scheduler Explorer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#08121e">
+  <meta name="description" content="An interactive academic presentation of the Greedy and Parallel Scheduling approach for weighted multi-skill project scheduling.">
+  <title>GPS Scheduling Presentation | Group G09</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-<main><div class="reading-progress" style="width:0%"></div><header class="site-header"><a class="brand" href="#top" aria-label="GPS Research Explorer home"><span class="logo-placeholder" aria-hidden="true"></span><span><strong>GPS</strong><small>Research Explorer</small></span></a><nav aria-label="Primary navigation"><a href="#problem">Problem</a><a href="#model">Model</a><a href="#method">GPS method</a><a href="#evidence">Evidence</a><a href="#conclusion">Conclusion</a></nav><a class="paper-link" href="weighted-multi-skill-gps-paper.pdf" target="_blank">Read paper <span aria-hidden="true">↗</span></a></header><section class="hero" id="top" data-label="Introduction"><div class="hero-grid" aria-hidden="true"></div><div class="hero-copy"><p class="eyebrow"><span>IEEE Access</span>Volume 12 · 2024</p><h1>Weighted Multi-Skill<span>Project Scheduling</span></h1><p class="hero-lead">A guided exploration of the Greedy and Parallel Scheduling algorithm: how weighted proficiency, parallel task groups, and active resource reuse work together to reduce project makespan.</p><div class="hero-actions"><a class="button button-primary" href="#method">Explore the method <span aria-hidden="true">↓</span></a><a class="button button-secondary" href="#evidence">See the evidence</a></div><p class="authors">Akbar · Zubair · Khan · Akbar · Ullah · Zheng<span>DOI 10.1109/ACCESS.2024.3350440</span></p></div><div class="hero-visual"><div class="signal-card"><div class="signal-head"><span>Scheduling signal</span><span class="live-dot">paper result</span></div><div class="metric-compare"><article><small>PSS average</small><strong>58.96</strong><span>days</span></article><div class="metric-delta"><span>−8.54</span><small>days</small></div><article class="metric-highlight"><small>GPS average</small><strong>50.42</strong><span>days</span></article></div><div class="mini-schedule" aria-label="Conceptual parallel schedule"><span class="track-label">Tasks</span><div class="schedule-row"><i style="--start:0%;--width:34%">T1</i></div><div class="schedule-row"><i style="--start:8%;--width:52%">T2</i></div><div class="schedule-row"><i style="--start:41%;--width:27%">T3</i></div><div class="schedule-row"><i style="--start:61%;--width:29%">T4</i></div><div class="schedule-axis"><span>0</span><span>parallel execution</span><span>time</span></div></div></div><div class="hero-note"><span>Core idea</span><p>Put high-proficiency and newly freed resources where they reduce the finish time most.</p></div></div></section><section class="gap-strip" aria-label="Research gap summary"><p>THE GAP</p><div><span>01</span> Homogeneous proficiency assumptions</div><div><span>02</span> Freed resources left idle</div><div><span>03</span> Unequal task durations</div></section><section class="section shell" id="problem" data-label="Problem evolution"><div class="section-heading"><p class="section-index">01 / THE PROBLEM</p><h2>From resource limits to weighted human capability.</h2><p>GPS addresses W-MSRCPSP: a software project scheduling problem where tasks have precedence relationships, skills are required, and people differ in proficiency across those skills.</p></div><div class="evolution-grid"><article><div class="card-top"><span>01</span><strong>RCPSP</strong></div><h3>Resources + precedence</h3><p>Schedule activities while respecting task dependencies and scarce renewable resources.</p></article><article><div class="card-top"><span>02</span><strong>MSRCPSP</strong></div><h3>Skills enter the model</h3><p>Each task demands skills, while each human resource can contribute one or more skills.</p></article><article><div class="card-top"><span>03</span><strong>W-MSRCPSP</strong></div><h3>Proficiency becomes weighted</h3><p>Resources are heterogeneous: skill proficiency is represented by a weight in the interval [0, 1].</p></article></div></section><section class="section section-dark" id="model" data-label="Research contribution"><div class="shell contribution-grid"><div><p class="section-index light">02 / RESEARCH CONTRIBUTION</p><h2>The paper changes what “available” means.</h2></div><div class="contribution-copy"><p>A resource is not represented as interchangeable capacity. Each person carries skill-specific proficiency weights, and GPS keeps revisiting allocation as parallel tasks finish at different times.</p><div class="claim-grid"><div><span>Greedy</span><strong>Best-fit resource selection</strong></div><div><span>Parallel</span><strong>Dependency-safe task groups</strong></div><div><span>Adaptive</span><strong>Freed resource reallocation</strong></div><div><span>Efficient</span><strong>Surplus resource utilization</strong></div></div></div></div></section><section class="section formulation-section" data-label="Problem formulation"><div class="shell"><div class="section-heading compact"><p class="section-index">03 / PROBLEM FORMULATION</p><h2>A precedence graph, two matrices, and one objective.</h2><p>The model assigns weighted, multi-skilled resources to task-skill requirements while respecting precedence, feasibility, and time.</p></div><div class="model-layout"><article class="notation-panel"><div class="panel-kicker"><span>Core notation</span><span>W-MSRCPSP</span></div><dl><div><dt>T</dt><dd>Task set, including dummy start t₀ and dummy end tₙ₊₁</dd></div><div><dt>S</dt><dd>Set of skills required across project tasks</dd></div><div><dt>R</dt><dd>Set of renewable human resources</dd></div><div><dt>V</dt><dd>Vertices of the task precedence graph; |V| = n + 2</dd></div><div><dt>E</dt><dd>Directed edges encoding precedence relations</dd></div><div><dt>effᵢ</dt><dd>Effort required to complete task tᵢ</dd></div><div><dt>Bᵢ / Fᵢ</dt><dd>Start time and finishing time of task tᵢ</dd></div><div><dt>wᵣₖₛₗₜᵢ</dt><dd>Binary assignment: resource rₖ uses skill sₗ on task tᵢ</dd></div></dl></article><div class="model-core"><article class="objective-card"><p>Objective function (1)</p><div class="equation">minimize  B<sub>tₙ₊₁</sub></div><span>Because tₙ₊₁ is the dummy end task, its start time marks project completion.</span></article><div class="matrix-grid"><article><div><span>TS</span><strong>Task–Skill Matrix</strong></div><p>t<sub>i</sub>s<sub>j</sub> ∈ {0, 1}</p><small>1 indicates that task tᵢ requires skill sⱼ.</small></article><article><div><span>RS</span><strong>Resource–Skill Matrix</strong></div><p>r<sub>k</sub>s<sub>j</sub> ∈ [0, 1]</p><small>The value represents resource k’s proficiency in skill j.</small></article></div><article class="parallel-card"><div><p>Parallel subset structure</p><strong>T = T₁ ∪ T₂ ∪ … ∪ T<sub>q</sub></strong></div><span>Tᵢ ∩ Tⱼ = ∅</span><small>No pair of tasks inside a subset has a precedence relation.</small></article></div></div><div class="constraints-block"><div class="constraints-intro"><p class="section-index">CONSTRAINTS (2)–(9)</p><h3>Read the model in plain language.</h3><p>Open any row to connect the mathematical condition to its scheduling role.</p></div><div class="constraint-list"><details><summary><span>(2)</span><code>Bⱼ ≥ Bᵢ + dᵢ   for every (tᵢ, tⱼ) ∈ E</code><i aria-hidden="true">+</i></summary><p>A successor can start only after its predecessor finishes.</p></details><details><summary><span>(3)</span><code>Σᵣₖ∈Rˢˡ wᵣₖₛₗₜᵢ = Rₜᵢₛₗ</code><i aria-hidden="true">+</i></summary><p>The assignment must meet the resource demand for every required task-skill pair.</p></details><details><summary><span>(4)</span><code>Σₛₗ∈Sʳᵏ∩Sᵗᶦ wᵣₖₛₗₜᵢ ≤ 1</code><i aria-hidden="true">+</i></summary><p>A resource performs at most one skill for a task and is assigned to only one task at a time.</p></details><details><summary><span>(5)</span><code>Σₛₗ tᵢsₗ &gt; 0</code><i aria-hidden="true">+</i></summary><p>Every project task requires at least one skill.</p></details><details><summary><span>(6)</span><code>Σᵣₖ tᵢrₖ &gt; 0</code><i aria-hidden="true">+</i></summary><p>At least one resource must perform every project task.</p></details><details><summary><span>(7)</span><code>Bᵢ ≥ 0, dᵢ ≥ 0</code><i aria-hidden="true">+</i></summary><p>Task start times and the paper’s dᵢ parameter cannot be negative.</p></details><details><summary><span>(8)</span><code>Rₜᵢₛₗ ⊆ ⋃ Sᵗᶦ</code><i aria-hidden="true">+</i></summary><p>Resources assigned to a task must possess skills required by that task.</p></details><details><summary><span>(9)</span><code>Fᵢ = Bᵢ + dᵢ</code><i aria-hidden="true">+</i></summary><p>A task’s finish time equals its start time plus dᵢ.</p></details></div></div><aside class="notation-note"><span>Notation note</span><p>The paper uses d<sub>tᵢ</sub> as a deadline in the task tuple and as duration in the precedence and finish-time equations. This explorer preserves that inconsistency rather than silently changing the model.</p></aside></div></section><section class="section method-section" id="method" data-label="GPS framework"><div class="shell"><div class="section-heading compact"><p class="section-index">04 / THE GPS FRAMEWORK</p><h2>Five algorithms, one scheduling loop.</h2><p>The main procedure groups dependency-safe tasks, schedules each group, assigns best-fit resources, and redirects capacity as execution advances.</p></div><div class="architecture" role="list" aria-label="Five GPS algorithms"><article role="listitem"><span>01</span><div><h3>GPS</h3><p>Orchestrate parallel groups</p></div></article><article role="listitem"><span>02</span><div><h3>Create groups</h3><p>Extract independent tasks</p></div></article><article role="listitem"><span>03</span><div><h3>Schedule subset</h3><p>Advance by earliest finish</p></div></article><article role="listitem"><span>04</span><div><h3>Assign resources</h3><p>Choose highest proficiency</p></div></article><article role="listitem"><span>05</span><div><h3>Assign surplus</h3><p>Accelerate the latest finisher</p></div></article></div><div class="method-callout"><div><small>Resource selection rule</small><strong>highest matching proficiency</strong></div><span aria-hidden="true">→</span><div><small>Surplus allocation target</small><strong>latest-finishing scheduled task</strong></div><span aria-hidden="true">→</span><div><small>Release event</small><strong>earliest-finishing task completes</strong></div></div><div class="algorithm-list"><article class="algorithm-card " id="algorithm-01"><div class="algorithm-image-wrap"><button type="button" aria-label="Open GPS pseudocode at full size"><img src="assets/algorithm-1-gps.png" alt="GPS pseudocode from the paper"><span>Expand pseudocode</span></button></div><div class="algorithm-copy"><div class="algorithm-number">01</div><p class="algorithm-role">Top-level orchestrator</p><h3>GPS</h3><div class="io-grid"><div><span>Input</span><strong>T, S, R, E</strong></div><div><span>Output</span><strong>project_makespan</strong></div></div><ol><li>Build the array of parallel task groups.</li><li>Skip groups containing dummy start or end tasks.</li><li>Sort each group by finishing time.</li><li>Schedule every subset and add its completion time to the makespan.</li></ol><p class="line-focus"><span>Focus lines</span>Lines 2, 8–9</p></div></article><article class="algorithm-card algorithm-card-reverse" id="algorithm-02"><div class="algorithm-image-wrap"><button type="button" aria-label="Open CreateParallelTasksGroups pseudocode at full size"><img src="assets/algorithm-2-parallel-groups.png" alt="CreateParallelTasksGroups pseudocode from the paper"><span>Expand pseudocode</span></button></div><div class="algorithm-copy"><div class="algorithm-number">02</div><p class="algorithm-role">Dependency-safe grouping</p><h3>CreateParallelTasksGroups</h3><div class="io-grid"><div><span>Input</span><strong>T, E</strong></div><div><span>Output</span><strong>T∥[ ]</strong></div></div><ol><li>Find vertices that are not the right vertex of any remaining edge.</li><li>Collect those independent vertices into the current parallel subset.</li><li>Remove the selected tasks and their outgoing edges.</li><li>Repeat until the task set is empty.</li></ol><p class="line-focus"><span>Focus lines</span>Lines 4–13, 16–24</p></div></article><article class="algorithm-card " id="algorithm-03"><div class="algorithm-image-wrap"><button type="button" aria-label="Open ScheduleTasksSubset pseudocode at full size"><img src="assets/algorithm-3-schedule-subset.png" alt="ScheduleTasksSubset pseudocode from the paper"><span>Expand pseudocode</span></button></div><div class="algorithm-copy"><div class="algorithm-number">03</div><p class="algorithm-role">Event-driven subset scheduler</p><h3>ScheduleTasksSubset</h3><div class="io-grid"><div><span>Input</span><strong>T∥, Rₐᵥₐᵢₗ</strong></div><div><span>Output</span><strong>Cₜ∥</strong></div></div><ol><li>Attempt a feasible assignment for every unscheduled task.</li><li>Redirect surplus capacity through Algorithm 5.</li><li>Select the earliest-finishing task as the next completion event.</li><li>Release its resources and update remaining effort for running tasks.</li></ol><p class="line-focus"><span>Focus lines</span>Lines 3–8, 9–25</p></div></article><article class="algorithm-card algorithm-card-reverse" id="algorithm-04"><div class="algorithm-image-wrap"><button type="button" aria-label="Open AssignResources pseudocode at full size"><img src="assets/algorithm-4-assign-resources.png" alt="AssignResources pseudocode from the paper"><span>Expand pseudocode</span></button></div><div class="algorithm-copy"><div class="algorithm-number">04</div><p class="algorithm-role">Best-fit resource assignment</p><h3>AssignResources</h3><div class="io-grid"><div><span>Input</span><strong>tᵢ, Rₐᵥₐᵢₗ</strong></div><div><span>Output</span><strong>Boolean</strong></div></div><ol><li>Visit every skill required by the task.</li><li>Choose the available matching resource with maximum proficiency.</li><li>Recalculate the task-skill finish time after every assignment.</li><li>Stop once the paper’s deadline condition is met; roll back on failure.</li></ol><p class="line-focus"><span>Focus lines</span>Lines 4, 9–13</p></div></article><article class="algorithm-card " id="algorithm-05"><div class="algorithm-image-wrap"><button type="button" aria-label="Open AssignExtraResources pseudocode at full size"><img src="assets/algorithm-5-extra-resources.png" alt="AssignExtraResources pseudocode from the paper"><span>Expand pseudocode</span></button></div><div class="algorithm-copy"><div class="algorithm-number">05</div><p class="algorithm-role">Surplus resource reuse</p><h3>AssignExtraResources</h3><div class="io-grid"><div><span>Input</span><strong>T∥, Rₐᵥₐᵢₗ</strong></div><div><span>Output</span><strong>Free-resource assignments</strong></div></div><ol><li>Remove tasks that have not received an initial assignment.</li><li>Select the latest-finishing scheduled task and skill.</li><li>Assign any available resource that possesses that skill.</li><li>Repeat while both resources and eligible tasks remain.</li></ol><p class="line-focus"><span>Focus lines</span>Lines 7–17</p><aside class="algorithm-note"><strong>Notation note</strong><p>Apparent notation ambiguity: line 9 seems to use the task selected at line 8, while line 17 appears intended to remove that selected task from Ttemp.</p></aside></div></article></div><aside class="complexity-note"><span>No formal complexity claim</span><p>The paper decomposes GPS into five procedures but does not provide a formal computational-complexity analysis.</p></aside></div></section><section class="section evidence-preview" id="evidence" data-label="Experimental evidence"><div class="shell evidence-grid"><div class="section-heading compact"><p class="section-index light">04 / EXPERIMENTAL EVIDENCE</p><h2>Seven experiments. Fifty projects each.</h2><p>Experiment 1 samples all six scheduling factors from their stated ranges. Experiments 2–7 vary one factor at a time while holding the others constant.</p><div class="evidence-kpis"><div><strong>7</strong><span>experiments</span></div><div><strong>50</strong><span>projects per experiment</span></div><div><strong>6</strong><span>varied scheduling factors</span></div></div></div><figure class="chart-card"><img src="assets/table-2-experimental-set.png" alt="Table 2 experimental set for seven experiments"><figcaption><span>Table 2</span>Experiment 1 uses ranges; Experiments 2–7 isolate one factor at a time.</figcaption></figure></div></section><section class="section results-section" data-label="Numerical results"><div class="shell"><div class="results-heading"><div><p class="section-index">05 / NUMERICAL RESULTS</p><h2>GPS vs. the established PSS benchmark.</h2></div><p>PSS was selected for its relevance and established use in project management. Both methods use parallel scheduling; GPS additionally chooses by proficiency and actively reallocates surplus and freed resources.</p></div><div class="benchmark-grid"><article class="benchmark-card"><span>PSS average makespan</span><strong>58.96</strong><small>days</small></article><article class="benchmark-difference"><span>Direct difference</span><strong>8.54 days</strong><small>calculated from the two reported averages</small></article><article class="benchmark-card benchmark-gps"><span>GPS average makespan</span><strong>50.42</strong><small>days</small></article></div><aside class="metric-note"><strong>Measurement note</strong><p>The paper also reports 9.80 and 2.88 days as “average completion gap” values without defining them as the direct GPS–PSS difference. They are therefore not used as the headline comparison here.</p></aside><div class="experiment-lab"><div class="experiment-tabs" role="tablist" aria-label="Experiments"><button type="button" role="tab" aria-selected="true" aria-controls="experiment-panel"><span>01</span>Random set</button><button type="button" role="tab" aria-controls="experiment-panel"><span>02</span>Tasks</button><button type="button" role="tab" aria-controls="experiment-panel"><span>03</span>Skills</button><button type="button" role="tab" aria-controls="experiment-panel"><span>04</span>Resources</button><button type="button" role="tab" aria-controls="experiment-panel"><span>05</span>Complexity</button><button type="button" role="tab" aria-controls="experiment-panel"><span>06</span>Duration</button><button type="button" role="tab" aria-controls="experiment-panel"><span>07</span>Demand</button></div><div class="experiment-panel" id="experiment-panel" role="tabpanel"><div class="experiment-copy"><p>Experiment 1</p><h3>All six factors sampled within Table 2 ranges</h3><dl><div><dt>Fixed</dt><dd>The other five scheduling factors</dd></div><div><dt>Observed trend</dt><dd>GPS reports an average makespan of 50.42 days versus 58.96 days for PSS.</dd></div><div><dt>Performance gap</dt><dd>Direct average difference: 8.54 days</dd></div><div><dt>Authors’ explanation</dt><dd>The authors attribute the result to surplus-resource assignment and reuse of resources released by early-finishing tasks.</dd></div></dl></div><div class="experiment-figures has-two"><figure><img src="assets/figure-2-makespan.png" alt="Figure 2 project makespan across 50 random projects"></figure><figure><img src="assets/figure-3-resource-wastage.png" alt="Figure 3 average free resources for GPS and PSS across 50 projects"></figure></div></div></div><aside class="figure-note"><span>Figure-numbering note</span><p>The paper’s prose points to Figures 7 and 8 for the final two experiments. The attached charts and captions identify them as Figure 8 (task duration) and Figure 9 (resource demand); this explorer uses those caption numbers.</p></aside></div></section><section class="section conclusion-section" id="conclusion" data-label="Conclusion"><div class="shell"><div class="conclusion-lead"><p class="section-index light">06 / CONCLUSION</p><h2>Use proficiency. Reuse capacity. Protect parallelism.</h2><p>GPS combines best-fit weighted assignment with parallel scheduling, then keeps resources productive as task finish times diverge.</p></div><div class="conclusion-grid"><article><span>GPS performs particularly well when</span><ul><li>More resources are available</li><li>Skill and resource demand are lower</li><li>Graph complexity leaves more parallel tasks</li><li>Task-duration ranges create early resource releases</li></ul></article><article><span>The GPS–PSS gap becomes smaller when</span><ul><li>More skills are required per task</li><li>Graph complexity reduces parallelism</li><li>Resource demand per skill increases</li></ul></article></div><div class="scope-grid"><article><span>Evidence scope</span><h3>Simulation-based evaluation</h3><p>Seven experiments, 50 project instances each, across six modeled scheduling factors and a primary comparison against PSS.</p></article><article><span>Supported limitations</span><h3>Bounded comparison</h3><p>The study is simulation-based, compares mainly with PSS, and models a limited set of factors and resource-allocation constraints.</p></article><article><span>Author-stated future work</span><h3>Broader allocation model</h3><p>Incorporate additional factors and constraints in resource allocation, while further improving and optimizing GPS.</p></article></div></div></section><footer class="site-footer"><div><strong>GPS Research Explorer</strong><p>Weighted Multi-Skill Resource Constrained Project Scheduling</p></div><div class="footer-meta"><span>Project Control · Group G09</span><span>Instructor: Mohsen Varmazyar</span></div><a href="weighted-multi-skill-gps-paper.pdf" target="_blank">Open the source paper ↗</a></footer><aside class="presentation-rail" aria-label="Presentation context"><span>Project Control</span><strong>Introduction</strong><span>Group G09</span></aside></main>
-<script>window.GPS_EXPLORER_DATA={"algorithms":[{"number":"01","title":"GPS","image":"assets/algorithm-1-gps.png","input":"T, S, R, E","output":"project_makespan","role":"Top-level orchestrator","steps":["Build the array of parallel task groups.","Skip groups containing dummy start or end tasks.","Sort each group by finishing time.","Schedule every subset and add its completion time to the makespan."],"focus":"Lines 2, 8–9"},{"number":"02","title":"CreateParallelTasksGroups","image":"assets/algorithm-2-parallel-groups.png","input":"T, E","output":"T∥[ ]","role":"Dependency-safe grouping","steps":["Find vertices that are not the right vertex of any remaining edge.","Collect those independent vertices into the current parallel subset.","Remove the selected tasks and their outgoing edges.","Repeat until the task set is empty."],"focus":"Lines 4–13, 16–24"},{"number":"03","title":"ScheduleTasksSubset","image":"assets/algorithm-3-schedule-subset.png","input":"T∥, Rₐᵥₐᵢₗ","output":"Cₜ∥","role":"Event-driven subset scheduler","steps":["Attempt a feasible assignment for every unscheduled task.","Redirect surplus capacity through Algorithm 5.","Select the earliest-finishing task as the next completion event.","Release its resources and update remaining effort for running tasks."],"focus":"Lines 3–8, 9–25"},{"number":"04","title":"AssignResources","image":"assets/algorithm-4-assign-resources.png","input":"tᵢ, Rₐᵥₐᵢₗ","output":"Boolean","role":"Best-fit resource assignment","steps":["Visit every skill required by the task.","Choose the available matching resource with maximum proficiency.","Recalculate the task-skill finish time after every assignment.","Stop once the paper’s deadline condition is met; roll back on failure."],"focus":"Lines 4, 9–13"},{"number":"05","title":"AssignExtraResources","image":"assets/algorithm-5-extra-resources.png","input":"T∥, Rₐᵥₐᵢₗ","output":"Free-resource assignments","role":"Surplus resource reuse","steps":["Remove tasks that have not received an initial assignment.","Select the latest-finishing scheduled task and skill.","Assign any available resource that possesses that skill.","Repeat while both resources and eligible tasks remain."],"focus":"Lines 7–17","note":"Apparent notation ambiguity: line 9 seems to use the task selected at line 8, while line 17 appears intended to remove that selected task from Ttemp."}],"experiments":[{"id":1,"label":"Random set","factor":"All six factors sampled within Table 2 ranges","image":"assets/figure-2-makespan.png","alt":"Figure 2 project makespan across 50 random projects","trend":"GPS reports an average makespan of 50.42 days versus 58.96 days for PSS.","gap":"Direct average difference: 8.54 days","reason":"The authors attribute the result to surplus-resource assignment and reuse of resources released by early-finishing tasks.","extraImage":"assets/figure-3-resource-wastage.png","extraAlt":"Figure 3 average free resources for GPS and PSS across 50 projects"},{"id":2,"label":"Tasks","factor":"Number of tasks: 5 → 40 in the plotted experiment","image":"assets/figure-4-tasks.png","alt":"Figure 4 impact of number of tasks on project makespan","trend":"Makespan rises in a broadly similar fashion for both methods.","gap":"GPS remains lower; the relative pattern changes little","reason":"Changing task count alone does not materially change the authors’ reported efficacy pattern when the other five factors are held constant."},{"id":3,"label":"Skills","factor":"Required skills per task: 1 → 4","image":"assets/figure-5-skills.png","alt":"Figure 5 impact of required skills on project makespan","trend":"GPS performs especially well when skill demand is low; the gap narrows as demand rises.","gap":"Wide at 1 skill; much smaller at 4 skills","reason":"More required skills consume more of the available pool, leaving fewer surplus resources for GPS to redirect."},{"id":4,"label":"Resources","factor":"Available resources: 9 → 15 in the plotted experiment","image":"assets/figure-6-resources.png","alt":"Figure 6 impact of available resources on project makespan","trend":"GPS makespan falls faster as the available resource pool expands.","gap":"The GPS advantage widens with more available resources","reason":"GPS uses both parallelism and surplus capacity, while the benchmark assigns only enough resources to meet task requirements."},{"id":5,"label":"Complexity","factor":"Predecessors and successors per task: 1 → 4","image":"assets/figure-7-complexity.png","alt":"Figure 7 impact of graph complexity on project makespan","trend":"GPS has the larger advantage when graph complexity is low.","gap":"The methods converge as the graph becomes more connected","reason":"Additional precedence relations reduce the amount of parallel execution available to the scheduler."},{"id":6,"label":"Duration","factor":"Maximum task-duration setting: 3 → 15 in the plotted experiment","image":"assets/figure-8-duration.png","alt":"Figure 8 impact of task duration on project makespan","trend":"The GPS–PSS makespan gap grows as the duration range widens.","gap":"Greater duration variation creates a larger GPS advantage","reason":"Unequal finish times create more opportunities to reuse resources released by the earliest-finishing task."},{"id":7,"label":"Demand","factor":"Required resources per task-skill: 1 → 4","image":"assets/figure-9-resource-demand.png","alt":"Figure 9 impact of required resources per task on makespan","trend":"GPS remains lower, but the advantage narrows as resource demand increases.","gap":"Largest at minimum demand; smaller at maximum demand","reason":"Higher mandatory demand leaves fewer surplus resources available for the extra-resource routine."}]};</script>
-<script src="script.js" defer></script>
+<body data-chapter="opening">
+  <div class="presentation-shell">
+    <header class="top-frame" aria-label="Presentation header">
+      <a class="university-lockup" href="#slide-1" data-go="0" aria-label="Go to title slide">
+        <span class="logo-slot">
+          <img src="logo.png" alt="University logo" onerror="this.hidden=true; this.parentElement.classList.add('is-missing')">
+          <span class="logo-fallback" aria-hidden="true">G09</span>
+        </span>
+        <span class="lockup-copy">
+          <strong>Project Control</strong>
+          <small>Research presentation · Group G09</small>
+        </span>
+      </a>
+
+      <div class="chapter-status" aria-live="polite">
+        <span id="chapter-index">Opening</span>
+        <strong id="chapter-title">Weighted Multi-Skill Scheduling</strong>
+      </div>
+
+      <a class="paper-link" href="weighted-multi-skill-gps-paper.pdf" target="_blank" rel="noopener">
+        Paper <span aria-hidden="true">↗</span>
+      </a>
+      <div class="top-progress" aria-hidden="true"><span id="top-progress-bar"></span></div>
+    </header>
+
+    <main class="slide-stage" id="presentation" aria-label="Slide presentation">
+      <section class="slide is-active theme-opening" id="slide-1" data-title="Weighted Multi-Skill Scheduling" data-chapter="Opening" aria-hidden="false">
+        <div class="slide-grid hero-slide">
+          <div class="hero-copy">
+            <p class="eyebrow morph-eyebrow"><span>IEEE Access · Volume 12 · 2024</span></p>
+            <h1 class="display-title morph-title">Weighted Multi-Skill<br><em>Project Scheduling</em></h1>
+            <p class="lead morph-lead">A Greedy and Parallel Scheduling approach for reducing project makespan through proficiency-aware assignment, parallel task groups, and active reuse of free resources.</p>
+            <div class="presenter-block morph-card">
+              <p>Presented by</p>
+              <strong>Ghazal Zolfi Moselo</strong>
+              <strong>MohammadMahdi Montazeri Hedesh</strong>
+              <span>Group G09 · Project Control · Prof. Mohsen Varmazyar</span>
+            </div>
+          </div>
+          <div class="hero-visual morph-visual" aria-label="Key comparison">
+            <div class="university-mark">
+              <span class="logo-slot logo-slot-large">
+                <img src="logo.png" alt="University logo" onerror="this.hidden=true; this.parentElement.classList.add('is-missing')">
+                <span class="logo-fallback" aria-hidden="true">UNIVERSITY<br>LOGO</span>
+              </span>
+            </div>
+            <div class="metric-pair">
+              <article><small>PSS average</small><strong>58.96</strong><span>days</span></article>
+              <div class="metric-arrow"><b>−8.54</b><span>days</span></div>
+              <article class="metric-accent"><small>GPS average</small><strong>50.42</strong><span>days</span></article>
+            </div>
+            <p class="source-note">Paper result, Experiment 1 · 50 random projects</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide theme-opening" id="slide-2" data-title="Presentation Roadmap" data-chapter="Opening" aria-hidden="true">
+        <div class="slide-heading">
+          <p class="eyebrow morph-eyebrow">Presentation roadmap</p>
+          <h2 class="morph-title">From the scheduling problem to the evidence.</h2>
+        </div>
+        <div class="roadmap-grid morph-visual">
+          <article><span>01</span><h3>Context</h3><p>RCPSP, MSRCPSP, research gap and contribution.</p></article>
+          <article><span>02</span><h3>Model</h3><p>Task graph, weighted skills, notation, objective and constraints.</p></article>
+          <article><span>03</span><h3>Method</h3><p>Five coordinated algorithms in the GPS scheduling loop.</p></article>
+          <article><span>04</span><h3>Evidence</h3><p>Seven simulation experiments against the PSS benchmark.</p></article>
+          <article><span>05</span><h3>Assessment</h3><p>Interpretation, limitations, future work and takeaways.</p></article>
+        </div>
+      </section>
+
+      <section class="slide theme-problem" id="slide-3" data-title="Problem Evolution" data-chapter="Problem" aria-hidden="true">
+        <div class="slide-heading">
+          <p class="eyebrow morph-eyebrow">Problem evolution</p>
+          <h2 class="morph-title">From scarce resources to weighted human capability.</h2>
+          <p class="lead morph-lead">The paper studies software projects in which activities are linked by precedence, people possess several skills, and proficiency differs by person and skill.</p>
+        </div>
+        <div class="evolution-flow morph-visual">
+          <article><span>RCPSP</span><h3>Resources + precedence</h3><p>Schedule activities under renewable resource limits and dependency constraints.</p></article>
+          <i aria-hidden="true">→</i>
+          <article><span>MSRCPSP</span><h3>Skills enter the model</h3><p>Every task requires skills; every human resource masters one or more skills.</p></article>
+          <i aria-hidden="true">→</i>
+          <article class="accent-card"><span>W-MSRCPSP</span><h3>Proficiency is weighted</h3><p>Skill proficiency is heterogeneous and represented by values in the interval [0, 1].</p></article>
+        </div>
+        <p class="source-note">Paper Sections I and III</p>
+      </section>
+
+      <section class="slide theme-problem" id="slide-4" data-title="Literature and Research Gap" data-chapter="Problem" aria-hidden="true">
+        <div class="slide-heading">
+          <p class="eyebrow morph-eyebrow">Related work and gap</p>
+          <h2 class="morph-title">Existing approaches solve parts of the problem, but leave two practical gaps.</h2>
+        </div>
+        <div class="literature-layout morph-visual">
+          <div class="method-columns">
+            <article><small>Exact methods</small><h3>MILP and mathematical programming</h3><p>Can model multiple objectives and constraints, but become computationally demanding as problem size grows.</p></article>
+            <article><small>Heuristics</small><h3>Priority and schedule-generation rules</h3><p>Produce solutions quickly, but do not guarantee optimality and often simplify resource capability.</p></article>
+            <article><small>Metaheuristics</small><h3>GA, PSO, VNS and related search</h3><p>Explore large search spaces, yet many studies assume homogeneous proficiency or limited collaboration.</p></article>
+          </div>
+          <div class="gap-banner">
+            <div><span>Gap 01</span><strong>Heterogeneous proficiency is often overlooked.</strong></div>
+            <div><span>Gap 02</span><strong>Resources freed by unequal task durations may remain underused.</strong></div>
+          </div>
+        </div>
+        <p class="source-note">Paper Sections I–II</p>
+      </section>
+
+      <section class="slide theme-problem" id="slide-5" data-title="Research Contribution" data-chapter="Problem" aria-hidden="true">
+        <div class="slide-heading">
+          <p class="eyebrow morph-eyebrow">Research objective and contribution</p>
+          <h2 class="morph-title">Minimize makespan by making resource availability more intelligent.</h2>
+        </div>
+        <div class="contribution-grid morph-visual">
+          <article><span>01</span><h3>Greedy best fit</h3><p>Select the available resource with the highest matching skill proficiency.</p></article>
+          <article><span>02</span><h3>Parallel task groups</h3><p>Partition the precedence graph into dependency-safe subsets that can execute concurrently.</p></article>
+          <article><span>03</span><h3>Surplus allocation</h3><p>Assign spare resources to the latest-finishing scheduled task to reduce its finish time.</p></article>
+          <article><span>04</span><h3>Freed-resource reuse</h3><p>When the earliest task finishes, redirect its resources to remaining tasks in the same group.</p></article>
+        </div>
+        <div class="one-line-claim morph-card"><span>Central claim</span><strong>Better proficiency matching + less idle capacity = shorter project duration.</strong></div>
+      </section>
+
+      <section class="slide theme-model" id="slide-6" data-title="Project Model" data-chapter="Model" aria-hidden="true">
+        <div class="slide-heading">
+          <p class="eyebrow morph-eyebrow">Problem setup</p>
+          <h2 class="morph-title">The project is a task precedence graph with dummy start and end nodes.</h2>
+        </div>
+        <div class="model-graph-layout morph-visual">
+          <div class="dag-card">
+            <svg class="dag" viewBox="0 0 760 300" role="img" aria-label="Directed acyclic task precedence graph">
+              <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z"></path></marker></defs>
+              <g class="dag-lines">
+                <path d="M90 150 L215 68"></path><path d="M90 150 L215 150"></path><path d="M90 150 L215 232"></path>
+                <path d="M260 68 L365 150"></path><path d="M260 150 L365 150"></path><path d="M260 232 L365 150"></path>
+                <path d="M410 150 L515 88"></path><path d="M410 150 L515 212"></path>
+                <path d="M560 88 L650 150"></path><path d="M560 212 L650 150"></path><path d="M695 150 L742 150"></path>
+              </g>
+              <g class="dag-nodes"><circle cx="65" cy="150" r="28"></circle><text x="65" y="158">t₀</text><circle cx="235" cy="68" r="28"></circle><text x="235" y="76">t₁</text><circle cx="235" cy="150" r="28"></circle><text x="235" y="158">t₂</text><circle cx="235" cy="232" r="28"></circle><text x="235" y="240">t₃</text><circle cx="385" cy="150" r="28"></circle><text x="385" y="158">t₄</text><circle cx="535" cy="88" r="28"></circle><text x="535" y="96">t₅</text><circle cx="535" cy="212" r="28"></circle><text x="535" y="220">t₆</text><circle cx="675" cy="150" r="28"></circle><text x="675" y="158">t₇</text><circle cx="748" cy="150" r="10"></circle></g>
+            </svg>
+            <p>Tasks inside the same parallel subset have no precedence relation with one another.</p>
+          </div>
+          <div class="definition-stack">
+            <article><span>T</span><p>Task set: {t₀, t₁, …, tₙ, tₙ₊₁}</p></article>
+            <article><span>TPG = (V, E)</span><p>Directed acyclic graph of task precedence relations.</p></article>
+            <article><span>t₀ / tₙ₊₁</span><p>Dummy start and dummy end tasks.</p></article>
+            <article><span>(eff<sub>tᵢ</sub>, d<sub>tᵢ</sub>)</span><p>Total effort and task duration used by the scheduling model.</p></article>
+          </div>
+        </div>
+        <p class="source-note">Paper Figure 1 and Section III</p>
+      </section>
+
+      <section class="slide theme-model" id="slide-7" data-title="Core Notation I" data-chapter="Model" aria-hidden="true">
+        <div class="slide-heading compact-heading">
+          <p class="eyebrow morph-eyebrow">Notation · sets and task state</p>
+          <h2 class="morph-title">Core symbols used by the formulation and algorithms.</h2>
+        </div>
+        <div class="notation-grid morph-visual">
+          <article><b>T</b><span>Set of project tasks</span></article>
+          <article><b>S</b><span>Set of skills</span></article>
+          <article><b>R</b><span>Set of all resources</span></article>
+          <article><b>T<sub>∥</sub></b><span>Set/subset of parallel executable tasks</span></article>
+          <article><b>V, E</b><span>Vertices and directed edges of the TPG</span></article>
+          <article><b>S<sub>tᵢ</sub></b><span>Skills required by task tᵢ</span></article>
+          <article><b>S<sup>rₖ</sup></b><span>Skills mastered by resource rₖ</span></article>
+          <article><b>S<sub>wsf</sub></b><span>Skills sorted “worst skill first”</span></article>
+          <article><b>eff<sub>tᵢ</sub></b><span>Total effort required by task tᵢ</span></article>
+          <article><b>eff*<sub>tᵢsₗ</sub></b><span>Effort completed for skill sₗ on task tᵢ</span></article>
+          <article><b>d<sub>tᵢ</sub></b><span>Duration of task tᵢ</span></article>
+          <article><b>C<sub>tᵢ</sub></b><span>Time already spent on task tᵢ</span></article>
+          <article><b>GPS / PSS</b><span>Proposed Greedy and Parallel Scheduling / benchmark Parallel Scheduling Scheme</span></article>
+          <article><b>TPG / MSRCPSP</b><span>Task Precedence Graph / Multi-Skill Resource-Constrained Project Scheduling Problem</span></article>
+          <article><b>e<sub>tᵢ</sub></b><span>Edge associated with task tᵢ in the paper's notation table</span></article>
+          <article><b>C<sub>T∥</sub></b><span>Total elapsed time returned for a parallel task subset</span></article>
+        </div>
+        <p class="source-note">Verified against Table 1 · Paper p. 29827</p>
+      </section>
+
+      <section class="slide theme-model" id="slide-8" data-title="Core Notation II" data-chapter="Model" aria-hidden="true">
+        <div class="slide-heading compact-heading">
+          <p class="eyebrow morph-eyebrow">Notation · resources and timing</p>
+          <h2 class="morph-title">Assignment, proficiency and event-time symbols.</h2>
+        </div>
+        <div class="notation-grid morph-visual">
+          <article><b>R*<sub>tᵢ</sub></b><span>Resources assigned to task tᵢ</span></article>
+          <article><b>R*</b><span>Set of assigned resources</span></article>
+          <article><b>R**<sub>tᵢ</sub></b><span>Surplus resources assigned to tᵢ</span></article>
+          <article><b>R<sub>avail</sub></b><span>Set of available resources</span></article>
+          <article><b>w<sub>rₖsₗ</sub></b><span>Proficiency of resource rₖ in skill sₗ</span></article>
+          <article><b>B<sub>tᵢ</sub>, F<sub>tᵢ</sub></b><span>Start and finish time of task tᵢ</span></article>
+          <article><b>F<sub>tᵢsₗ</sub></b><span>Finish time of task tᵢ with respect to skill sₗ</span></article>
+          <article><b>LF<sub>tᵢsₗ</sub></b><span>Latest-finishing skill in task tᵢ</span></article>
+          <article><b>t<sub>ef</sub>, t<sub>lf</sub></b><span>Earliest- and latest-finishing tasks</span></article>
+          <article><b>LV(e), RV(e)</b><span>Left and right vertex of an edge</span></article>
+          <article><b>TS</b><span>Task–skill matrix</span></article>
+          <article><b>RS</b><span>Resource–skill matrix</span></article>
+          <article><b>w<sub>rₖsₗtᵢ</sub></b><span>Binary decision: rₖ uses skill sₗ on task tᵢ</span></article>
+          <article><b>R<sub>tᵢsₗ</sub></b><span>Required resource count for task–skill pair (tᵢ,sₗ)</span></article>
+          <article><b>Σ w<sub>rₖsₗ</sub></b><span>Combined proficiency of resources assigned to skill sₗ on task tᵢ</span></article>
+          <article><b>tᵢsⱼ / rₖsⱼ</b><span>Task-skill binary entry / resource-skill proficiency entry</span></article>
+        </div>
+        <p class="source-note">Verified against Table 1 · Paper p. 29827</p>
+      </section>
+
+      <section class="slide theme-model" id="slide-9" data-title="Matrices and Assignment" data-chapter="Model" aria-hidden="true">
+        <div class="slide-heading">
+          <p class="eyebrow morph-eyebrow">Model inputs</p>
+          <h2 class="morph-title">Two matrices connect task demand to heterogeneous capability.</h2>
+        </div>
+        <div class="matrix-layout morph-visual">
+          <article class="matrix-card">
+            <div><span>TS</span><h3>Task–Skill Matrix</h3></div>
+            <div class="matrix-sample" aria-label="Task skill matrix example"><span>1</span><span>0</span><span>1</span><span>0</span><span>1</span><span>1</span><span>1</span><span>0</span><span>0</span></div>
+            <p><b>tᵢsⱼ ∈ {0,1}</b><br>1 means task tᵢ requires skill sⱼ.</p>
+          </article>
+          <div class="matrix-bridge"><span>matched through</span><strong>w<sub>rₖsₗtᵢ</sub></strong><small>binary assignment decision</small></div>
+          <article class="matrix-card accent-card">
+            <div><span>RS</span><h3>Resource–Skill Matrix</h3></div>
+            <div class="matrix-sample weighted" aria-label="Resource skill matrix example"><span>.9</span><span>.2</span><span>.7</span><span>.4</span><span>1</span><span>.6</span><span>.8</span><span>.5</span><span>.3</span></div>
+            <p><b>rₖsⱼ ∈ [0,1]</b><br>The value expresses proficiency in a skill.</p>
+          </article>
+        </div>
+        <div class="decision-definition morph-card"><code>w<sub>rₖsₗtᵢ</sub> = 1</code><p>when resource rₖ is assigned to task tᵢ using required skill sₗ; otherwise it is 0.</p></div>
+      </section>
+
+      <section class="slide theme-model" id="slide-10" data-title="Objective and Constraints I" data-chapter="Model" aria-hidden="true">
+        <div class="slide-heading compact-heading">
+          <p class="eyebrow morph-eyebrow">Mathematical formulation · objective and constraints (2)–(4)</p>
+          <h2 class="morph-title">Finish the dummy end task as early as possible.</h2>
+        </div>
+        <div class="objective-layout morph-visual">
+          <article class="objective-box"><small>Objective (1)</small><strong>minimize&nbsp; B<sub>tₙ₊₁</sub></strong><p>The start time of the dummy end node represents project completion.</p></article>
+          <div class="constraint-cards">
+            <article><span>(2)</span><code>B<sub>tⱼ</sub> ≥ B<sub>tᵢ</sub> + d<sub>tᵢ</sub>, &nbsp;(tᵢ,tⱼ) ∈ E</code><p>A successor starts only after its predecessor finishes.</p></article>
+            <article><span>(3)</span><code>Σ<sub>rₖ∈R<sup>sₗ</sup></sub> w<sub>rₖsₗtᵢ</sub> = R<sub>tᵢsₗ</sub></code><p>The assignment satisfies the required headcount for each task–skill pair.</p></article>
+            <article><span>(4)</span><code>Σ<sub>sₗ∈S<sup>rₖ</sup>∩S<sub>tᵢ</sub></sub> w<sub>rₖsₗtᵢ</sub> ≤ 1</code><p>For a given task, one resource contributes through at most one skill.</p></article>
+          </div>
+        </div>
+        <p class="source-note">Paper Equations (1)–(4), p. 29828</p>
+      </section>
+
+      <section class="slide theme-model" id="slide-11" data-title="Objective and Constraints II" data-chapter="Model" aria-hidden="true">
+        <div class="slide-heading compact-heading">
+          <p class="eyebrow morph-eyebrow">Mathematical formulation · constraints (5)–(9)</p>
+          <h2 class="morph-title">Feasibility, non-negativity, compatibility and finish time.</h2>
+        </div>
+        <div class="constraint-grid morph-visual">
+          <article><span>(5)</span><code>Σ<sub>sₗ=1</sub><sup>|S|</sup> tᵢsₗ &gt; 0</code><p>Every project task requires at least one skill.</p></article>
+          <article><span>(6)</span><code>Σ<sub>rₖ=1</sub><sup>|R|</sup> tᵢrₖ &gt; 0</code><p>At least one resource performs every project task.</p></article>
+          <article><span>(7)</span><code>B<sub>tᵢ</sub> ≥ 0, &nbsp; d<sub>tᵢ</sub> ≥ 0</code><p>Start times and durations are non-negative.</p></article>
+          <article><span>(8)</span><code>R<sub>tᵢsₗ</sub> ⊆ ⋃ S<sub>tᵢ</sub></code><p>Intended meaning: assigned resources must possess skills required by the task.</p></article>
+          <article><span>(9)</span><code>F<sub>tᵢ</sub> = B<sub>tᵢ</sub> + d<sub>tᵢ</sub></code><p>Finish time equals start time plus duration.</p></article>
+          <aside><b>Model-reading note</b><p>Equations (6) and (8) are typographically ambiguous in the published paper. The interpretations shown here follow the accompanying prose, rather than silently inventing a new formula.</p></aside>
+        </div>
+        <p class="source-note">Paper Equations (5)–(9) and explanatory text, pp. 29828–29829</p>
+      </section>
+
+      <section class="slide theme-model" id="slide-12" data-title="Editorial Notation Check" data-chapter="Model" aria-hidden="true">
+        <div class="slide-heading">
+          <p class="eyebrow morph-eyebrow">Notation verification</p>
+          <h2 class="morph-title">Three paper-level inconsistencies are explicitly controlled in this presentation.</h2>
+        </div>
+        <div class="audit-grid morph-visual">
+          <article><span>01</span><h3>d<sub>tᵢ</sub>: duration, not deadline</h3><p>The problem-formulation paragraph calls d<sub>tᵢ</sub> a deadline, but Table 1, Equations (2), (7), (9), and the algorithm discussion use it as task duration. The slides use “duration.”</p></article>
+          <article><span>02</span><h3>Constraint wording is separated from formula scope</h3><p>Constraint (4) directly limits one skill contribution per resource for a given task. The broader “one task at a time” claim appears in prose and is not overstated as a standalone mathematical guarantee.</p></article>
+          <article><span>03</span><h3>Figure references are corrected by captions</h3><p>The results prose points to Figures 7 and 8 for Experiments 6 and 7. Their actual captions are Figure 8 (duration) and Figure 9 (resource demand), which this presentation follows.</p></article>
+        </div>
+      </section>
+
+      <section class="slide theme-method" id="slide-13" data-title="GPS Architecture" data-chapter="Method" aria-hidden="true">
+        <div class="slide-heading">
+          <p class="eyebrow morph-eyebrow">GPS framework</p>
+          <h2 class="morph-title">Five algorithms form one event-driven scheduling loop.</h2>
+        </div>
+        <div class="algorithm-flow morph-visual">
+          <article><span>1</span><h3>GPS</h3><p>Orchestrate groups</p></article><i>→</i>
+          <article><span>2</span><h3>Create groups</h3><p>Extract independent tasks</p></article><i>→</i>
+          <article><span>3</span><h3>Schedule subset</h3><p>Advance by completion events</p></article><i>→</i>
+          <article><span>4</span><h3>Assign resources</h3><p>Choose maximum proficiency</p></article><i>↔</i>
+          <article><span>5</span><h3>Assign surplus</h3><p>Accelerate latest finisher</p></article>
+        </div>
+        <div class="event-rules morph-card">
+          <div><small>Best-fit choice</small><strong>Highest matching proficiency</strong></div>
+          <div><small>Release event</small><strong>Earliest-finishing task completes</strong></div>
+          <div><small>Surplus target</small><strong>Latest-finishing scheduled task</strong></div>
+        </div>
+      </section>
+
+      <section class="slide theme-method" id="slide-14" data-title="Algorithm 1: GPS" data-chapter="Method" aria-hidden="true">
+        <div class="algorithm-slide">
+          <div class="algorithm-copy">
+            <p class="eyebrow morph-eyebrow">Algorithm 1 · Top-level orchestrator</p>
+            <h2 class="morph-title">GPS builds parallel groups, schedules each group, and accumulates makespan.</h2>
+            <ol class="step-list morph-card"><li>Create the array of dependency-safe task groups.</li><li>Ignore groups containing dummy start or end tasks.</li><li>Sort tasks in a group by finishing time.</li><li>Call the subset scheduler and add its elapsed time.</li></ol>
+            <div class="io-row"><span><b>Input</b> T, S, R, E</span><span><b>Output</b> project_makespan</span></div>
+          </div>
+          <figure class="paper-figure morph-visual"><button class="zoom-button" data-image="assets/algorithm-1-gps.png" data-alt="Algorithm 1 GPS pseudocode"><img src="assets/algorithm-1-gps.png" alt="Algorithm 1 GPS pseudocode"><span>Expand</span></button><figcaption>Paper Algorithm 1 · p. 29830</figcaption></figure>
+        </div>
+      </section>
+
+      <section class="slide theme-method" id="slide-15" data-title="Algorithm 2: Parallel Groups" data-chapter="Method" aria-hidden="true">
+        <div class="algorithm-slide">
+          <div class="algorithm-copy">
+            <p class="eyebrow morph-eyebrow">Algorithm 2 · CreateParallelTasksGroups</p>
+            <h2 class="morph-title">Repeatedly extract vertices with no remaining predecessor.</h2>
+            <ol class="step-list morph-card"><li>Scan the remaining task set.</li><li>Select vertices that are not the right vertex of any remaining edge.</li><li>Place them in the current parallel subset.</li><li>Remove selected vertices and outgoing edges; repeat.</li></ol>
+            <div class="io-row"><span><b>Input</b> T, E</span><span><b>Output</b> T<sub>∥</sub>[ ]</span></div>
+          </div>
+          <figure class="paper-figure morph-visual"><button class="zoom-button" data-image="assets/algorithm-2-parallel-groups.png" data-alt="Algorithm 2 Create Parallel Tasks Groups pseudocode"><img src="assets/algorithm-2-parallel-groups.png" alt="Algorithm 2 Create Parallel Tasks Groups pseudocode"><span>Expand</span></button><figcaption>Paper Algorithm 2 · p. 29830</figcaption></figure>
+        </div>
+      </section>
+
+      <section class="slide theme-method" id="slide-16" data-title="Algorithm 3: Schedule Subset" data-chapter="Method" aria-hidden="true">
+        <div class="algorithm-slide">
+          <div class="algorithm-copy">
+            <p class="eyebrow morph-eyebrow">Algorithm 3 · ScheduleTasksSubset</p>
+            <h2 class="morph-title">The scheduler advances from one earliest-finish event to the next.</h2>
+            <ol class="step-list morph-card"><li>Attempt an initial feasible assignment for unscheduled tasks.</li><li>Use Algorithm 5 to place surplus capacity.</li><li>Find the earliest-finishing task and release its resources.</li><li>Update remaining effort and elapsed time for running tasks.</li></ol>
+            <div class="io-row"><span><b>Input</b> T<sub>∥</sub>, R<sub>avail</sub></span><span><b>Output</b> C<sub>T∥</sub></span></div>
+          </div>
+          <figure class="paper-figure morph-visual"><button class="zoom-button" data-image="assets/algorithm-3-schedule-subset.png" data-alt="Algorithm 3 Schedule Tasks Subset pseudocode"><img src="assets/algorithm-3-schedule-subset.png" alt="Algorithm 3 Schedule Tasks Subset pseudocode"><span>Expand</span></button><figcaption>Paper Algorithm 3 · p. 29831</figcaption></figure>
+        </div>
+      </section>
+
+      <section class="slide theme-method" id="slide-17" data-title="Algorithm 4: Assign Resources" data-chapter="Method" aria-hidden="true">
+        <div class="algorithm-slide">
+          <div class="algorithm-copy">
+            <p class="eyebrow morph-eyebrow">Algorithm 4 · AssignResources</p>
+            <h2 class="morph-title">For each required skill, greedily choose the available resource with maximum proficiency.</h2>
+            <ol class="step-list morph-card"><li>Visit every skill required by the task.</li><li>Find the highest-weight available matching resource.</li><li>Update task-skill finishing time after each assignment.</li><li>Stop when the task can finish within d<sub>tᵢ</sub>; roll back if no match exists.</li></ol>
+            <div class="io-row"><span><b>Input</b> tᵢ, R<sub>avail</sub></span><span><b>Output</b> Boolean</span></div>
+          </div>
+          <figure class="paper-figure morph-visual"><button class="zoom-button" data-image="assets/algorithm-4-assign-resources.png" data-alt="Algorithm 4 Assign Resources pseudocode"><img src="assets/algorithm-4-assign-resources.png" alt="Algorithm 4 Assign Resources pseudocode"><span>Expand</span></button><figcaption>Paper Algorithm 4 · p. 29831</figcaption></figure>
+        </div>
+      </section>
+
+      <section class="slide theme-method" id="slide-18" data-title="Algorithm 5: Extra Resources" data-chapter="Method" aria-hidden="true">
+        <div class="algorithm-slide">
+          <div class="algorithm-copy">
+            <p class="eyebrow morph-eyebrow">Algorithm 5 · AssignExtraResources</p>
+            <h2 class="morph-title">Use spare capacity where it can reduce the group completion time most.</h2>
+            <ol class="step-list morph-card"><li>Remove tasks that received no initial assignment.</li><li>Select the latest-finishing scheduled task.</li><li>Select that task’s latest-finishing skill.</li><li>Assign any free resource possessing that skill; repeat.</li></ol>
+            <div class="io-row"><span><b>Input</b> T<sub>∥</sub>, R<sub>avail</sub></span><span><b>Output</b> surplus assignments</span></div>
+          </div>
+          <figure class="paper-figure morph-visual"><button class="zoom-button" data-image="assets/algorithm-5-extra-resources.png" data-alt="Algorithm 5 Assign Extra Resources pseudocode"><img src="assets/algorithm-5-extra-resources.png" alt="Algorithm 5 Assign Extra Resources pseudocode"><span>Expand</span></button><figcaption>Paper Algorithm 5 · p. 29831</figcaption></figure>
+        </div>
+      </section>
+
+      <section class="slide theme-method" id="slide-19" data-title="Resource Reallocation Logic" data-chapter="Method" aria-hidden="true">
+        <div class="slide-heading">
+          <p class="eyebrow morph-eyebrow">Why GPS can shorten a parallel group</p>
+          <h2 class="morph-title">Completion events continuously reshape resource allocation.</h2>
+        </div>
+        <div class="timeline-demo morph-visual">
+          <div class="timeline-before"><strong>Initial allocation</strong><div class="track"><span style="--x:0%;--w:46%">Task A</span><span style="--x:0%;--w:78%">Task B</span><span style="--x:0%;--w:94%">Task C</span></div><p>A finishes first; its assigned resources become available.</p></div>
+          <div class="timeline-arrow">morph</div>
+          <div class="timeline-after"><strong>After resource release</strong><div class="track"><span style="--x:0%;--w:46%">Task A ✓</span><span style="--x:0%;--w:69%">Task B + R</span><span style="--x:0%;--w:82%">Task C + R</span></div><p>Freed and surplus resources are redirected to reduce the latest finish.</p></div>
+        </div>
+        <div class="logic-chain morph-card"><span>Earliest task completes</span><i>→</i><span>Resources released</span><i>→</i><span>Remaining effort updated</span><i>→</i><span>Latest finish reduced</span></div>
+      </section>
+
+      <section class="slide theme-evidence" id="slide-20" data-title="Experimental Design" data-chapter="Evidence" aria-hidden="true">
+        <div class="slide-heading compact-heading">
+          <p class="eyebrow morph-eyebrow">Simulation setup</p>
+          <h2 class="morph-title">Seven experiments, 50 generated projects per experiment.</h2>
+        </div>
+        <div class="experiment-design morph-visual">
+          <figure class="table-figure"><button class="zoom-button" data-image="assets/table-2-experimental-set.png" data-alt="Table 2 experimental set"><img src="assets/table-2-experimental-set.png" alt="Table 2 experimental set"><span>Expand</span></button><figcaption>Table 2 · Experimental set</figcaption></figure>
+          <div class="experiment-summary">
+            <article><span>Experiment 1</span><h3>Random benchmark</h3><p>All six factors are sampled within the reported ranges.</p></article>
+            <article><span>Experiments 2–7</span><h3>One-factor sensitivity</h3><p>One factor varies while the other five remain fixed.</p></article>
+            <div class="factor-tags"><b>Tasks</b><b>Skills</b><b>Resources</b><b>Graph complexity</b><b>Duration</b><b>Demand per skill</b></div>
+            <p class="benchmark-note"><b>Benchmark:</b> Parallel Scheduling Scheme (PSS), selected by the authors for its relevance and established use.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide theme-evidence" id="slide-21" data-title="Random-Project Results" data-chapter="Evidence" aria-hidden="true">
+        <div class="slide-heading compact-heading">
+          <p class="eyebrow morph-eyebrow">Experiment 1 · Random projects</p>
+          <h2 class="morph-title">GPS reports a lower average makespan and fewer idle resources.</h2>
+        </div>
+        <div class="result-dashboard morph-visual">
+          <div class="result-metrics">
+            <article><small>PSS average</small><strong>58.96</strong><span>days</span></article>
+            <article class="delta"><small>Direct difference</small><strong>8.54</strong><span>days</span></article>
+            <article class="accent-card"><small>GPS average</small><strong>50.42</strong><span>days</span></article>
+          </div>
+          <div class="figure-pair">
+            <figure><button class="zoom-button" data-image="assets/figure-2-makespan.png" data-alt="Figure 2 project makespan"><img src="assets/figure-2-makespan.png" alt="Figure 2 project makespan"><span>Expand</span></button><figcaption>Figure 2 · Project makespan</figcaption></figure>
+            <figure><button class="zoom-button" data-image="assets/figure-3-resource-wastage.png" data-alt="Figure 3 resource wastage"><img src="assets/figure-3-resource-wastage.png" alt="Figure 3 resource wastage"><span>Expand</span></button><figcaption>Figure 3 · Free resources</figcaption></figure>
+          </div>
+        </div>
+        <p class="result-note">The paper separately reports “average completion gap” values of 9.80 days for GPS and 2.88 days for PSS without defining them as the direct difference. The headline comparison therefore uses 58.96 − 50.42 = 8.54 days.</p>
+      </section>
+
+      <section class="slide theme-evidence" id="slide-22" data-title="Tasks and Skills" data-chapter="Evidence" aria-hidden="true">
+        <div class="slide-heading compact-heading"><p class="eyebrow morph-eyebrow">Sensitivity results · Experiments 2 and 3</p><h2 class="morph-title">Task count preserves the pattern; higher skill demand narrows the advantage.</h2></div>
+        <div class="comparison-figures morph-visual">
+          <figure><button class="zoom-button" data-image="assets/figure-4-tasks.png" data-alt="Figure 4 impact of tasks"><img src="assets/figure-4-tasks.png" alt="Figure 4 impact of tasks"><span>Expand</span></button><figcaption><b>Number of tasks</b><span>Both makespans rise similarly; GPS remains lower.</span></figcaption></figure>
+          <figure><button class="zoom-button" data-image="assets/figure-5-skills.png" data-alt="Figure 5 impact of skills"><img src="assets/figure-5-skills.png" alt="Figure 5 impact of skills"><span>Expand</span></button><figcaption><b>Skills required per task</b><span>The gap shrinks as mandatory skill demand consumes spare capacity.</span></figcaption></figure>
+        </div>
+      </section>
+
+      <section class="slide theme-evidence" id="slide-23" data-title="Resources and Complexity" data-chapter="Evidence" aria-hidden="true">
+        <div class="slide-heading compact-heading"><p class="eyebrow morph-eyebrow">Sensitivity results · Experiments 4 and 5</p><h2 class="morph-title">More resources help GPS; denser precedence reduces parallel opportunity.</h2></div>
+        <div class="comparison-figures morph-visual">
+          <figure><button class="zoom-button" data-image="assets/figure-6-resources.png" data-alt="Figure 6 impact of resources"><img src="assets/figure-6-resources.png" alt="Figure 6 impact of resources"><span>Expand</span></button><figcaption><b>Available resources</b><span>GPS makespan falls faster because it can use surplus capacity.</span></figcaption></figure>
+          <figure><button class="zoom-button" data-image="assets/figure-7-complexity.png" data-alt="Figure 7 impact of graph complexity"><img src="assets/figure-7-complexity.png" alt="Figure 7 impact of graph complexity"><span>Expand</span></button><figcaption><b>Graph complexity</b><span>As dependencies increase, fewer tasks can execute in parallel.</span></figcaption></figure>
+        </div>
+      </section>
+
+      <section class="slide theme-evidence" id="slide-24" data-title="Duration and Demand" data-chapter="Evidence" aria-hidden="true">
+        <div class="slide-heading compact-heading"><p class="eyebrow morph-eyebrow">Sensitivity results · Experiments 6 and 7</p><h2 class="morph-title">Unequal durations create reuse opportunities; higher mandatory demand removes them.</h2></div>
+        <div class="comparison-figures morph-visual">
+          <figure><button class="zoom-button" data-image="assets/figure-8-duration.png" data-alt="Figure 8 impact of duration"><img src="assets/figure-8-duration.png" alt="Figure 8 impact of duration"><span>Expand</span></button><figcaption><b>Task-duration range</b><span>The GPS–PSS gap grows as early-finishing tasks release resources sooner.</span></figcaption></figure>
+          <figure><button class="zoom-button" data-image="assets/figure-9-resource-demand.png" data-alt="Figure 9 impact of resource demand"><img src="assets/figure-9-resource-demand.png" alt="Figure 9 impact of resource demand"><span>Expand</span></button><figcaption><b>Resources required per skill</b><span>The advantage narrows as required headcount leaves less surplus capacity.</span></figcaption></figure>
+        </div>
+      </section>
+
+      <section class="slide theme-evidence" id="slide-25" data-title="When GPS Works Best" data-chapter="Evidence" aria-hidden="true">
+        <div class="slide-heading">
+          <p class="eyebrow morph-eyebrow">Synthesis of experimental evidence</p>
+          <h2 class="morph-title">GPS is strongest when the schedule contains exploitable flexibility.</h2>
+        </div>
+        <div class="wins-layout morph-visual">
+          <div class="wins-column good"><h3>Advantage expands when…</h3><ul><li>More resources are available.</li><li>Each task requires fewer skills.</li><li>Resource demand per task-skill is lower.</li><li>Graph complexity leaves more parallel tasks.</li><li>Task durations vary enough to release resources early.</li></ul></div>
+          <div class="center-principle"><span>Available flexibility</span><strong>→ GPS reallocation →</strong><span>Lower makespan</span></div>
+          <div class="wins-column narrow"><h3>Advantage narrows when…</h3><ul><li>Skills consume most of the resource pool.</li><li>Mandatory headcount leaves little surplus.</li><li>Dense precedence relations suppress concurrency.</li><li>Few resources become free before the group completes.</li></ul></div>
+        </div>
+      </section>
+
+      <section class="slide theme-assessment" id="slide-26" data-title="Critical Assessment" data-chapter="Assessment" aria-hidden="true">
+        <div class="slide-heading">
+          <p class="eyebrow morph-eyebrow">Critical assessment</p>
+          <h2 class="morph-title">Promising simulation evidence, with a bounded validation scope.</h2>
+        </div>
+        <div class="assessment-grid morph-visual">
+          <article class="strength"><span>Strength</span><h3>Mechanism matches the problem</h3><p>Weighted best fit and event-driven resource reuse directly target the two gaps identified by the authors.</p></article>
+          <article class="strength"><span>Strength</span><h3>Factor-by-factor analysis</h3><p>Six sensitivity experiments explain the conditions under which the advantage expands or contracts.</p></article>
+          <article class="limit"><span>Limitation</span><h3>Simulation only</h3><p>No industrial case study or real project dataset is reported.</p></article>
+          <article class="limit"><span>Limitation</span><h3>Primary comparison is PSS</h3><p>The study does not establish superiority against a broad set of contemporary exact and metaheuristic methods.</p></article>
+          <article class="limit"><span>Limitation</span><h3>Model simplifications</h3><p>Costs, uncertainty, skill evolution, switching, preemption and broader allocation constraints are outside the evaluated model.</p></article>
+          <article class="limit"><span>Limitation</span><h3>Notation and reporting ambiguity</h3><p>Several formulas and result references need careful interpretation, as documented earlier in this presentation.</p></article>
+        </div>
+      </section>
+
+      <section class="slide theme-assessment" id="slide-27" data-title="Conclusion" data-chapter="Assessment" aria-hidden="true">
+        <div class="conclusion-layout">
+          <div class="slide-heading">
+            <p class="eyebrow morph-eyebrow">Conclusion</p>
+            <h2 class="morph-title">Use proficiency. Preserve parallelism. Reuse capacity.</h2>
+            <p class="lead morph-lead">GPS combines a greedy best-fit rule with parallel scheduling and repeatedly reassigns surplus or newly freed resources to reduce the latest finish time.</p>
+          </div>
+          <div class="takeaway-stack morph-visual">
+            <article><span>01</span><p>Heterogeneous skill weights produce more realistic resource selection than interchangeable-capacity assumptions.</p></article>
+            <article><span>02</span><p>The principal operational gain comes from keeping resources productive while parallel tasks finish at different times.</p></article>
+            <article><span>03</span><p>Across the reported simulations, GPS achieves a lower makespan than PSS in almost all tested settings.</p></article>
+          </div>
+          <div class="future-line morph-card"><b>Author-stated future work</b><span>Add more factors and constraints to resource allocation, and further improve the GPS method.</span></div>
+        </div>
+      </section>
+
+      <section class="slide theme-closing" id="slide-28" data-title="Questions" data-chapter="Closing" aria-hidden="true">
+        <div class="closing-slide">
+          <div class="closing-mark morph-visual"><span class="logo-slot logo-slot-large"><img src="logo.png" alt="University logo" onerror="this.hidden=true; this.parentElement.classList.add('is-missing')"><span class="logo-fallback" aria-hidden="true">G09</span></span></div>
+          <p class="eyebrow morph-eyebrow">Group G09 · Project Control</p>
+          <h2 class="display-title morph-title">Questions <em>&amp; Discussion</em></h2>
+          <div class="closing-names morph-card"><strong>Ghazal Zolfi Moselo</strong><span>·</span><strong>MohammadMahdi Montazeri Hedesh</strong></div>
+          <a class="doi-card" href="weighted-multi-skill-gps-paper.pdf" target="_blank" rel="noopener">DOI 10.1109/ACCESS.2024.3350440 <span>Open paper ↗</span></a>
+        </div>
+      </section>
+    </main>
+
+    <aside class="slide-map" id="slide-map" aria-label="Slide overview" aria-hidden="true">
+      <div class="slide-map-card">
+        <div class="map-head"><div><small>Presentation overview</small><strong>Jump to a slide</strong></div><button type="button" id="close-map" aria-label="Close slide overview">×</button></div>
+        <div class="map-list" id="map-list"></div>
+      </div>
+    </aside>
+
+    <div class="image-modal" id="image-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Expanded figure">
+      <button type="button" class="modal-close" aria-label="Close expanded figure">×</button>
+      <img src="" alt="">
+    </div>
+
+    <footer class="bottom-frame" aria-label="Presentation controls">
+      <div class="presenter-line"><span>Presented by</span><strong>Ghazal Zolfi Moselo</strong><i>·</i><strong>MohammadMahdi Montazeri Hedesh</strong></div>
+      <div class="slide-counter"><strong id="slide-current">01</strong><span>/</span><span id="slide-total">28</span></div>
+      <div class="navigation-controls">
+        <button type="button" id="overview-button" title="Slide overview (O)"><span>O</span> Overview</button>
+        <button type="button" id="previous-button" aria-label="Previous slide"><span>←</span></button>
+        <p><kbd>←</kbd><kbd>↑</kbd> Previous &nbsp; <kbd>→</kbd><kbd>↓</kbd> Next</p>
+        <button type="button" id="next-button" aria-label="Next slide"><span>→</span></button>
+        <button type="button" id="fullscreen-button" title="Fullscreen (F)"><span>F</span> Fullscreen</button>
+      </div>
+      <div class="bottom-progress" aria-hidden="true"><span id="bottom-progress-bar"></span></div>
+    </footer>
+  </div>
+  <noscript>This presentation requires JavaScript for slide navigation.</noscript>
+  <script src="script.js"></script>
 </body>
 </html>

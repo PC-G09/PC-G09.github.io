@@ -1,138 +1,291 @@
 (() => {
   "use strict";
 
-  const data = window.GPS_EXPLORER_DATA;
-  if (!data) return;
+  const slides = [...document.querySelectorAll(".slide")];
+  const total = slides.length;
+  const currentNumber = document.querySelector("#slide-current");
+  const totalNumber = document.querySelector("#slide-total");
+  const chapterIndex = document.querySelector("#chapter-index");
+  const chapterTitle = document.querySelector("#chapter-title");
+  const topProgress = document.querySelector("#top-progress-bar");
+  const bottomProgress = document.querySelector("#bottom-progress-bar");
+  const previousButton = document.querySelector("#previous-button");
+  const nextButton = document.querySelector("#next-button");
+  const fullscreenButton = document.querySelector("#fullscreen-button");
+  const overviewButton = document.querySelector("#overview-button");
+  const slideMap = document.querySelector("#slide-map");
+  const mapList = document.querySelector("#map-list");
+  const closeMapButton = document.querySelector("#close-map");
+  const imageModal = document.querySelector("#image-modal");
+  const modalImage = imageModal?.querySelector("img");
+  const modalClose = imageModal?.querySelector(".modal-close");
 
-  const progressBar = document.querySelector(".reading-progress");
-  const chapterLabel = document.querySelector(".presentation-rail strong");
+  let current = 0;
+  let isTransitioning = false;
+  let queuedTarget = null;
+  let wheelTotal = 0;
+  let wheelTimer = null;
+  let touchStartX = 0;
+  let touchStartY = 0;
 
-  const updateProgress = () => {
-    if (!progressBar) return;
-    const height = document.documentElement.scrollHeight - window.innerHeight;
-    const progress = height > 0 ? Math.min(100, (window.scrollY / height) * 100) : 0;
-    progressBar.style.width = `${progress}%`;
+  const pad = (value) => String(value).padStart(2, "0");
+
+  const parseInitialSlide = () => {
+    const hashMatch = window.location.hash.match(/slide-(\d+)/i);
+    if (!hashMatch) return 0;
+    const parsed = Number(hashMatch[1]) - 1;
+    return Number.isInteger(parsed) && parsed >= 0 && parsed < total ? parsed : 0;
   };
 
-  window.addEventListener("scroll", updateProgress, { passive: true });
-  updateProgress();
+  const updateInterface = () => {
+    const slide = slides[current];
+    const progress = ((current + 1) / total) * 100;
+    const title = slide.dataset.title || `Slide ${current + 1}`;
+    const chapter = slide.dataset.chapter || "Presentation";
 
-  if (chapterLabel && "IntersectionObserver" in window) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+    currentNumber.textContent = pad(current + 1);
+    totalNumber.textContent = pad(total);
+    chapterIndex.textContent = chapter;
+    chapterTitle.textContent = title;
+    topProgress.style.width = `${progress}%`;
+    bottomProgress.style.width = `${progress}%`;
+    previousButton.disabled = current === 0;
+    nextButton.disabled = current === total - 1;
+    document.body.dataset.chapter = chapter.toLowerCase();
+    document.title = `${pad(current + 1)} · ${title} | Group G09`;
 
-        if (visible) {
-          chapterLabel.textContent = visible.target.getAttribute("data-label") || "Introduction";
-        }
-      },
-      { rootMargin: "-30% 0px -55% 0px", threshold: [0, 0.2, 0.6] },
-    );
+    [...mapList.querySelectorAll("button")].forEach((button, index) => {
+      button.classList.toggle("is-current", index === current);
+      button.setAttribute("aria-current", index === current ? "true" : "false");
+    });
 
-    document.querySelectorAll("[data-label]").forEach((section) => observer.observe(section));
-  }
+    history.replaceState(null, "", `#slide-${current + 1}`);
+  };
 
-  const escapeHtml = (value) =>
-    String(value)
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
+  const activateSlide = (index) => {
+    slides.forEach((slide, slideIndex) => {
+      const active = slideIndex === index;
+      slide.classList.toggle("is-active", active);
+      slide.setAttribute("aria-hidden", active ? "false" : "true");
+      if (active) slide.scrollTop = 0;
+    });
+    current = index;
+    updateInterface();
+  };
 
-  const experimentButtons = [...document.querySelectorAll(".experiment-tabs button")];
-  const experimentPanel = document.querySelector("#experiment-panel");
+  const fallbackTransition = async (index, direction) => {
+    const oldSlide = slides[current];
+    const distance = direction > 0 ? -18 : 18;
+    await oldSlide.animate(
+      [
+        { opacity: 1, transform: "translateY(0) scale(1)", filter: "blur(0)" },
+        { opacity: 0, transform: `translateY(${distance}px) scale(.988)`, filter: "blur(3px)" },
+      ],
+      { duration: 220, easing: "cubic-bezier(.4,0,.8,.2)", fill: "forwards" },
+    ).finished.catch(() => {});
 
-  const renderExperiment = (experiment) => {
-    if (!experimentPanel) return;
+    activateSlide(index);
+    const newSlide = slides[current];
+    await newSlide.animate(
+      [
+        { opacity: 0, transform: `translateY(${-distance}px) scale(1.012)`, filter: "blur(3px)" },
+        { opacity: 1, transform: "translateY(0) scale(1)", filter: "blur(0)" },
+      ],
+      { duration: 420, easing: "cubic-bezier(.2,.75,.15,1)", fill: "both" },
+    ).finished.catch(() => {});
+  };
 
-    const figures = [
-      `<figure><img src="${escapeHtml(experiment.image)}" alt="${escapeHtml(experiment.alt)}"></figure>`,
-    ];
-
-    if (experiment.extraImage) {
-      figures.push(
-        `<figure><img src="${escapeHtml(experiment.extraImage)}" alt="${escapeHtml(experiment.extraAlt || "")}"></figure>`,
-      );
+  const goTo = async (index) => {
+    const target = Math.max(0, Math.min(total - 1, index));
+    if (target === current && !isTransitioning) return;
+    if (isTransitioning) {
+      queuedTarget = target;
+      return;
     }
 
-    experimentPanel.innerHTML = `
-      <div class="experiment-copy">
-        <p>Experiment ${escapeHtml(experiment.id)}</p>
-        <h3>${escapeHtml(experiment.factor)}</h3>
-        <dl>
-          <div><dt>Fixed</dt><dd>The other five scheduling factors</dd></div>
-          <div><dt>Observed trend</dt><dd>${escapeHtml(experiment.trend)}</dd></div>
-          <div><dt>Performance gap</dt><dd>${escapeHtml(experiment.gap)}</dd></div>
-          <div><dt>Authors’ explanation</dt><dd>${escapeHtml(experiment.reason)}</dd></div>
-        </dl>
-      </div>
-      <div class="experiment-figures${experiment.extraImage ? " has-two" : ""}">
-        ${figures.join("")}
-      </div>
-    `;
+    isTransitioning = true;
+    const direction = target > current ? 1 : -1;
+
+    try {
+      if (typeof document.startViewTransition === "function") {
+        const transition = document.startViewTransition(() => activateSlide(target));
+        await transition.finished;
+      } else {
+        await fallbackTransition(target, direction);
+      }
+    } finally {
+      isTransitioning = false;
+      const nextTarget = queuedTarget;
+      queuedTarget = null;
+      if (Number.isInteger(nextTarget) && nextTarget !== current) {
+        setTimeout(() => goTo(nextTarget), 0);
+      }
+    }
   };
 
-  experimentButtons.forEach((button, index) => {
-    button.addEventListener("click", () => {
-      experimentButtons.forEach((item) => item.setAttribute("aria-selected", "false"));
-      button.setAttribute("aria-selected", "true");
-      const experiment = data.experiments[index];
-      if (experiment) renderExperiment(experiment);
+  const next = () => goTo(current + 1);
+  const previous = () => goTo(current - 1);
+
+  const createOverview = () => {
+    mapList.innerHTML = slides.map((slide, index) => {
+      const chapter = slide.dataset.chapter || "Presentation";
+      const title = slide.dataset.title || `Slide ${index + 1}`;
+      return `<button type="button" data-slide-index="${index}"><b>${pad(index + 1)}</b><span><small>${chapter}</small><br>${title}</span></button>`;
+    }).join("");
+
+    mapList.addEventListener("click", (event) => {
+      const button = event.target.closest("button[data-slide-index]");
+      if (!button) return;
+      closeOverview();
+      goTo(Number(button.dataset.slideIndex));
     });
+  };
+
+  const openOverview = () => {
+    if (!slideMap) return;
+    slideMap.classList.add("is-open");
+    slideMap.setAttribute("aria-hidden", "false");
+    mapList.querySelector("button.is-current")?.scrollIntoView({ block: "center" });
+    closeMapButton?.focus();
+  };
+
+  const closeOverview = () => {
+    if (!slideMap) return;
+    slideMap.classList.remove("is-open");
+    slideMap.setAttribute("aria-hidden", "true");
+  };
+
+  const openImage = (src, alt) => {
+    if (!imageModal || !modalImage) return;
+    modalImage.src = src;
+    modalImage.alt = alt || "Expanded presentation figure";
+    imageModal.classList.add("is-open");
+    imageModal.setAttribute("aria-hidden", "false");
+    modalClose?.focus();
+  };
+
+  const closeImage = () => {
+    if (!imageModal || !modalImage) return;
+    imageModal.classList.remove("is-open");
+    imageModal.setAttribute("aria-hidden", "true");
+    modalImage.src = "";
+  };
+
+  const toggleFullscreen = async () => {
+    try {
+      if (!document.fullscreenElement) {
+        await document.documentElement.requestFullscreen();
+      } else {
+        await document.exitFullscreen();
+      }
+    } catch {
+      // Fullscreen can be blocked by the browser or embedding environment.
+    }
+  };
+
+  document.addEventListener("keydown", (event) => {
+    const modalOpen = imageModal?.classList.contains("is-open");
+    const overviewOpen = slideMap?.classList.contains("is-open");
+
+    if (event.key === "Escape") {
+      if (modalOpen) closeImage();
+      else if (overviewOpen) closeOverview();
+      else if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+      return;
+    }
+
+    if (modalOpen || overviewOpen) return;
+
+    const nextKeys = ["ArrowRight", "ArrowDown", "PageDown", " "];
+    const previousKeys = ["ArrowLeft", "ArrowUp", "PageUp"];
+
+    if (nextKeys.includes(event.key)) {
+      event.preventDefault();
+      next();
+    } else if (previousKeys.includes(event.key)) {
+      event.preventDefault();
+      previous();
+    } else if (event.key === "Home") {
+      event.preventDefault();
+      goTo(0);
+    } else if (event.key === "End") {
+      event.preventDefault();
+      goTo(total - 1);
+    } else if (event.key.toLowerCase() === "f") {
+      event.preventDefault();
+      toggleFullscreen();
+    } else if (event.key.toLowerCase() === "o") {
+      event.preventDefault();
+      openOverview();
+    }
   });
 
-  const algorithmButtons = [
-    ...document.querySelectorAll(".algorithm-card .algorithm-image-wrap button"),
-  ];
+  document.addEventListener("click", (event) => {
+    const goLink = event.target.closest("[data-go]");
+    if (goLink) {
+      event.preventDefault();
+      goTo(Number(goLink.dataset.go));
+      return;
+    }
 
-  let activeModal = null;
-
-  const closeModal = () => {
-    if (!activeModal) return;
-    activeModal.remove();
-    activeModal = null;
-  };
-
-  const openModal = (algorithm) => {
-    closeModal();
-
-    const modal = document.createElement("div");
-    modal.className = "algorithm-modal";
-    modal.setAttribute("role", "dialog");
-    modal.setAttribute("aria-modal", "true");
-    modal.setAttribute("aria-label", `${algorithm.title} pseudocode`);
-    modal.innerHTML = `
-      <div class="algorithm-modal-card">
-        <div>
-          <p>Algorithm ${escapeHtml(algorithm.number)}</p>
-          <h2>${escapeHtml(algorithm.title)}</h2>
-          <button type="button" aria-label="Close pseudocode">×</button>
-        </div>
-        <img src="${escapeHtml(algorithm.image)}" alt="${escapeHtml(algorithm.title)} pseudocode from the paper at full size">
-      </div>
-    `;
-
-    modal.addEventListener("mousedown", (event) => {
-      if (event.target === modal) closeModal();
-    });
-    modal.querySelector("button")?.addEventListener("click", closeModal);
-
-    document.body.appendChild(modal);
-    activeModal = modal;
-    modal.querySelector("button")?.focus();
-  };
-
-  algorithmButtons.forEach((button, index) => {
-    button.addEventListener("click", () => {
-      const algorithm = data.algorithms[index];
-      if (algorithm) openModal(algorithm);
-    });
+    const zoomButton = event.target.closest(".zoom-button");
+    if (zoomButton) {
+      openImage(zoomButton.dataset.image, zoomButton.dataset.alt);
+    }
   });
 
-  window.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") closeModal();
+  document.querySelector(".slide-stage")?.addEventListener("wheel", (event) => {
+    if (imageModal?.classList.contains("is-open") || slideMap?.classList.contains("is-open")) return;
+    wheelTotal += event.deltaY || event.deltaX;
+    clearTimeout(wheelTimer);
+    wheelTimer = setTimeout(() => { wheelTotal = 0; }, 170);
+    if (Math.abs(wheelTotal) < 100) return;
+    wheelTotal > 0 ? next() : previous();
+    wheelTotal = 0;
+  }, { passive: true });
+
+  document.addEventListener("touchstart", (event) => {
+    const touch = event.changedTouches[0];
+    touchStartX = touch.clientX;
+    touchStartY = touch.clientY;
+  }, { passive: true });
+
+  document.addEventListener("touchend", (event) => {
+    if (imageModal?.classList.contains("is-open") || slideMap?.classList.contains("is-open")) return;
+    const touch = event.changedTouches[0];
+    const deltaX = touch.clientX - touchStartX;
+    const deltaY = touch.clientY - touchStartY;
+    const dominant = Math.abs(deltaX) > Math.abs(deltaY) ? deltaX : deltaY;
+    if (Math.abs(dominant) < 55) return;
+    dominant < 0 ? next() : previous();
+  }, { passive: true });
+
+  previousButton?.addEventListener("click", previous);
+  nextButton?.addEventListener("click", next);
+  fullscreenButton?.addEventListener("click", toggleFullscreen);
+  overviewButton?.addEventListener("click", openOverview);
+  closeMapButton?.addEventListener("click", closeOverview);
+  modalClose?.addEventListener("click", closeImage);
+  slideMap?.addEventListener("mousedown", (event) => { if (event.target === slideMap) closeOverview(); });
+  imageModal?.addEventListener("mousedown", (event) => { if (event.target === imageModal) closeImage(); });
+
+  document.addEventListener("fullscreenchange", () => {
+    if (!fullscreenButton) return;
+    fullscreenButton.innerHTML = document.fullscreenElement ? "<span>F</span> Exit" : "<span>F</span> Fullscreen";
+  });
+
+  window.addEventListener("hashchange", () => {
+    const target = parseInitialSlide();
+    if (target !== current) goTo(target);
+  });
+
+  createOverview();
+  activateSlide(parseInitialSlide());
+
+  // Preload presentation graphics so transitions remain smooth during delivery.
+  [...document.images].forEach((image) => {
+    if (image.complete) return;
+    const preload = new Image();
+    preload.src = image.src;
   });
 })();
