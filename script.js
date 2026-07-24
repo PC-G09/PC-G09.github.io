@@ -81,7 +81,7 @@
         { opacity: 1, transform: "translateY(0) scale(1)", filter: "blur(0)" },
         { opacity: 0, transform: `translateY(${distance}px) scale(.988)`, filter: "blur(3px)" },
       ],
-      { duration: 220, easing: "cubic-bezier(.4,0,.8,.2)", fill: "forwards" },
+      { duration: 380, easing: "cubic-bezier(.35,0,.65,1)", fill: "forwards" },
     ).finished.catch(() => {});
 
     activateSlide(index);
@@ -91,7 +91,7 @@
         { opacity: 0, transform: `translateY(${-distance}px) scale(1.012)`, filter: "blur(3px)" },
         { opacity: 1, transform: "translateY(0) scale(1)", filter: "blur(0)" },
       ],
-      { duration: 420, easing: "cubic-bezier(.2,.75,.15,1)", fill: "both" },
+      { duration: 680, easing: "cubic-bezier(.18,.72,.18,1)", fill: "both" },
     ).finished.catch(() => {});
   };
 

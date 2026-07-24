@@ -3,11 +3,24 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#08121e">
+  <meta name="theme-color" content="#061522">
   <meta name="description" content="An interactive academic presentation of the Greedy and Parallel Scheduling approach for weighted multi-skill project scheduling.">
   <title>GPS Scheduling Presentation | Group G09</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)']],
+        displayMath: [['\\[', '\\]']],
+        processEscapes: true,
+        packages: {'[+]': ['ams']}
+      },
+      svg: { fontCache: 'global' },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre'] }
+    };
+  </script>
+  <script defer src="vendor/mathjax/tex-svg.js"></script>
 </head>
 <body data-chapter="opening">
   <div class="presentation-shell">
@@ -57,7 +70,7 @@
             </div>
             <div class="metric-pair">
               <article><small>PSS average</small><strong>58.96</strong><span>days</span></article>
-              <div class="metric-arrow"><b>−8.54</b><span>days</span></div>
+              <div class="metric-arrow"><b>\(58.96-50.42\)</b><span>\(=8.54\) days</span></div>
               <article class="metric-accent"><small>GPS average</small><strong>50.42</strong><span>days</span></article>
             </div>
             <p class="source-note">Paper result, Experiment 1 · 50 random projects</p>
@@ -90,7 +103,7 @@
           <i aria-hidden="true">→</i>
           <article><span>MSRCPSP</span><h3>Skills enter the model</h3><p>Every task requires skills; every human resource masters one or more skills.</p></article>
           <i aria-hidden="true">→</i>
-          <article class="accent-card"><span>W-MSRCPSP</span><h3>Proficiency is weighted</h3><p>Skill proficiency is heterogeneous and represented by values in the interval [0, 1].</p></article>
+          <article class="accent-card"><span>W-MSRCPSP</span><h3>Proficiency is weighted</h3><p>Skill proficiency is heterogeneous and represented by values in the interval \([0,1]\).</p></article>
         </div>
         <p class="source-note">Paper Sections I and III</p>
       </section>
@@ -105,6 +118,9 @@
             <article><small>Exact methods</small><h3>MILP and mathematical programming</h3><p>Can model multiple objectives and constraints, but become computationally demanding as problem size grows.</p></article>
             <article><small>Heuristics</small><h3>Priority and schedule-generation rules</h3><p>Produce solutions quickly, but do not guarantee optimality and often simplify resource capability.</p></article>
             <article><small>Metaheuristics</small><h3>GA, PSO, VNS and related search</h3><p>Explore large search spaces, yet many studies assume homogeneous proficiency or limited collaboration.</p></article>
+          </div>
+          <div class="literature-themes" aria-label="Literature themes covered in the paper">
+            <span>Uncertainty</span><span>Project cost</span><span>Multi-project scheduling</span><span>Employee addition</span><span>Skill switching</span><span>Soft skills</span><span>Multitasking</span><span>Dynamic availability</span><span>Collaboration</span>
           </div>
           <div class="gap-banner">
             <div><span>Gap 01</span><strong>Heterogeneous proficiency is often overlooked.</strong></div>
@@ -148,11 +164,15 @@
             <p>Tasks inside the same parallel subset have no precedence relation with one another.</p>
           </div>
           <div class="definition-stack">
-            <article><span>T</span><p>Task set: {t₀, t₁, …, tₙ, tₙ₊₁}</p></article>
-            <article><span>TPG = (V, E)</span><p>Directed acyclic graph of task precedence relations.</p></article>
-            <article><span>t₀ / tₙ₊₁</span><p>Dummy start and dummy end tasks.</p></article>
-            <article><span>(eff<sub>tᵢ</sub>, d<sub>tᵢ</sub>)</span><p>Total effort and task duration used by the scheduling model.</p></article>
+            <article><span class="math-symbol">\(T\)</span><p>Task set: \(T=\{t_0,t_1,\ldots,t_n,t_{n+1}\}\).</p></article>
+            <article><span class="math-symbol">\(\mathrm{TPG}=(V,E)\)</span><p>Directed acyclic graph of task precedence relations.</p></article>
+            <article><span class="math-symbol">\(t_0,\ t_{n+1}\)</span><p>Dummy start and dummy end tasks.</p></article>
+            <article><span class="math-symbol">\((\mathrm{eff}_{t_i},d_{t_i})\)</span><p>Total effort and task duration used by the scheduling model.</p></article>
           </div>
+        </div>
+        <div class="subset-formula morph-card">
+          <span>Parallel-subset structure</span>
+          <div>\[|T|=|T_1|+|T_2|+\cdots+|T_q|=n,\qquad T_i\cap T_j=\varnothing\quad(i\ne j).\]</div>
         </div>
         <p class="source-note">Paper Figure 1 and Section III</p>
       </section>
@@ -163,22 +183,20 @@
           <h2 class="morph-title">Core symbols used by the formulation and algorithms.</h2>
         </div>
         <div class="notation-grid morph-visual">
-          <article><b>T</b><span>Set of project tasks</span></article>
-          <article><b>S</b><span>Set of skills</span></article>
-          <article><b>R</b><span>Set of all resources</span></article>
-          <article><b>T<sub>∥</sub></b><span>Set/subset of parallel executable tasks</span></article>
-          <article><b>V, E</b><span>Vertices and directed edges of the TPG</span></article>
-          <article><b>S<sub>tᵢ</sub></b><span>Skills required by task tᵢ</span></article>
-          <article><b>S<sup>rₖ</sup></b><span>Skills mastered by resource rₖ</span></article>
-          <article><b>S<sub>wsf</sub></b><span>Skills sorted “worst skill first”</span></article>
-          <article><b>eff<sub>tᵢ</sub></b><span>Total effort required by task tᵢ</span></article>
-          <article><b>eff*<sub>tᵢsₗ</sub></b><span>Effort completed for skill sₗ on task tᵢ</span></article>
-          <article><b>d<sub>tᵢ</sub></b><span>Duration of task tᵢ</span></article>
-          <article><b>C<sub>tᵢ</sub></b><span>Time already spent on task tᵢ</span></article>
-          <article><b>GPS / PSS</b><span>Proposed Greedy and Parallel Scheduling / benchmark Parallel Scheduling Scheme</span></article>
-          <article><b>TPG / MSRCPSP</b><span>Task Precedence Graph / Multi-Skill Resource-Constrained Project Scheduling Problem</span></article>
-          <article><b>e<sub>tᵢ</sub></b><span>Edge associated with task tᵢ in the paper's notation table</span></article>
-          <article><b>C<sub>T∥</sub></b><span>Total elapsed time returned for a parallel task subset</span></article>
+          <article><b>\(T\)</b><span>Set of project tasks</span></article>
+          <article><b>\(S\)</b><span>Set of skills</span></article>
+          <article><b>\(R\)</b><span>Set of all resources</span></article>
+          <article><b>\(T_{\parallel}\)</b><span>Set or subset of parallel executable tasks</span></article>
+          <article><b>\(V,E\)</b><span>Vertices and directed edges of the TPG</span></article>
+          <article><b>\(e_{t_i}\)</b><span>An edge associated with task \(t_i\)</span></article>
+          <article><b>\(S_{t_i}\)</b><span>Skills required by task \(t_i\)</span></article>
+          <article><b>\(S^{r_k}\)</b><span>Skills mastered by resource \(r_k\)</span></article>
+          <article><b>\(S_{\mathrm{wsf}}\)</b><span>Skills sorted “worst skill first”</span></article>
+          <article><b>\(\mathrm{eff}_{t_i}\)</b><span>Total effort required by task \(t_i\)</span></article>
+          <article><b>\(\mathrm{eff}^{*}_{t_i s_l}\)</b><span>Effort completed for skill \(s_l\) on task \(t_i\)</span></article>
+          <article><b>\(d_{t_i}\)</b><span>Duration of task \(t_i\)</span></article>
+          <article><b>\(C_{t_i}\)</b><span>Time already spent on task \(t_i\)</span></article>
+          <article><b>\(C_{T_{\parallel}}\)</b><span>Total time spent on tasks in parallel subset \(T_{\parallel}\)</span></article>
         </div>
         <p class="source-note">Verified against Table 1 · Paper p. 29827</p>
       </section>
@@ -189,22 +207,19 @@
           <h2 class="morph-title">Assignment, proficiency and event-time symbols.</h2>
         </div>
         <div class="notation-grid morph-visual">
-          <article><b>R*<sub>tᵢ</sub></b><span>Resources assigned to task tᵢ</span></article>
-          <article><b>R*</b><span>Set of assigned resources</span></article>
-          <article><b>R**<sub>tᵢ</sub></b><span>Surplus resources assigned to tᵢ</span></article>
-          <article><b>R<sub>avail</sub></b><span>Set of available resources</span></article>
-          <article><b>w<sub>rₖsₗ</sub></b><span>Proficiency of resource rₖ in skill sₗ</span></article>
-          <article><b>B<sub>tᵢ</sub>, F<sub>tᵢ</sub></b><span>Start and finish time of task tᵢ</span></article>
-          <article><b>F<sub>tᵢsₗ</sub></b><span>Finish time of task tᵢ with respect to skill sₗ</span></article>
-          <article><b>LF<sub>tᵢsₗ</sub></b><span>Latest-finishing skill in task tᵢ</span></article>
-          <article><b>t<sub>ef</sub>, t<sub>lf</sub></b><span>Earliest- and latest-finishing tasks</span></article>
-          <article><b>LV(e), RV(e)</b><span>Left and right vertex of an edge</span></article>
-          <article><b>TS</b><span>Task–skill matrix</span></article>
-          <article><b>RS</b><span>Resource–skill matrix</span></article>
-          <article><b>w<sub>rₖsₗtᵢ</sub></b><span>Binary decision: rₖ uses skill sₗ on task tᵢ</span></article>
-          <article><b>R<sub>tᵢsₗ</sub></b><span>Required resource count for task–skill pair (tᵢ,sₗ)</span></article>
-          <article><b>Σ w<sub>rₖsₗ</sub></b><span>Combined proficiency of resources assigned to skill sₗ on task tᵢ</span></article>
-          <article><b>tᵢsⱼ / rₖsⱼ</b><span>Task-skill binary entry / resource-skill proficiency entry</span></article>
+          <article><b>\(R^{*}_{t_i}\)</b><span>Resources assigned to task \(t_i\)</span></article>
+          <article><b>\(R^{*}\)</b><span>Set of assigned resources</span></article>
+          <article><b>\(R^{**}_{t_i}\)</b><span>Surplus resources assigned to \(t_i\)</span></article>
+          <article><b>\(R_{\mathrm{avail}}\)</b><span>Set of available resources</span></article>
+          <article><b>\(w_{r_k s_l}\)</b><span>Proficiency of resource \(r_k\) in skill \(s_l\)</span></article>
+          <article><b>\(\sum_{w r_k}^{|R|} r_k t_i s_l\)</b><span>Paper notation for the summed proficiency of resources assigned to \(t_i\) for \(s_l\)</span></article>
+          <article><b>\(B_{t_i},F_{t_i}\)</b><span>Start and finish time of task \(t_i\)</span></article>
+          <article><b>\(F_{t_i s_l}\)</b><span>Finish time of task \(t_i\) with respect to skill \(s_l\)</span></article>
+          <article><b>\(LF_{t_i s_l}\)</b><span>Latest-finishing skill in task \(t_i\)</span></article>
+          <article><b>\(t_{ef},t_{lf}\)</b><span>Earliest- and latest-finishing tasks</span></article>
+          <article><b>\(LV(e),RV(e)\)</b><span>Left and right vertex of an edge</span></article>
+          <article><b>\(TS\)</b><span>Task–skill matrix</span></article>
+          <article><b>\(RS\)</b><span>Resource–skill matrix</span></article>
         </div>
         <p class="source-note">Verified against Table 1 · Paper p. 29827</p>
       </section>
@@ -217,17 +232,20 @@
         <div class="matrix-layout morph-visual">
           <article class="matrix-card">
             <div><span>TS</span><h3>Task–Skill Matrix</h3></div>
-            <div class="matrix-sample" aria-label="Task skill matrix example"><span>1</span><span>0</span><span>1</span><span>0</span><span>1</span><span>1</span><span>1</span><span>0</span><span>0</span></div>
-            <p><b>tᵢsⱼ ∈ {0,1}</b><br>1 means task tᵢ requires skill sⱼ.</p>
+            <div class="latex-matrix" aria-label="Task skill matrix example">\[TS=\begin{bmatrix}1&0&1\\0&1&1\\1&0&0\end{bmatrix}\]</div>
+            <p><b>\(t_i s_j\in\{0,1\}\)</b><br>A value of \(1\) means task \(t_i\) requires skill \(s_j\).</p>
           </article>
-          <div class="matrix-bridge"><span>matched through</span><strong>w<sub>rₖsₗtᵢ</sub></strong><small>binary assignment decision</small></div>
+          <div class="matrix-bridge"><span>matched through</span><strong>\(w_{r_k s_l t_i}\)</strong><small>binary assignment decision</small></div>
           <article class="matrix-card accent-card">
             <div><span>RS</span><h3>Resource–Skill Matrix</h3></div>
-            <div class="matrix-sample weighted" aria-label="Resource skill matrix example"><span>.9</span><span>.2</span><span>.7</span><span>.4</span><span>1</span><span>.6</span><span>.8</span><span>.5</span><span>.3</span></div>
-            <p><b>rₖsⱼ ∈ [0,1]</b><br>The value expresses proficiency in a skill.</p>
+            <div class="latex-matrix" aria-label="Resource skill matrix example">\[RS=\begin{bmatrix}0.9&0.2&0.7\\0.4&1.0&0.6\\0.8&0.5&0.3\end{bmatrix}\]</div>
+            <p><b>\(r_k s_j\in[0,1]\)</b><br>The value expresses the proficiency of resource \(r_k\) in skill \(s_j\).</p>
           </article>
         </div>
-        <div class="decision-definition morph-card"><code>w<sub>rₖsₗtᵢ</sub> = 1</code><p>when resource rₖ is assigned to task tᵢ using required skill sₗ; otherwise it is 0.</p></div>
+        <div class="decision-definition morph-card">
+          <div class="decision-math">\[w_{r_k s_l t_i}=\begin{cases}1,&\text{if }r_k\text{ with }s_l\text{ is assigned to }t_i,\\0,&\text{otherwise.}\end{cases}\]</div>
+          <p><b>Illustrative feasible match:</b> if \(t_1\) requires \(s_1\) and \(w_{r_2s_1}=0.9\), then \(w_{r_2s_1t_1}=1\) records the assignment.</p>
+        </div>
       </section>
 
       <section class="slide theme-model" id="slide-10" data-title="Objective and Constraints I" data-chapter="Model" aria-hidden="true">
@@ -236,11 +254,11 @@
           <h2 class="morph-title">Finish the dummy end task as early as possible.</h2>
         </div>
         <div class="objective-layout morph-visual">
-          <article class="objective-box"><small>Objective (1)</small><strong>minimize&nbsp; B<sub>tₙ₊₁</sub></strong><p>The start time of the dummy end node represents project completion.</p></article>
+          <article class="objective-box"><small>Objective (1)</small><strong class="equation-display">\[\min B_{t_{n+1}}\]</strong><p>The start time of the dummy end node represents project completion.</p></article>
           <div class="constraint-cards">
-            <article><span>(2)</span><code>B<sub>tⱼ</sub> ≥ B<sub>tᵢ</sub> + d<sub>tᵢ</sub>, &nbsp;(tᵢ,tⱼ) ∈ E</code><p>A successor starts only after its predecessor finishes.</p></article>
-            <article><span>(3)</span><code>Σ<sub>rₖ∈R<sup>sₗ</sup></sub> w<sub>rₖsₗtᵢ</sub> = R<sub>tᵢsₗ</sub></code><p>The assignment satisfies the required headcount for each task–skill pair.</p></article>
-            <article><span>(4)</span><code>Σ<sub>sₗ∈S<sup>rₖ</sup>∩S<sub>tᵢ</sub></sub> w<sub>rₖsₗtᵢ</sub> ≤ 1</code><p>For a given task, one resource contributes through at most one skill.</p></article>
+            <article><span>(2)</span><div class="equation-line">\[B_{t_j}\ge B_{t_i}+d_{t_i},\qquad t_i,t_j\in T\land(t_i,t_j)\in E\]</div><p>A successor starts only after its predecessor finishes.</p></article>
+            <article><span>(3)</span><div class="equation-line">\[\sum_{r_k\in R_{s_l}}w_{r_k s_l t_i}=R_{t_i s_l},\qquad t_i\in T,\ s_l\in S_{t_i}\]</div><p>The assignment satisfies the required headcount for each task–skill pair.</p></article>
+            <article><span>(4)</span><div class="equation-line">\[\sum_{s_l\in S^{r_k}\cap S_{t_i}}w_{r_k s_l t_i}\le 1,\qquad r_k\in R,\ t_i\in T\]</div><p>For a given task, one resource contributes through at most one skill.</p></article>
           </div>
         </div>
         <p class="source-note">Paper Equations (1)–(4), p. 29828</p>
@@ -252,11 +270,11 @@
           <h2 class="morph-title">Feasibility, non-negativity, compatibility and finish time.</h2>
         </div>
         <div class="constraint-grid morph-visual">
-          <article><span>(5)</span><code>Σ<sub>sₗ=1</sub><sup>|S|</sup> tᵢsₗ &gt; 0</code><p>Every project task requires at least one skill.</p></article>
-          <article><span>(6)</span><code>Σ<sub>rₖ=1</sub><sup>|R|</sup> tᵢrₖ &gt; 0</code><p>At least one resource performs every project task.</p></article>
-          <article><span>(7)</span><code>B<sub>tᵢ</sub> ≥ 0, &nbsp; d<sub>tᵢ</sub> ≥ 0</code><p>Start times and durations are non-negative.</p></article>
-          <article><span>(8)</span><code>R<sub>tᵢsₗ</sub> ⊆ ⋃ S<sub>tᵢ</sub></code><p>Intended meaning: assigned resources must possess skills required by the task.</p></article>
-          <article><span>(9)</span><code>F<sub>tᵢ</sub> = B<sub>tᵢ</sub> + d<sub>tᵢ</sub></code><p>Finish time equals start time plus duration.</p></article>
+          <article><span>(5)</span><div class="equation-line">\[\sum_{s_l=1}^{|S|} t_i s_l>0,\qquad \forall t_i\in T\land s_l\in S_{t_i}\]</div><p>Every project task requires at least one skill.</p></article>
+          <article><span>(6)</span><div class="equation-line">\[\sum_{r_k=1}^{|R|} t_i r_k>0\]</div><p>At least one resource performs every project task; the published qualifier is typographically ambiguous.</p></article>
+          <article><span>(7)</span><div class="equation-line">\[B_{t_i}\ge0,\qquad d_{t_i}\ge0,\qquad \forall t_i\in T\]</div><p>Start times and durations are non-negative.</p></article>
+          <article><span>(8)</span><div class="equation-line">\[R_{t_i s_l}\subseteq\bigcup_{t_i r_k>0}S_{t_i}\]</div><p>Published notation is ambiguous; the prose intends assigned resources to possess skills required by the task.</p></article>
+          <article><span>(9)</span><div class="equation-line">\[F_{t_i}=B_{t_i}+d_{t_i},\qquad \forall t_i\in T\]</div><p>Finish time equals start time plus duration.</p></article>
           <aside><b>Model-reading note</b><p>Equations (6) and (8) are typographically ambiguous in the published paper. The interpretations shown here follow the accompanying prose, rather than silently inventing a new formula.</p></aside>
         </div>
         <p class="source-note">Paper Equations (5)–(9) and explanatory text, pp. 29828–29829</p>
@@ -268,7 +286,7 @@
           <h2 class="morph-title">Three paper-level inconsistencies are explicitly controlled in this presentation.</h2>
         </div>
         <div class="audit-grid morph-visual">
-          <article><span>01</span><h3>d<sub>tᵢ</sub>: duration, not deadline</h3><p>The problem-formulation paragraph calls d<sub>tᵢ</sub> a deadline, but Table 1, Equations (2), (7), (9), and the algorithm discussion use it as task duration. The slides use “duration.”</p></article>
+          <article><span>01</span><h3>\(d_{t_i}\): duration, not deadline</h3><p>The problem-formulation paragraph calls \(d_{t_i}\) a deadline, but Table 1, Equations (2), (7), (9), and the algorithm discussion use it as task duration. The slides use “duration.”</p></article>
           <article><span>02</span><h3>Constraint wording is separated from formula scope</h3><p>Constraint (4) directly limits one skill contribution per resource for a given task. The broader “one task at a time” claim appears in prose and is not overstated as a standalone mathematical guarantee.</p></article>
           <article><span>03</span><h3>Figure references are corrected by captions</h3><p>The results prose points to Figures 7 and 8 for Experiments 6 and 7. Their actual captions are Figure 8 (duration) and Figure 9 (resource demand), which this presentation follows.</p></article>
         </div>
@@ -299,7 +317,7 @@
             <p class="eyebrow morph-eyebrow">Algorithm 1 · Top-level orchestrator</p>
             <h2 class="morph-title">GPS builds parallel groups, schedules each group, and accumulates makespan.</h2>
             <ol class="step-list morph-card"><li>Create the array of dependency-safe task groups.</li><li>Ignore groups containing dummy start or end tasks.</li><li>Sort tasks in a group by finishing time.</li><li>Call the subset scheduler and add its elapsed time.</li></ol>
-            <div class="io-row"><span><b>Input</b> T, S, R, E</span><span><b>Output</b> project_makespan</span></div>
+            <div class="io-row"><span><b>Input</b> \(T,S,R,E\)</span><span><b>Output</b> \(\mathrm{project\_makespan}\)</span></div>
           </div>
           <figure class="paper-figure morph-visual"><button class="zoom-button" data-image="assets/algorithm-1-gps.png" data-alt="Algorithm 1 GPS pseudocode"><img src="assets/algorithm-1-gps.png" alt="Algorithm 1 GPS pseudocode"><span>Expand</span></button><figcaption>Paper Algorithm 1 · p. 29830</figcaption></figure>
         </div>
@@ -311,7 +329,7 @@
             <p class="eyebrow morph-eyebrow">Algorithm 2 · CreateParallelTasksGroups</p>
             <h2 class="morph-title">Repeatedly extract vertices with no remaining predecessor.</h2>
             <ol class="step-list morph-card"><li>Scan the remaining task set.</li><li>Select vertices that are not the right vertex of any remaining edge.</li><li>Place them in the current parallel subset.</li><li>Remove selected vertices and outgoing edges; repeat.</li></ol>
-            <div class="io-row"><span><b>Input</b> T, E</span><span><b>Output</b> T<sub>∥</sub>[ ]</span></div>
+            <div class="io-row"><span><b>Input</b> \(T,E\)</span><span><b>Output</b> \(T_{\parallel}[\,]\)</span></div>
           </div>
           <figure class="paper-figure morph-visual"><button class="zoom-button" data-image="assets/algorithm-2-parallel-groups.png" data-alt="Algorithm 2 Create Parallel Tasks Groups pseudocode"><img src="assets/algorithm-2-parallel-groups.png" alt="Algorithm 2 Create Parallel Tasks Groups pseudocode"><span>Expand</span></button><figcaption>Paper Algorithm 2 · p. 29830</figcaption></figure>
         </div>
@@ -323,7 +341,7 @@
             <p class="eyebrow morph-eyebrow">Algorithm 3 · ScheduleTasksSubset</p>
             <h2 class="morph-title">The scheduler advances from one earliest-finish event to the next.</h2>
             <ol class="step-list morph-card"><li>Attempt an initial feasible assignment for unscheduled tasks.</li><li>Use Algorithm 5 to place surplus capacity.</li><li>Find the earliest-finishing task and release its resources.</li><li>Update remaining effort and elapsed time for running tasks.</li></ol>
-            <div class="io-row"><span><b>Input</b> T<sub>∥</sub>, R<sub>avail</sub></span><span><b>Output</b> C<sub>T∥</sub></span></div>
+            <div class="io-row"><span><b>Input</b> \(T_{\parallel},R_{\mathrm{avail}}\)</span><span><b>Output</b> \(C_{T_{\parallel}}\)</span></div>
           </div>
           <figure class="paper-figure morph-visual"><button class="zoom-button" data-image="assets/algorithm-3-schedule-subset.png" data-alt="Algorithm 3 Schedule Tasks Subset pseudocode"><img src="assets/algorithm-3-schedule-subset.png" alt="Algorithm 3 Schedule Tasks Subset pseudocode"><span>Expand</span></button><figcaption>Paper Algorithm 3 · p. 29831</figcaption></figure>
         </div>
@@ -334,8 +352,8 @@
           <div class="algorithm-copy">
             <p class="eyebrow morph-eyebrow">Algorithm 4 · AssignResources</p>
             <h2 class="morph-title">For each required skill, greedily choose the available resource with maximum proficiency.</h2>
-            <ol class="step-list morph-card"><li>Visit every skill required by the task.</li><li>Find the highest-weight available matching resource.</li><li>Update task-skill finishing time after each assignment.</li><li>Stop when the task can finish within d<sub>tᵢ</sub>; roll back if no match exists.</li></ol>
-            <div class="io-row"><span><b>Input</b> tᵢ, R<sub>avail</sub></span><span><b>Output</b> Boolean</span></div>
+            <ol class="step-list morph-card"><li>Visit every skill required by the task.</li><li>Find the highest-weight available matching resource.</li><li>Update task-skill finishing time after each assignment.</li><li>Stop when the task can finish within \(d_{t_i}\); roll back if no match exists.</li></ol>
+            <div class="io-row"><span><b>Input</b> \(t_i,R_{\mathrm{avail}}\)</span><span><b>Output</b> \(\mathrm{Boolean}\)</span></div>
           </div>
           <figure class="paper-figure morph-visual"><button class="zoom-button" data-image="assets/algorithm-4-assign-resources.png" data-alt="Algorithm 4 Assign Resources pseudocode"><img src="assets/algorithm-4-assign-resources.png" alt="Algorithm 4 Assign Resources pseudocode"><span>Expand</span></button><figcaption>Paper Algorithm 4 · p. 29831</figcaption></figure>
         </div>
@@ -347,7 +365,8 @@
             <p class="eyebrow morph-eyebrow">Algorithm 5 · AssignExtraResources</p>
             <h2 class="morph-title">Use spare capacity where it can reduce the group completion time most.</h2>
             <ol class="step-list morph-card"><li>Remove tasks that received no initial assignment.</li><li>Select the latest-finishing scheduled task.</li><li>Select that task’s latest-finishing skill.</li><li>Assign any free resource possessing that skill; repeat.</li></ol>
-            <div class="io-row"><span><b>Input</b> T<sub>∥</sub>, R<sub>avail</sub></span><span><b>Output</b> surplus assignments</span></div>
+            <div class="io-row"><span><b>Input</b> \(T_{\parallel},R_{\mathrm{avail}}\)</span><span><b>Output</b> surplus assignments</span></div>
+            <div class="algorithm-note"><b>Notation note</b><span>Lines 9 and 17 appear to reuse the latest-finishing task selected in line 8. This is presented as an apparent ambiguity, not as a correction to the paper.</span></div>
           </div>
           <figure class="paper-figure morph-visual"><button class="zoom-button" data-image="assets/algorithm-5-extra-resources.png" data-alt="Algorithm 5 Assign Extra Resources pseudocode"><img src="assets/algorithm-5-extra-resources.png" alt="Algorithm 5 Assign Extra Resources pseudocode"><span>Expand</span></button><figcaption>Paper Algorithm 5 · p. 29831</figcaption></figure>
         </div>
@@ -360,7 +379,9 @@
         </div>
         <div class="timeline-demo morph-visual">
           <div class="timeline-before"><strong>Initial allocation</strong><div class="track"><span style="--x:0%;--w:46%">Task A</span><span style="--x:0%;--w:78%">Task B</span><span style="--x:0%;--w:94%">Task C</span></div><p>A finishes first; its assigned resources become available.</p></div>
-          <div class="timeline-arrow">morph</div>
+          <div class="timeline-arrow" aria-label="Resource reallocation">
+            <span class="transfer-dot"></span><span class="transfer-line"></span><b>Reallocate</b><span class="transfer-chevron">→</span>
+          </div>
           <div class="timeline-after"><strong>After resource release</strong><div class="track"><span style="--x:0%;--w:46%">Task A ✓</span><span style="--x:0%;--w:69%">Task B + R</span><span style="--x:0%;--w:82%">Task C + R</span></div><p>Freed and surplus resources are redirected to reduce the latest finish.</p></div>
         </div>
         <div class="logic-chain morph-card"><span>Earliest task completes</span><i>→</i><span>Resources released</span><i>→</i><span>Remaining effort updated</span><i>→</i><span>Latest finish reduced</span></div>
@@ -398,7 +419,7 @@
             <figure><button class="zoom-button" data-image="assets/figure-3-resource-wastage.png" data-alt="Figure 3 resource wastage"><img src="assets/figure-3-resource-wastage.png" alt="Figure 3 resource wastage"><span>Expand</span></button><figcaption>Figure 3 · Free resources</figcaption></figure>
           </div>
         </div>
-        <p class="result-note">The paper separately reports “average completion gap” values of 9.80 days for GPS and 2.88 days for PSS without defining them as the direct difference. The headline comparison therefore uses 58.96 − 50.42 = 8.54 days.</p>
+        <p class="result-note">The paper separately reports “average completion gap” values of 9.80 days for GPS and 2.88 days for PSS without defining them as the direct difference. The headline comparison therefore uses \(58.96-50.42=8.54\) days.</p>
       </section>
 
       <section class="slide theme-evidence" id="slide-22" data-title="Tasks and Skills" data-chapter="Evidence" aria-hidden="true">
@@ -447,7 +468,7 @@
           <article class="strength"><span>Strength</span><h3>Factor-by-factor analysis</h3><p>Six sensitivity experiments explain the conditions under which the advantage expands or contracts.</p></article>
           <article class="limit"><span>Limitation</span><h3>Simulation only</h3><p>No industrial case study or real project dataset is reported.</p></article>
           <article class="limit"><span>Limitation</span><h3>Primary comparison is PSS</h3><p>The study does not establish superiority against a broad set of contemporary exact and metaheuristic methods.</p></article>
-          <article class="limit"><span>Limitation</span><h3>Model simplifications</h3><p>Costs, uncertainty, skill evolution, switching, preemption and broader allocation constraints are outside the evaluated model.</p></article>
+          <article class="limit"><span>Limitation</span><h3>Model simplifications</h3><p>Costs, uncertainty, skill evolution, switching, preemption and broader allocation constraints are outside the evaluated model. The paper also does not provide a formal computational-complexity analysis.</p></article>
           <article class="limit"><span>Limitation</span><h3>Notation and reporting ambiguity</h3><p>Several formulas and result references need careful interpretation, as documented earlier in this presentation.</p></article>
         </div>
       </section>
