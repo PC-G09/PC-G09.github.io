@@ -37,11 +37,25 @@
     return Number.isInteger(parsed) && parsed >= 0 && parsed < total ? parsed : 0;
   };
 
+  const fitActiveTitle = (slide) => {
+    const title = slide?.querySelector(".slide-heading h2");
+    if (!title) return;
+    title.style.fontSize = "";
+    const minimum = 28;
+    let size = Number.parseFloat(getComputedStyle(title).fontSize);
+    while (title.scrollWidth > title.clientWidth + 1 && size > minimum) {
+      size -= 1;
+      title.style.fontSize = `${size}px`;
+    }
+  };
+
   const updateInterface = () => {
     const slide = slides[current];
     const progress = ((current + 1) / total) * 100;
     const title = slide.dataset.title || `Slide ${current + 1}`;
     const chapter = slide.dataset.chapter || "Presentation";
+
+    fitActiveTitle(slide);
 
     currentNumber.textContent = pad(current + 1);
     totalNumber.textContent = pad(total);
@@ -49,8 +63,8 @@
     chapterTitle.textContent = title;
     topProgress.style.width = `${progress}%`;
     bottomProgress.style.width = `${progress}%`;
-    previousButton.disabled = current === 0;
-    nextButton.disabled = current === total - 1;
+    if (previousButton) previousButton.disabled = current === 0;
+    if (nextButton) nextButton.disabled = current === total - 1;
     document.body.dataset.chapter = chapter.toLowerCase();
     document.title = `${pad(current + 1)} · ${title} | Group G09`;
 
@@ -196,6 +210,13 @@
 
     if (modalOpen || overviewOpen) return;
 
+    const focusedJump = event.target.closest?.("[data-go]");
+    if (focusedJump && (event.key === "Enter" || event.key === " ")) {
+      event.preventDefault();
+      goTo(Number(focusedJump.dataset.go));
+      return;
+    }
+
     const nextKeys = ["ArrowRight", "ArrowDown", "PageDown", " "];
     const previousKeys = ["ArrowLeft", "ArrowUp", "PageUp"];
 
@@ -273,6 +294,8 @@
     if (!fullscreenButton) return;
     fullscreenButton.innerHTML = document.fullscreenElement ? "<span>F</span> Exit" : "<span>F</span> Fullscreen";
   });
+
+  window.addEventListener("resize", () => fitActiveTitle(slides[current]));
 
   window.addEventListener("hashchange", () => {
     const target = parseInitialSlide();

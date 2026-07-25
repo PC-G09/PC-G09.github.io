@@ -1343,3 +1343,223 @@ mjx-container[display="true"] { margin: 0 !important; }
   .timeline-arrow .transfer-chevron { top: -5px; right: calc(50% - 52px); }
   .timeline-arrow .transfer-line { width: 88px; }
 }
+
+/* ==========================================================================\n   Targeted revision from the modern academic version\n   ========================================================================== */
+
+/* The active slide is a vertical frame: heading remains fixed at the top,
+   while the complete content group is centered in the remaining safe area. */
+.slide.is-active {
+  display: flex;
+  flex-direction: column;
+}
+.slide-heading {
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: none;
+  margin-bottom: 0;
+}
+.slide-heading h2 {
+  width: 100%;
+  max-width: none;
+  margin-right: 0;
+  white-space: nowrap;
+  overflow: visible;
+  line-height: 1.04;
+}
+.slide-content {
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: clamp(12px, 1.8vh, 24px);
+}
+.slide-content > * {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Title slide: remove the secondary visual column and center the academic copy. */
+.hero-slide-centered {
+  grid-template-columns: minmax(0, 1fr);
+  place-items: center;
+  text-align: center;
+}
+.hero-slide-centered .hero-copy {
+  width: min(1120px, 100%);
+  max-width: 1120px;
+  margin: auto;
+  text-align: center;
+}
+.hero-slide-centered .lead {
+  margin-left: auto;
+  margin-right: auto;
+}
+.hero-slide-centered .presenter-block {
+  width: min(760px, 100%);
+  margin-left: auto;
+  margin-right: auto;
+  grid-template-columns: 1fr 1fr;
+  text-align: center;
+  border-left: 0;
+  border-top: 4px solid var(--accent);
+  border-radius: 17px;
+}
+.hero-slide-centered .presenter-block p,
+.hero-slide-centered .presenter-block span {
+  grid-column: 1 / -1;
+  grid-row: auto;
+  text-align: center;
+}
+
+/* Compact footer controls: Previous/Next guide is intentionally removed. */
+.navigation-controls-compact {
+  gap: 10px;
+}
+
+/* Roadmap: shorter cards, centered as a group, and directly navigable. */
+#slide-2 .slide-content {
+  justify-content: center;
+}
+#slide-2 .roadmap-grid {
+  height: auto;
+  min-height: 0;
+  align-items: center;
+  margin: 0 auto;
+}
+#slide-2 .roadmap-grid article {
+  min-height: clamp(220px, 31vh, 310px);
+  padding: 22px 23px;
+  cursor: pointer;
+  outline: none;
+}
+#slide-2 .roadmap-grid article:nth-child(even) {
+  transform: none;
+}
+#slide-2 .roadmap-grid article:hover,
+#slide-2 .roadmap-grid article:focus-visible {
+  transform: translateY(-7px);
+  border-color: rgba(46,115,146,.52);
+  box-shadow: 0 22px 50px rgba(16,40,58,.17);
+}
+#slide-2 .roadmap-grid article:focus-visible {
+  box-shadow: 0 0 0 4px rgba(85,184,178,.22), 0 22px 50px rgba(16,40,58,.17);
+}
+
+/* Uniform academic justification inside all content boxes. */
+.slide-content article p,
+.slide-content article li,
+.slide-content aside p,
+.slide-content .morph-card p,
+.slide-content .morph-card li,
+.slide-content .step-list li,
+.slide-content .benchmark-note,
+.slide-content .result-note,
+.slide-content .algorithm-note span,
+.slide-content figcaption span,
+.slide-content .future-line span,
+.slide-content .timeline-demo p {
+  text-align: justify;
+  text-align-last: left;
+  text-justify: inter-word;
+  hyphens: auto;
+}
+
+/* Centre chip-like groups and give every similar item the same refined hover. */
+.literature-themes,
+.factor-tags,
+.io-row,
+.logic-chain {
+  justify-content: center;
+  align-items: center;
+}
+.literature-themes span,
+.factor-tags b,
+.io-row span,
+.logic-chain span {
+  border: 1px solid rgba(46,115,146,.22);
+  border-radius: 999px;
+  transition: transform .32s ease, color .32s ease, border-color .32s ease,
+              background .32s ease, box-shadow .32s ease;
+}
+.io-row span {
+  padding: 7px 12px;
+  background: rgba(255,255,255,.055);
+  border-color: rgba(255,255,255,.14);
+}
+.logic-chain span {
+  padding: 7px 12px;
+}
+.literature-themes span:hover,
+.factor-tags b:hover,
+.io-row span:hover,
+.logic-chain span:hover {
+  transform: translateY(-3px);
+  border-color: rgba(85,184,178,.58);
+  box-shadow: 0 9px 22px rgba(16,40,58,.13);
+}
+.literature-themes span:hover,
+.factor-tags b:hover {
+  color: var(--deep-blue);
+  background: rgba(85,184,178,.14);
+}
+.io-row span:hover,
+.logic-chain span:hover {
+  color: #fff;
+  background: rgba(85,184,178,.13);
+}
+
+/* Algorithm pages now use the same full-width heading and centred body system. */
+.algorithm-heading {
+  width: 100%;
+}
+.slide-content .algorithm-slide {
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  align-items: center;
+}
+.slide-content .paper-figure img {
+  max-height: min(53vh, 500px);
+}
+
+/* Comparison/result layouts should centre in the remaining height, not reserve
+   space based on the old non-centred slide model. */
+.slide-content .comparison-figures,
+.slide-content .roadmap-grid {
+  height: auto;
+}
+.slide-content .comparison-figures button {
+  height: min(43vh, 430px);
+}
+
+/* Conclusion title remains fixed; only its content group is centred. */
+.conclusion-body {
+  width: min(1180px, 100%);
+  height: auto;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto;
+  gap: 18px;
+  align-items: center;
+}
+.conclusion-body .takeaway-stack {
+  width: 100%;
+  grid-template-columns: repeat(3, 1fr);
+}
+.conclusion-body .future-line {
+  grid-column: 1;
+}
+
+@media (max-height: 820px) and (min-width: 761px) {
+  .slide-content { padding-top: 8px; }
+  #slide-2 .roadmap-grid article { min-height: 205px; padding: 18px 20px; }
+  .slide-content .paper-figure img { max-height: min(49vh, 405px); }
+}
+
+@media (max-width: 1100px) {
+  .slide-heading h2 { white-space: normal; }
+  .conclusion-body .takeaway-stack { grid-template-columns: 1fr; }
+}
