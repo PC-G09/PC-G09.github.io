@@ -185,12 +185,22 @@
     modalImage.src = "";
   };
 
+  const fullscreenDocument = (() => {
+    try {
+      return window.parent !== window && window.parent.document
+        ? window.parent.document
+        : document;
+    } catch {
+      return document;
+    }
+  })();
+
   const toggleFullscreen = async () => {
     try {
-      if (!document.fullscreenElement) {
-        await document.documentElement.requestFullscreen();
+      if (!fullscreenDocument.fullscreenElement) {
+        await fullscreenDocument.documentElement.requestFullscreen();
       } else {
-        await document.exitFullscreen();
+        await fullscreenDocument.exitFullscreen();
       }
     } catch {
       // Fullscreen can be blocked by the browser or embedding environment.
@@ -204,7 +214,7 @@
     if (event.key === "Escape") {
       if (modalOpen) closeImage();
       else if (overviewOpen) closeOverview();
-      else if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+      else if (fullscreenDocument.fullscreenElement) fullscreenDocument.exitFullscreen().catch(() => {});
       return;
     }
 
@@ -290,9 +300,11 @@
   slideMap?.addEventListener("mousedown", (event) => { if (event.target === slideMap) closeOverview(); });
   imageModal?.addEventListener("mousedown", (event) => { if (event.target === imageModal) closeImage(); });
 
-  document.addEventListener("fullscreenchange", () => {
+  fullscreenDocument.addEventListener("fullscreenchange", () => {
     if (!fullscreenButton) return;
-    fullscreenButton.innerHTML = document.fullscreenElement ? "<span>F</span> Exit" : "<span>F</span> Fullscreen";
+    fullscreenButton.innerHTML = fullscreenDocument.fullscreenElement
+      ? "<span>F</span> Exit"
+      : "<span>F</span> Fullscreen";
   });
 
   window.addEventListener("resize", () => fitActiveTitle(slides[current]));
