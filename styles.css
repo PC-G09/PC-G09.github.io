@@ -1413,6 +1413,7 @@ mjx-container[display="true"] { margin: 0 !important; }
   grid-column: 1 / -1;
   grid-row: auto;
   text-align: center;
+  text-align-last: center;
 }
 
 /* Compact footer controls: Previous/Next guide is intentionally removed. */
