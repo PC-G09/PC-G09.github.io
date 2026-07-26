@@ -1,0 +1,138 @@
+/* Smaller adaptive glowing presentation pointer - text friendly */
+
+:root {
+    --pointer-rgb: 255, 84, 112;
+    --pointer-core-size: 10px;
+    --pointer-core-size-hover: 13px;
+    --pointer-core-size-pressed: 8px;
+    --pointer-core-size-text: 8px;
+
+    --pointer-glow-size: 68px;
+    --pointer-glow-size-pressed: 54px;
+    --pointer-glow-size-text: 40px;
+}
+
+.presentation-pointer,
+.presentation-pointer-glow {
+    display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    html.presentation-pointer-ready,
+    html.presentation-pointer-ready body,
+    html.presentation-pointer-ready body * {
+        cursor: none !important;
+    }
+
+    .presentation-pointer,
+    .presentation-pointer-glow {
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: block;
+        pointer-events: none;
+        opacity: 0;
+        border-radius: 50%;
+        will-change: transform, opacity, width, height, filter;
+        transition:
+            opacity 130ms ease,
+            width 130ms ease,
+            height 130ms ease,
+            filter 150ms ease;
+    }
+
+    .presentation-pointer {
+        z-index: 2147483647;
+        width: var(--pointer-core-size);
+        height: var(--pointer-core-size);
+        background:
+            radial-gradient(
+                circle at 50% 50%,
+                rgba(255, 255, 255, 0.98) 0%,
+                rgba(255, 248, 248, 0.94) 14%,
+                rgba(var(--pointer-rgb), 0.82) 40%,
+                rgba(var(--pointer-rgb), 0.48) 61%,
+                rgba(var(--pointer-rgb), 0.14) 80%,
+                rgba(var(--pointer-rgb), 0.02) 92%,
+                rgba(var(--pointer-rgb), 0) 100%
+            );
+        filter:
+            drop-shadow(0 0 2px rgba(var(--pointer-rgb), 0.82))
+            drop-shadow(0 0 5px rgba(var(--pointer-rgb), 0.40))
+            drop-shadow(0 0 9px rgba(var(--pointer-rgb), 0.12));
+    }
+
+    .presentation-pointer-glow {
+        z-index: 2147483646;
+        width: var(--pointer-glow-size);
+        height: var(--pointer-glow-size);
+        background:
+            radial-gradient(
+                circle,
+                rgba(255, 255, 255, 0.020) 0%,
+                rgba(var(--pointer-rgb), 0.050) 16%,
+                rgba(var(--pointer-rgb), 0.022) 36%,
+                rgba(var(--pointer-rgb), 0.010) 56%,
+                rgba(var(--pointer-rgb), 0.003) 72%,
+                rgba(var(--pointer-rgb), 0) 82%
+            );
+        filter: blur(10px);
+        mix-blend-mode: screen;
+    }
+
+    .presentation-pointer.is-visible,
+    .presentation-pointer-glow.is-visible {
+        opacity: 1;
+    }
+
+    .presentation-pointer-glow.is-visible {
+        opacity: 0.52;
+    }
+
+    .presentation-pointer.is-interactive {
+        width: var(--pointer-core-size-hover);
+        height: var(--pointer-core-size-hover);
+        filter:
+            drop-shadow(0 0 3px rgba(var(--pointer-rgb), 0.92))
+            drop-shadow(0 0 7px rgba(var(--pointer-rgb), 0.48))
+            drop-shadow(0 0 12px rgba(var(--pointer-rgb), 0.16));
+    }
+
+    .presentation-pointer.is-pressed {
+        width: var(--pointer-core-size-pressed);
+        height: var(--pointer-core-size-pressed);
+        filter:
+            drop-shadow(0 0 3px rgba(var(--pointer-rgb), 0.95))
+            drop-shadow(0 0 8px rgba(var(--pointer-rgb), 0.44));
+    }
+
+    .presentation-pointer-glow.is-pressed {
+        width: var(--pointer-glow-size-pressed);
+        height: var(--pointer-glow-size-pressed);
+        opacity: 0.62;
+    }
+
+    /* Main readability fix:
+       when the pointer is over text, make it smaller and much more subtle. */
+    .presentation-pointer.is-over-text {
+        width: var(--pointer-core-size-text);
+        height: var(--pointer-core-size-text);
+        filter:
+            drop-shadow(0 0 2px rgba(var(--pointer-rgb), 0.58))
+            drop-shadow(0 0 4px rgba(var(--pointer-rgb), 0.24));
+    }
+
+    .presentation-pointer-glow.is-over-text {
+        width: var(--pointer-glow-size-text);
+        height: var(--pointer-glow-size-text);
+        opacity: 0.22 !important;
+        filter: blur(9px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .presentation-pointer,
+    .presentation-pointer-glow {
+        transition: opacity 100ms linear !important;
+    }
+}
