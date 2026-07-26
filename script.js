@@ -282,10 +282,39 @@
   }, { passive: true });
 
   document.addEventListener("touchend", (event) => {
-    if (imageModal?.classList.contains("is-open") || slideMap?.classList.contains("is-open")) return;
+    if (
+      imageModal?.classList.contains("is-open") ||
+      slideMap?.classList.contains("is-open")
+    ) return;
+
     const touch = event.changedTouches[0];
     const deltaX = touch.clientX - touchStartX;
     const deltaY = touch.clientY - touchStartY;
+
+    const mobileView = window.matchMedia(
+      "(max-width: 760px), " +
+      "(max-width: 900px) and (max-height: 500px) and (orientation: landscape)"
+    ).matches;
+
+    if (mobileView) {
+      /*
+        On phones, vertical movement is reserved for scrolling the content.
+        A slide changes only after a clear horizontal swipe.
+      */
+      const horizontalSwipe =
+        Math.abs(deltaX) >= 75 &&
+        Math.abs(deltaX) > Math.abs(deltaY) * 1.35;
+
+      if (!horizontalSwipe) return;
+
+      deltaX < 0 ? next() : previous();
+      return;
+    }
+
+    /*
+      Preserve the original behaviour outside the mobile layout,
+      so the laptop and desktop presentation are not affected.
+    */
     const dominant = Math.abs(deltaX) > Math.abs(deltaY) ? deltaX : deltaY;
     if (Math.abs(dominant) < 55) return;
     dominant < 0 ? next() : previous();
