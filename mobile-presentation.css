@@ -998,3 +998,107 @@
     }
   }
 }
+
+/* MOBILE_ALGORITHM_NUMBER_FIX_START */
+/*
+  Mobile-only fix for algorithm step cards on slides 14 to 18.
+  Numbers use their own grid column instead of absolute positioning.
+*/
+@media
+  (max-width: 760px),
+  (max-width: 900px) and (max-height: 500px) and (orientation: landscape) {
+
+  #slide-14 .step-list,
+  #slide-15 .step-list,
+  #slide-16 .step-list,
+  #slide-17 .step-list,
+  #slide-18 .step-list {
+    width: 100% !important;
+    margin: 12px 0 !important;
+    padding: 0 !important;
+    display: grid !important;
+    gap: 9px !important;
+    counter-reset: steps !important;
+  }
+
+  #slide-14 .step-list li,
+  #slide-15 .step-list li,
+  #slide-16 .step-list li,
+  #slide-17 .step-list li,
+  #slide-18 .step-list li {
+    position: relative !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+
+    display: grid !important;
+    grid-template-columns: 30px minmax(0, 1fr) !important;
+    grid-template-rows: auto !important;
+    align-items: start !important;
+    column-gap: 10px !important;
+
+    margin: 0 !important;
+    padding: 11px 12px !important;
+
+    overflow: visible !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+
+    text-align: left !important;
+    text-align-last: left !important;
+    line-height: 1.5 !important;
+  }
+
+  #slide-14 .step-list li::before,
+  #slide-15 .step-list li::before,
+  #slide-16 .step-list li::before,
+  #slide-17 .step-list li::before,
+  #slide-18 .step-list li::before {
+    position: static !important;
+    inset: auto !important;
+
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    align-self: start !important;
+    justify-self: start !important;
+
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+
+    display: grid !important;
+    place-items: center !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    border: 1px solid rgba(85, 184, 178, 0.30) !important;
+    border-radius: 8px !important;
+    background: rgba(85, 184, 178, 0.10) !important;
+
+    color: var(--accent-2) !important;
+    font-size: 11px !important;
+    font-weight: 850 !important;
+    line-height: 1 !important;
+    letter-spacing: 0 !important;
+  }
+
+  #slide-14 .algorithm-copy,
+  #slide-15 .algorithm-copy,
+  #slide-16 .algorithm-copy,
+  #slide-17 .algorithm-copy,
+  #slide-18 .algorithm-copy {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  #slide-14 .io-row,
+  #slide-15 .io-row,
+  #slide-16 .io-row,
+  #slide-17 .io-row,
+  #slide-18 .io-row {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+}
+/* MOBILE_ALGORITHM_NUMBER_FIX_END */
