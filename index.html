@@ -16,6 +16,20 @@
       --inverse-presentation-zoom: 66.6666666667%;
     }
 
+    /* On phone-width screens, the fixed 150% zoom stage shrinks the
+       presentation's own viewport to an artificial ~66% width, which is far
+       narrower than the device and breaks its mobile layout. Neutralize the
+       zoom below the site's own mobile breakpoint (760px) so the iframe is
+       shown at 1:1 and presentation.html can use its real, native viewport
+       and its existing @media (max-width: 760px) rules. Desktop/tablet
+       widths above 760px are untouched. */
+    @media (max-width: 760px) {
+      :root {
+        --presentation-zoom: 1;
+        --inverse-presentation-zoom: 100%;
+      }
+    }
+
     *,
     *::before,
     *::after {

@@ -331,11 +331,19 @@
 <p class="eyebrow morph-eyebrow"><span>IEEE Access · Volume 12 · 2024</span></p>
 <h1 class="display-title morph-title">Weighted Multi-Skill<br/><em>Project Scheduling</em></h1>
 <p class="lead morph-lead">A Greedy and Parallel Scheduling approach for reducing project makespan through proficiency-aware assignment, parallel task groups, and active reuse of free resources.</p>
+<div class="presenter-group">
 <div class="presenter-block morph-card">
 <p>Presented by</p>
+<div class="presenter-names">
 <strong>Ghazal Zolfi Moselo</strong>
+<i aria-hidden="true">·</i>
 <strong>MohammadMahdi Montazeri Hedesh</strong>
-<span>Group G09 · Project Control · Prof. <strong style="font-weight: 800;">Mohsen Varmazyar</strong></span>
+</div>
+</div>
+<div class="supervisor-block">
+<p>Course Instructor</p>
+<strong>Prof. Mohsen Varmazyar</strong>
+</div>
 </div>
 </div>
 </div>
@@ -364,7 +372,7 @@
 <i aria-hidden="true">→</i>
 <article class="accent-card"><span>W-MSRCPSP</span><h3>Proficiency is weighted</h3><p>Skill proficiency is heterogeneous and represented by values in the interval \([0,1]\).</p></article>
 </div></div>
-<p class="source-note">Paper Sections I and III</p>
+
 </section>
 <section aria-hidden="true" class="slide theme-problem" data-chapter="Problem" data-title="Literature and Research Gap" id="slide-4">
 <div class="slide-heading">
@@ -384,7 +392,7 @@
 <div><span>Gap 02</span><strong>Resources freed by unequal task durations may remain underused.</strong></div>
 </div>
 </div></div>
-<p class="source-note">Paper Sections I–II</p>
+
 </section>
 <section aria-hidden="true" class="slide theme-problem" data-chapter="Problem" data-title="Research Contribution" id="slide-5">
 <div class="slide-heading">
@@ -425,7 +433,7 @@
 <span>Parallel-subset structure</span>
 <div>\[|T|=|T_1|+|T_2|+\cdots+|T_q|=n,\qquad T_i\cap T_j=\varnothing\quad(i\ne j).\]</div>
 </div></div>
-<p class="source-note">Paper Figure 1 and Section III</p>
+
 </section>
 <section aria-hidden="true" class="slide theme-model" data-chapter="Model" data-title="Core Notation I" id="slide-7">
 <div class="slide-heading compact-heading">
@@ -447,7 +455,7 @@
 <article><b>\(C_{t_i}\)</b><span>Time already spent on task \(t_i\)</span></article>
 <article><b>\(C_{T_{\parallel}}\)</b><span>Total time spent on tasks in parallel subset \(T_{\parallel}\)</span></article>
 </div></div>
-<p class="source-note">Verified against Table 1 · Paper p. 29827</p>
+
 </section>
 <section aria-hidden="true" class="slide theme-model" data-chapter="Model" data-title="Core Notation II" id="slide-8">
 <div class="slide-heading compact-heading">
@@ -468,7 +476,7 @@
 <article><b>\(TS\)</b><span>Task–skill matrix</span></article>
 <article><b>\(RS\)</b><span>Resource–skill matrix</span></article>
 </div></div>
-<p class="source-note">Verified against Table 1 · Paper p. 29827</p>
+
 </section>
 <section aria-hidden="true" class="slide theme-model" data-chapter="Model" data-title="Matrices and Assignment" id="slide-9">
 <div class="slide-heading">
@@ -503,7 +511,7 @@
 <article><span>(4)</span><div class="equation-line">\[\sum_{s_l\in S^{r_k}\cap S_{t_i}}w_{r_k s_l t_i}\le 1,\qquad r_k\in R,\ t_i\in T\]</div><p>For a given task, one resource contributes through at most one skill.</p></article>
 </div>
 </div></div>
-<p class="source-note">Paper Equations (1)–(4), p. 29828</p>
+
 </section>
 <section aria-hidden="true" class="slide theme-model" data-chapter="Model" data-title="Objective and Constraints II" id="slide-11">
 <div class="slide-heading compact-heading">
@@ -517,7 +525,7 @@
 <article><span>(9)</span><div class="equation-line">\[F_{t_i}=B_{t_i}+d_{t_i},\qquad \forall t_i\in T\]</div><p>Finish time equals start time plus duration.</p></article>
 <aside><b>Model-reading note</b><p>Equations (6) and (8) are typographically ambiguous in the published paper. The interpretations shown here follow the accompanying prose, rather than silently inventing a new formula.</p></aside>
 </div></div>
-<p class="source-note">Paper Equations (5)–(9) and explanatory text, pp. 29828–29829</p>
+
 </section>
 <section aria-hidden="true" class="slide theme-model" data-chapter="Model" data-title="Editorial Notation Check" id="slide-12">
 <div class="slide-heading">
