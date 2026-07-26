@@ -58,6 +58,151 @@
     }
   </style>
   <link rel="stylesheet" href="mobile-viewer.css?v=1">
+<!-- ADAPTIVE_DESKTOP_ZOOM_START -->
+<script>
+  (() => {
+    "use strict";
+
+    /*
+      Reference device:
+      MacBook Air 15-inch at its common effective desktop size.
+      On this reference screen the requested presentation scale is 150%.
+    */
+    const REFERENCE_SCREEN_WIDTH = 1710;
+    const REFERENCE_SCREEN_HEIGHT = 1107;
+    const REFERENCE_ZOOM = 1.5;
+
+    /*
+      Safety limits:
+      Small laptops will not go below 100%.
+      Large desktop monitors will not exceed 165%.
+    */
+    const MIN_DESKTOP_ZOOM = 1.0;
+    const MAX_DESKTOP_ZOOM = 1.65;
+
+    const mobileQuery = window.matchMedia(
+      "(max-width: 760px), " +
+      "(max-width: 900px) and (max-height: 500px) and (orientation: landscape)"
+    );
+
+    const clamp = (value, min, max) =>
+      Math.min(max, Math.max(min, value));
+
+    const updatePresentationZoom = () => {
+      const root = document.documentElement;
+
+      /*
+        Mobile must always remain at 1:1 because it has its own
+        dedicated responsive redesign.
+      */
+      if (mobileQuery.matches) {
+        root.style.setProperty("--presentation-zoom", "1");
+        root.style.setProperty("--inverse-presentation-zoom", "100%");
+        root.dataset.presentationZoom = "1.000";
+        return;
+      }
+
+      /*
+        screen.width and screen.height are effective CSS dimensions.
+        They automatically reflect:
+        - different laptop sizes
+        - operating-system display scaling
+        - external displays
+        - different screen aspect ratios
+      */
+      const screenWidth =
+        Number(window.screen?.width) || window.innerWidth;
+
+      const screenHeight =
+        Number(window.screen?.height) || window.innerHeight;
+
+      const widthRatio =
+        screenWidth / REFERENCE_SCREEN_WIDTH;
+
+      const heightRatio =
+        screenHeight / REFERENCE_SCREEN_HEIGHT;
+
+      /*
+        Use the smaller ratio so content never becomes too large
+        on a short or narrow laptop display.
+      */
+      const deviceRatio = Math.min(widthRatio, heightRatio);
+
+      /*
+        Also reduce the presentation when the browser window is not
+        maximised. Width is used because browser toolbars naturally
+        reduce height even in a maximised window.
+      */
+      const windowWidthRatio = Math.min(
+        1,
+        window.innerWidth / screenWidth
+      );
+
+      const calculatedZoom =
+        REFERENCE_ZOOM * deviceRatio * windowWidthRatio;
+
+      const zoom = clamp(
+        calculatedZoom,
+        MIN_DESKTOP_ZOOM,
+        MAX_DESKTOP_ZOOM
+      );
+
+      const inversePercentage = 100 / zoom;
+
+      root.style.setProperty(
+        "--presentation-zoom",
+        zoom.toFixed(4)
+      );
+
+      root.style.setProperty(
+        "--inverse-presentation-zoom",
+        `${inversePercentage.toFixed(6)}%`
+      );
+
+      /*
+        Helpful for testing in browser developer tools.
+        Example: <html data-presentation-zoom="1.326">
+      */
+      root.dataset.presentationZoom = zoom.toFixed(3);
+    };
+
+    let resizeTimer = 0;
+
+    const scheduleUpdate = () => {
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(
+        updatePresentationZoom,
+        40
+      );
+    };
+
+    updatePresentationZoom();
+
+    window.addEventListener(
+      "resize",
+      scheduleUpdate,
+      { passive: true }
+    );
+
+    window.addEventListener(
+      "orientationchange",
+      scheduleUpdate,
+      { passive: true }
+    );
+
+    mobileQuery.addEventListener?.(
+      "change",
+      updatePresentationZoom
+    );
+
+    window.visualViewport?.addEventListener(
+      "resize",
+      scheduleUpdate,
+      { passive: true }
+    );
+  })();
+</script>
+<!-- ADAPTIVE_DESKTOP_ZOOM_END -->
 </head>
 <body>
   <iframe
