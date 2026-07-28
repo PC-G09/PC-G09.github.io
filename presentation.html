@@ -586,7 +586,7 @@
 <div class="slide-heading algorithm-heading"><p class="eyebrow morph-eyebrow">Algorithm 4 · Assign Resources</p><h2 class="morph-title">For Each Required Skill, Repeatedly Assign the Highest-Proficiency Available Resource.</h2></div><div class="slide-content"><div class="algorithm-slide">
 <div class="algorithm-copy">
 <ol class="step-list morph-card"><li>Process every skill required by task \(t_i\).</li><li>Select the available resource with the highest proficiency in the current skill.</li><li>Assign the resource and recompute the skill-specific finishing time.</li><li>Continue until \(F_{t_i s_l}\le d_{t_i}\); if no matching resource exists, release the task’s assigned resources and return false.</li></ol>
-<div class="io-row"><span><b>Input</b> \(t_i,R_{\mathrm{avail}}\)</span><span><b>Output</b> \(\mathrm{Boolean}\): true if successful, false otherwise</span></div>
+<div class="io-row"><span><b>Input</b> \(t_i,R_{\mathrm{avail}}\)</span><span><b>Output</b> \(\mathrm{Boolean}\): true if successful</span></div>
 </div>
 <figure class="paper-figure morph-visual"><button class="zoom-button" data-alt="Algorithm 4 Assign Resources pseudocode" data-image="assets/algorithm-4-assign-resources.png"><img alt="Algorithm 4 Assign Resources pseudocode" src="assets/algorithm-4-assign-resources.png"/><span>Expand</span></button><figcaption>Paper Algorithm 4 · p. 29831</figcaption></figure>
 </div></div>
@@ -595,7 +595,7 @@
 <div class="slide-heading algorithm-heading"><p class="eyebrow morph-eyebrow">Algorithm 5 · AssignExtraResources</p><h2 class="morph-title">Assign Surplus Resources to the Latest-Finishing Task and Skill.</h2></div><div class="slide-content"><div class="algorithm-slide">
 <div class="algorithm-copy">
 <ol class="step-list morph-card"><li>Remove tasks that received no initial resource assignment.</li><li>Select the latest-finishing task among the scheduled tasks.</li><li>Identify the latest-finishing skill of the selected task.</li><li>Assign a compatible available resource to that skill and repeat.</li></ol>
-<div class="io-row"><span><b>Input</b> \(T_{\parallel},R_{\mathrm{avail}}\)</span><span><b>Output</b> Assignment of free resources to tasks in \(T_{\parallel}\)</span></div>
+<div class="io-row"><span><b>Input</b> \(T_{\parallel},R_{\mathrm{avail}}\)</span><span><b>Output</b>Extra-resource assignment</span></div>
 <div class="algorithm-note"><b>Notation note</b><span>Line 9 appears intended to use the latest-finishing task \(t_{lf}\) selected in line 8. Line 17 appears intended to remove that selected task from \(T_{\mathrm{temp}}\). These are apparent notation ambiguities, not definitive corrections.</span></div>
 </div>
 <figure class="paper-figure morph-visual"><button class="zoom-button" data-alt="Algorithm 5 Assign Extra Resources pseudocode" data-image="assets/algorithm-5-extra-resources.png"><img alt="Algorithm 5 Assign Extra Resources pseudocode" src="assets/algorithm-5-extra-resources.png"/><span>Expand</span></button><figcaption>Paper Algorithm 5 · p. 29831</figcaption></figure>
