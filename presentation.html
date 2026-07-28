@@ -379,19 +379,19 @@
 <section aria-hidden="true" class="slide theme-problem" data-chapter="Problem" data-title="Literature and Research Gap" id="slide-4">
 <div class="slide-heading">
 <p class="eyebrow morph-eyebrow">Related work and gap</p>
-<h2 class="morph-title">Existing approaches solve parts of the problem, but leave two practical gaps.</h2>
+<h2 class="morph-title">Existing Approaches Address Key Dimensions, but Two Practical Gaps Remain.</h2>
 </div><div class="slide-content"><div class="literature-layout morph-visual">
 <div class="method-columns">
-<article><small>Exact methods</small><h3 class="slide4-title-exact">MILP and mathematical programming</h3><p>Can model multiple objectives and constraints, but become computationally demanding as problem size grows.</p></article>
-<article><small>Heuristics</small><h3 class="slide4-title-heuristic">Priority and schedule-generation rules</h3><p>Produce solutions quickly, but do not guarantee optimality and often simplify resource capability.</p></article>
-<article><small>Metaheuristics</small><h3 class="slide4-title-metaheuristic">GA, PSO, VNS and related search</h3><p>Explore large search spaces, yet many studies assume homogeneous proficiency or limited collaboration.</p></article>
+<article><small>Exact methods</small><h3 class="slide4-title-exact">MILP and Exact Optimization Models</h3><p>Model multiple objectives, uncertainty, cost, risk, and quality, but become computationally expensive for large instances.</p></article>
+<article><small>Heuristics</small><h3 class="slide4-title-heuristic">Priority and schedule-generation rules</h3><p>Generate feasible schedules quickly, but may use simplified employee abilities, incomplete precedence modeling, or limited dynamic adaptation.</p></article>
+<article><small>Metaheuristics</small><h3 class="slide4-title-metaheuristic">GA, PSO, VNS and related search</h3><p>Explore complex search spaces effectively, but several studies still assume homogeneous proficiency, single-resource assignments, or simplified skill transitions.</p></article>
 </div>
 <div aria-label="Literature themes covered in the paper" class="literature-themes">
 <span>Uncertainty</span><span>Project cost</span><span>Multi-project scheduling</span><span>Employee addition</span><span>Skill switching</span><span>Soft skills</span><span>Multitasking</span><span>Dynamic availability</span><span>Collaboration</span>
 </div>
 <div class="gap-banner">
-<div><span>Gap 01</span><strong>Heterogeneous proficiency is often overlooked.</strong></div>
-<div><span>Gap 02</span><strong>Resources freed by unequal task durations may remain underused.</strong></div>
+<div><span>Gap 01</span><strong>Heterogeneous proficiency across resource–skill pairs is often overlooked.</strong></div>
+<div><span>Gap 02</span><strong>Resources released by earlier-finishing tasks may remain underutilized.</strong></div>
 </div>
 </div></div>
 
@@ -399,18 +399,18 @@
 <section aria-hidden="true" class="slide theme-problem" data-chapter="Problem" data-title="Research Contribution" id="slide-5">
 <div class="slide-heading">
 <p class="eyebrow morph-eyebrow">Research objective and contribution</p>
-<h2 class="morph-title">Minimize makespan by making resource availability more intelligent.</h2>
+<h2 class="morph-title">Minimizing Makespan Through Smarter Resource Allocation.</h2>
 </div><div class="slide-content"><div class="contribution-grid morph-visual">
-<article><span>01</span><h3>Greedy best fit</h3><p>Select the available resource with the highest matching skill proficiency.</p></article>
-<article><span>02</span><h3>Parallel task groups</h3><p>Partition the precedence graph into dependency-safe subsets that can execute concurrently.</p></article>
-<article><span>03</span><h3>Surplus allocation</h3><p>Assign spare resources to the latest-finishing scheduled task to reduce its finish time.</p></article>
-<article><span>04</span><h3>Freed-resource reuse</h3><p>When the earliest task finishes, redirect its resources to remaining tasks in the same group.</p></article>
-</div><div class="one-line-claim morph-card"><span>Central claim</span><strong>Better proficiency matching + less idle capacity = shorter project duration.</strong></div></div>
+<article><span>01</span><h3>Greedy best fit</h3><p>Select the available resource with the highest proficiency in each required skill.</p></article>
+<article><span>02</span><h3>Parallel task groups</h3><p>Group precedence-compatible tasks into subsets that can execute concurrently when sufficient resources are available.</p></article>
+<article><span>03</span><h3>Surplus allocation</h3><p>Assign surplus resources to the latest-finishing task and its latest-finishing skill.</p></article>
+<article><span>04</span><h3>Freed-resource reuse</h3><p>When the earliest-finishing task completes, release and reassign its resources to the remaining tasks in the same parallel group.</p></article>
+</div><div class="one-line-claim morph-card"><span>Central claim</span><strong>Weighted skill matching and resource reuse reduce project makespan.</strong></div></div>
 </section>
 <section aria-hidden="true" class="slide theme-model" data-chapter="Model" data-title="Project Model" id="slide-6">
 <div class="slide-heading">
 <p class="eyebrow morph-eyebrow">Problem setup</p>
-<h2 class="morph-title">The project is a task precedence graph with dummy start and end nodes.</h2>
+<h2 class="morph-title">Project Tasks Are Modeled Through a Directed Precedence Graph.</h2>
 </div><div class="slide-content"><div class="model-graph-layout morph-visual">
 <div class="dag-card">
 <svg aria-label="Directed acyclic task precedence graph" class="dag" role="img" viewbox="0 0 760 300">
@@ -423,7 +423,7 @@
 </g>
 <g class="dag-nodes"><circle cx="65" cy="150" r="28"></circle><text x="65" y="158">t₀</text><circle cx="235" cy="68" r="28"></circle><text x="235" y="76">t₁</text><circle cx="235" cy="150" r="28"></circle><text x="235" y="158">t₂</text><circle cx="235" cy="232" r="28"></circle><text x="235" y="240">t₃</text><circle cx="385" cy="150" r="28"></circle><text x="385" y="158">t₄</text><circle cx="535" cy="88" r="28"></circle><text x="535" y="96">t₅</text><circle cx="535" cy="212" r="28"></circle><text x="535" y="220">t₆</text><circle cx="675" cy="150" r="28"></circle><text x="675" y="158">t₇</text><circle cx="748" cy="150" r="10"></circle></g>
 </svg>
-<p>Tasks inside the same parallel subset have no precedence relation with one another.</p>
+<p>Tasks in the same subset have no precedence relation and may execute concurrently if sufficient resources are available.</p>
 </div>
 <div class="definition-stack">
 <article><span class="math-symbol">\(T\)</span><p>Task set:<br class="task-set-line-break-v1"/> \(T=\{t_0,t_1,\ldots,t_n,t_{n+1}\}\).</p></article>
@@ -482,34 +482,35 @@
 </section>
 <section aria-hidden="true" class="slide theme-model" data-chapter="Model" data-title="Matrices and Assignment" id="slide-9">
 <div class="slide-heading">
-<p class="eyebrow morph-eyebrow">Model inputs</p>
-<h2 class="morph-title">Two matrices connect task demand to heterogeneous capability.</h2>
+<p class="eyebrow morph-eyebrow">Model inputs and decision variable</p>
+<h2 class="morph-title">Two matrices represent task requirements and heterogeneous resource proficiency.</h2>
 </div><div class="slide-content"><div class="matrix-layout morph-visual">
 <article class="matrix-card">
 <div><span>TS</span><h3>Task–Skill Matrix</h3></div>
-<div aria-label="Task skill matrix example" class="latex-matrix">\[TS=\begin{bmatrix}1&amp;0&amp;1\\0&amp;1&amp;1\\1&amp;0&amp;0\end{bmatrix}\]</div>
+<div aria-label="Task skill matrix" class="latex-matrix">\[TS=\begin{bmatrix}t_1s_1&amp;t_1s_2&amp;\cdots&amp;t_1s_m\\t_2s_1&amp;t_2s_2&amp;\cdots&amp;t_2s_m\\\vdots&amp;\vdots&amp;\ddots&amp;\vdots\\t_ns_1&amp;t_ns_2&amp;\cdots&amp;t_ns_m\end{bmatrix}\]</div>
 <p><b>\(t_i s_j\in\{0,1\}\)</b><br>A value of \(1\) means task \(t_i\) requires skill \(s_j\).</br></p>
 </article>
-<div class="matrix-bridge"><span>matched through</span><strong>\(w_{r_k s_l t_i}\)</strong><small>binary assignment decision</small></div>
+<div class="matrix-bridge"><span>connected through</span><strong>\(w_{r_k s_l t_i}\)</strong><small>binary resource–skill–task assignment</small></div>
 <article class="matrix-card accent-card">
 <div><span>RS</span><h3>Resource–Skill Matrix</h3></div>
-<div aria-label="Resource skill matrix example" class="latex-matrix">\[RS=\begin{bmatrix}0.9&amp;0.2&amp;0.7\\0.4&amp;1.0&amp;0.6\\0.8&amp;0.5&amp;0.3\end{bmatrix}\]</div>
+<div aria-label="Resource skill matrix" class="latex-matrix">\[RS=\begin{bmatrix}r_1s_1&amp;r_1s_2&amp;\cdots&amp;r_1s_m\\r_2s_1&amp;r_2s_2&amp;\cdots&amp;r_2s_m\\\vdots&amp;\vdots&amp;\ddots&amp;\vdots\\r_ks_1&amp;r_ks_2&amp;\cdots&amp;r_ks_m\end{bmatrix}\]</div>
 <p><b>\(r_k s_j\in[0,1]\)</b><br/>The value expresses the proficiency of resource \(r_k\) in skill \(s_j\).</p>
 </article>
 </div><div class="decision-definition morph-card">
 <div class="decision-math">\[w_{r_k s_l t_i}=\begin{cases}1,&amp;\text{if }r_k\text{ with }s_l\text{ is assigned to }t_i,\\0,&amp;\text{otherwise.}\end{cases}\]</div>
-<p><b>Illustrative feasible match:</b> if \(t_1\) requires \(s_1\) and \(w_{r_2s_1}=0.9\), then \(w_{r_2s_1t_1}=1\) records the assignment.</p>
+<p><b>Feasibility condition:</b> \(r_k\in R,\;t_i\in T,\;s_l\in S_{t_i}\cap S^{r_k}\).</p>
 </div></div>
+
 </section>
 <section aria-hidden="true" class="slide theme-model" data-chapter="Model" data-title="Objective and Constraints I" id="slide-10">
 <div class="slide-heading compact-heading">
 <p class="eyebrow morph-eyebrow">Mathematical formulation · objective and constraints (2)–(4)</p>
-<h2 class="morph-title">Finish the dummy end task as early as possible.</h2>
+<h2 class="morph-title">Minimize the Project Completion Time.</h2>
 </div><div class="slide-content"><div class="objective-layout morph-visual">
-<article class="objective-box"><small>Objective (1)</small><strong class="equation-display">\[\min B_{t_{n+1}}\]</strong><p>The start time of the dummy end node represents project completion.</p></article>
+<article class="objective-box"><small>Objective (1)</small><strong class="equation-display">\[\min B_{t_{n+1}}\]</strong><p>The start time of the dummy end task represents the project makespan.</p></article>
 <div class="constraint-cards">
 <article><span>(2)</span><div class="equation-line">\[B_{t_j}\ge B_{t_i}+d_{t_i},\qquad t_i,t_j\in T\land(t_i,t_j)\in E\]</div><p>A successor starts only after its predecessor finishes.</p></article>
-<article><span>(3)</span><div class="equation-line">\[\sum_{r_k\in R_{s_l}}w_{r_k s_l t_i}=R_{t_i s_l},\qquad t_i\in T,\ s_l\in S_{t_i}\]</div><p>The assignment satisfies the required headcount for each task–skill pair.</p></article>
+<article><span>(3)</span><div class="equation-line">\[\sum_{r_k\in R_{s_l}}w_{r_k s_l t_i}=R_{t_i s_l},\qquad t_i\in T,\ s_l\in S_{t_i}\]</div><p>The number of assigned resources equals the resource requirement for each task–skill pair.</p></article>
 <article><span>(4)</span><div class="equation-line">\[\sum_{s_l\in S^{r_k}\cap S_{t_i}}w_{r_k s_l t_i}\le 1,\qquad r_k\in R,\ t_i\in T\]</div><p>For a given task, one resource contributes through at most one skill.</p></article>
 </div>
 </div></div>
@@ -521,11 +522,10 @@
 <h2 class="morph-title">Feasibility, non-negativity, compatibility and finish time.</h2>
 </div><div class="slide-content"><div class="constraint-grid morph-visual">
 <article><span>(5)</span><div class="equation-line">\[\sum_{s_l=1}^{|S|} t_i s_l&gt;0,\qquad \forall t_i\in T\land s_l\in S_{t_i}\]</div><p>Every project task requires at least one skill.</p></article>
-<article><span>(6)</span><div class="equation-line">\[\sum_{r_k=1}^{|R|} t_i r_k&gt;0\]</div><p>At least one resource performs every project task; the published qualifier is typographically ambiguous.</p></article>
+<article><span>(6)</span><div class="equation-line">\[\sum_{r_k=1}^{|R|} t_i r_k&gt;0\]</div><p>Intended meaning: at least one resource performs each project task.</p></article>
 <article><span>(7)</span><div class="equation-line">\[B_{t_i}\ge0,\qquad d_{t_i}\ge0,\qquad \forall t_i\in T\]</div><p>Start times and durations are non-negative.</p></article>
-<article><span>(8)</span><div class="equation-line">\[R_{t_i s_l}\subseteq\bigcup_{t_i r_k&gt;0}S_{t_i}\]</div><p>Published notation is ambiguous; the prose intends assigned resources to possess skills required by the task.</p></article>
-<article><span>(9)</span><div class="equation-line">\[F_{t_i}=B_{t_i}+d_{t_i},\qquad \forall t_i\in T\]</div><p>Finish time equals start time plus duration.</p></article>
-<aside><b>Model-reading note</b><p>Equations (6) and (8) are typographically ambiguous in the published paper. The interpretations shown here follow the accompanying prose, rather than silently inventing a new formula.</p></aside>
+<article><span>(8)</span><div class="equation-line">\[R_{t_i s_l}\subseteq\bigcup_{t_i r_k&gt;0}S_{t_i},\qquad \forall t_i\in T\cap s_l\in S_{t_i}\]</div><p>Resources allocated to task \(t_i\) must possess the skills required to perform that task.</p></article>
+<aside><b>Model-reading note</b><p>Equations (6) and (8) are typographically ambiguous in the published paper. The interpretations shown here follow the accompanying prose.</p></aside>
 </div></div>
 
 </section>
