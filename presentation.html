@@ -529,74 +529,74 @@
 </div></div>
 
 </section>
-<section aria-hidden="true" class="slide theme-model" data-chapter="Model" data-title="Editorial Notation Check" id="slide-12">
+<section aria-hidden="true" class="slide theme-model" data-chapter="Model" data-title="Notation and Reporting Ambiguities" id="slide-12">
 <div class="slide-heading">
-<p class="eyebrow morph-eyebrow">Notation verification</p>
-<h2 class="morph-title">Three paper-level inconsistencies are explicitly controlled in this presentation.</h2>
+<p class="eyebrow morph-eyebrow">Notation and reporting check</p>
+<h2 class="morph-title">Three Notation and Reporting Ambiguities Are Handled Explicitly.</h2>
 </div><div class="slide-content"><div class="audit-grid morph-visual">
-<article><span>01</span><h3>\(d_{t_i}\): duration, not deadline</h3><p>The problem-formulation paragraph calls \(d_{t_i}\) a deadline, but Table 1, Equations (2), (7), (9), and the algorithm discussion use it as task duration. The slides use “duration.”</p></article>
-<article><span>02</span><h3>Constraint wording is separated from formula scope</h3><p>Constraint (4) directly limits one skill contribution per resource for a given task. The broader “one task at a time” claim appears in prose and is not overstated as a standalone mathematical guarantee.</p></article>
-<article><span>03</span><h3>Figure references are corrected by captions</h3><p>The results prose points to Figures 7 and 8 for Experiments 6 and 7. Their actual captions are Figure 8 (duration) and Figure 9 (resource demand), which this presentation follows.</p></article>
+<article><span>01</span><h3>\(d_{t_i}\): Treated as Task Duration</h3><p>The formulation initially calls \(d_{t_i}\) a deadline, while Table 1, Equations (2), (7), and (9), and the algorithm discussion use it as task duration. This presentation follows the latter interpretation.</p></article>
+<article><span>02</span><h3>Equation (4): Formula Scope vs. Prose</h3><p>Equation (4) limits each resource to at most one skill for a given task. The broader “one task at a time” statement appears in the prose but is not explicitly represented by this equation alone.</p></article>
+<article><span>03</span><h3>Figure Numbers Follow the Actual Captions</h3><p>The results prose refers to Figures 7 and 8 for Experiments 6 and 7. The corresponding plots are Figure 8 for task duration and Figure 9 for resource demand. This presentation uses the caption-based numbering.</p></article>
 </div></div>
 </section>
 <section aria-hidden="true" class="slide theme-method" data-chapter="Method" data-title="GPS Architecture" id="slide-13">
 <div class="slide-heading">
 <p class="eyebrow morph-eyebrow">GPS framework</p>
-<h2 class="morph-title">Five algorithms form one event-driven scheduling loop.</h2>
+<h2 class="morph-title">Five Algorithms Form One Coordinated GPS Framework.</h2>
 </div><div class="slide-content"><div class="algorithm-flow morph-visual">
-<article><span>1</span><h3>GPS</h3><p>Orchestrate groups</p></article><i>→</i>
-<article><span>2</span><h3>Create groups</h3><p>Extract independent tasks</p></article><i>→</i>
-<article><span>3</span><h3>Schedule subset</h3><p>Advance by completion events</p></article><i>→</i>
-<article><span>4</span><h3>Assign resources</h3><p>Choose maximum proficiency</p></article><i>↔</i>
-<article><span>5</span><h3>Assign surplus</h3><p>Accelerate latest finisher</p></article>
+<article><span>1</span><h3>GPS Main Procedure</h3><p>Coordinate parallel groups and accumulate makespan</p></article><i>→</i>
+<article><span>2</span><h3>Create Parallel Task Groups</h3><p>Form precedence-safe groups of executable tasks</p></article><i>→</i>
+<article><span>3</span><h3>Schedule Task Subset</h3><p>Schedule one group until all its tasks are completed</p></article><i>→</i>
+<article><span>4</span><h3>Assign Resources</h3><p>Select the highest-proficiency available resources</p></article><i>↔</i>
+<article><span>5</span><h3>Assign Extra Resources</h3><p>Allocate surplus resources to the current bottleneck</p></article>
 </div><div class="event-rules morph-card">
-<div><small>Best-fit choice</small><strong>Highest matching proficiency</strong></div>
-<div><small>Release event</small><strong>Earliest-finishing task completes</strong></div>
-<div><small>Surplus target</small><strong>Latest-finishing scheduled task</strong></div>
+<div><small>Best-fit choice</small><strong>Highest proficiency in the required skill</strong></div>
+<div><small>Release event</small><strong>Earliest-finishing task completes and releases resources</strong></div>
+<div><small>Surplus target</small><strong>Latest-finishing task and its latest-finishing skill</strong></div>
 </div></div>
 </section>
 <section aria-hidden="true" class="slide theme-method" data-chapter="Method" data-title="Algorithm 1: GPS" id="slide-14">
-<div class="slide-heading algorithm-heading"><p class="eyebrow morph-eyebrow">Algorithm 1 · Top-level orchestrator</p><h2 class="morph-title">GPS builds parallel groups, schedules each group, and accumulates makespan.</h2></div><div class="slide-content"><div class="algorithm-slide">
+<div class="slide-heading algorithm-heading"><p class="eyebrow morph-eyebrow">Algorithm 1 · Top-Level Orchestrator</p><h2 class="morph-title">GPS Generates Parallel Task Groups, Schedules Each Group, and Accumulates Makespan.</h2></div><div class="slide-content"><div class="algorithm-slide">
 <div class="algorithm-copy">
-<ol class="step-list morph-card"><li>Create the array of dependency-safe task groups.</li><li>Ignore groups containing dummy start or end tasks.</li><li>Sort tasks in a group by finishing time.</li><li>Call the subset scheduler and add its elapsed time.</li></ol>
+<ol class="step-list morph-card"><li>Generate the array of parallel executable task groups.</li><li>Skip groups containing the dummy start or end task.</li><li>Sort tasks by finishing time, earliest first.</li><li>Schedule the selected group and add its completion time to the makespan.</li></ol>
 <div class="io-row"><span><b>Input</b> \(T,S,R,E\)</span><span><b>Output</b> \(\mathrm{project\_makespan}\)</span></div>
 </div>
 <figure class="paper-figure morph-visual"><button class="zoom-button" data-alt="Algorithm 1 GPS pseudocode" data-image="assets/algorithm-1-gps.png"><img alt="Algorithm 1 GPS pseudocode" src="assets/algorithm-1-gps.png"/><span>Expand</span></button><figcaption>Paper Algorithm 1 · p. 29830</figcaption></figure>
 </div></div>
 </section>
 <section aria-hidden="true" class="slide theme-method" data-chapter="Method" data-title="Algorithm 2: Parallel Groups" id="slide-15">
-<div class="slide-heading algorithm-heading"><p class="eyebrow morph-eyebrow">Algorithm 2 · CreateParallelTasksGroups</p><h2 class="morph-title">Repeatedly extract vertices with no remaining predecessor.</h2></div><div class="slide-content"><div class="algorithm-slide">
+<div class="slide-heading algorithm-heading"><p class="eyebrow morph-eyebrow">Algorithm 2 · Create Parallel Tasks Groups</p><h2 class="morph-title">Repeatedly Group Tasks with No Unresolved Predecessors.</h2></div><div class="slide-content"><div class="algorithm-slide">
 <div class="algorithm-copy">
-<ol class="step-list morph-card"><li>Scan the remaining task set.</li><li>Select vertices that are not the right vertex of any remaining edge.</li><li>Place them in the current parallel subset.</li><li>Remove selected vertices and outgoing edges; repeat.</li></ol>
+<ol class="step-list morph-card"><li>Scan all tasks remaining in \(T\).</li><li>Select tasks that are not the right endpoint of any remaining precedence edge.</li><li>Add all selected tasks to the current parallel group.</li><li>Remove the selected tasks and their outgoing edges, then repeat.</li></ol>
 <div class="io-row"><span><b>Input</b> \(T,E\)</span><span><b>Output</b> \(T_{\parallel}[\,]\)</span></div>
 </div>
 <figure class="paper-figure morph-visual"><button class="zoom-button" data-alt="Algorithm 2 Create Parallel Tasks Groups pseudocode" data-image="assets/algorithm-2-parallel-groups.png"><img alt="Algorithm 2 Create Parallel Tasks Groups pseudocode" src="assets/algorithm-2-parallel-groups.png"/><span>Expand</span></button><figcaption>Paper Algorithm 2 · p. 29830</figcaption></figure>
 </div></div>
 </section>
 <section aria-hidden="true" class="slide theme-method" data-chapter="Method" data-title="Algorithm 3: Schedule Subset" id="slide-16">
-<div class="slide-heading algorithm-heading"><p class="eyebrow morph-eyebrow">Algorithm 3 · ScheduleTasksSubset</p><h2 class="morph-title">The scheduler advances from one earliest-finish event to the next.</h2></div><div class="slide-content"><div class="algorithm-slide">
+<div class="slide-heading algorithm-heading"><p class="eyebrow morph-eyebrow">Algorithm 3 · Schedule Tasks Subset</p><h2 class="morph-title">The Scheduler Advances from One Earliest-Completion Event to the Next.</h2></div><div class="slide-content"><div class="algorithm-slide">
 <div class="algorithm-copy">
-<ol class="step-list morph-card"><li>Attempt an initial feasible assignment for unscheduled tasks.</li><li>Use Algorithm 5 to place surplus capacity.</li><li>Find the earliest-finishing task and release its resources.</li><li>Update remaining effort and elapsed time for running tasks.</li></ol>
+<ol class="step-list morph-card"><li>Assign resources to tasks that are unscheduled or do not satisfy the required time condition.</li><li>Call Algorithm 5 to allocate any remaining resources to scheduled tasks.</li><li>Identify the earliest-finishing task, mark it complete, and release its resources.</li><li>Update completed effort and elapsed time for the remaining running tasks.</li></ol>
 <div class="io-row"><span><b>Input</b> \(T_{\parallel},R_{\mathrm{avail}}\)</span><span><b>Output</b> \(C_{T_{\parallel}}\)</span></div>
 </div>
 <figure class="paper-figure morph-visual"><button class="zoom-button" data-alt="Algorithm 3 Schedule Tasks Subset pseudocode" data-image="assets/algorithm-3-schedule-subset.png"><img alt="Algorithm 3 Schedule Tasks Subset pseudocode" src="assets/algorithm-3-schedule-subset.png"/><span>Expand</span></button><figcaption>Paper Algorithm 3 · p. 29831</figcaption></figure>
 </div></div>
 </section>
 <section aria-hidden="true" class="slide theme-method" data-chapter="Method" data-title="Algorithm 4: Assign Resources" id="slide-17">
-<div class="slide-heading algorithm-heading"><p class="eyebrow morph-eyebrow">Algorithm 4 · AssignResources</p><h2 class="morph-title">For each required skill, greedily choose the available resource with maximum proficiency.</h2></div><div class="slide-content"><div class="algorithm-slide">
+<div class="slide-heading algorithm-heading"><p class="eyebrow morph-eyebrow">Algorithm 4 · Assign Resources</p><h2 class="morph-title">For Each Required Skill, Repeatedly Assign the Highest-Proficiency Available Resource.</h2></div><div class="slide-content"><div class="algorithm-slide">
 <div class="algorithm-copy">
-<ol class="step-list morph-card"><li>Visit every skill required by the task.</li><li>Find the highest-weight available matching resource.</li><li>Update task-skill finishing time after each assignment.</li><li>Stop when the task can finish within \(d_{t_i}\); roll back if no match exists.</li></ol>
-<div class="io-row"><span><b>Input</b> \(t_i,R_{\mathrm{avail}}\)</span><span><b>Output</b> \(\mathrm{Boolean}\)</span></div>
+<ol class="step-list morph-card"><li>Process every skill required by task \(t_i\).</li><li>Select the available resource with the highest proficiency in the current skill.</li><li>Assign the resource and recompute the skill-specific finishing time.</li><li>Continue until \(F_{t_i s_l}\le d_{t_i}\); if no matching resource exists, release the task’s assigned resources and return false.</li></ol>
+<div class="io-row"><span><b>Input</b> \(t_i,R_{\mathrm{avail}}\)</span><span><b>Output</b> \(\mathrm{Boolean}\): true if successful, false otherwise</span></div>
 </div>
 <figure class="paper-figure morph-visual"><button class="zoom-button" data-alt="Algorithm 4 Assign Resources pseudocode" data-image="assets/algorithm-4-assign-resources.png"><img alt="Algorithm 4 Assign Resources pseudocode" src="assets/algorithm-4-assign-resources.png"/><span>Expand</span></button><figcaption>Paper Algorithm 4 · p. 29831</figcaption></figure>
 </div></div>
 </section>
 <section aria-hidden="true" class="slide theme-method" data-chapter="Method" data-title="Algorithm 5: Extra Resources" id="slide-18">
-<div class="slide-heading algorithm-heading"><p class="eyebrow morph-eyebrow">Algorithm 5 · AssignExtraResources</p><h2 class="morph-title">Use spare capacity where it can reduce the group completion time most.</h2></div><div class="slide-content"><div class="algorithm-slide">
+<div class="slide-heading algorithm-heading"><p class="eyebrow morph-eyebrow">Algorithm 5 · AssignExtraResources</p><h2 class="morph-title">Assign Surplus Resources to the Latest-Finishing Task and Skill.</h2></div><div class="slide-content"><div class="algorithm-slide">
 <div class="algorithm-copy">
-<ol class="step-list morph-card"><li>Remove tasks that received no initial assignment.</li><li>Select the latest-finishing scheduled task.</li><li>Select that task’s latest-finishing skill.</li><li>Assign any free resource possessing that skill; repeat.</li></ol>
-<div class="io-row"><span><b>Input</b> \(T_{\parallel},R_{\mathrm{avail}}\)</span><span><b>Output</b> surplus assignments</span></div>
-<div class="algorithm-note"><b>Notation note</b><span>Lines 9 and 17 appear to reuse the latest-finishing task selected in line 8. This is presented as an apparent ambiguity, not as a correction to the paper.</span></div>
+<ol class="step-list morph-card"><li>Remove tasks that received no initial resource assignment.</li><li>Select the latest-finishing task among the scheduled tasks.</li><li>Identify the latest-finishing skill of the selected task.</li><li>Assign a compatible available resource to that skill and repeat.</li></ol>
+<div class="io-row"><span><b>Input</b> \(T_{\parallel},R_{\mathrm{avail}}\)</span><span><b>Output</b> Assignment of free resources to tasks in \(T_{\parallel}\)</span></div>
+<div class="algorithm-note"><b>Notation note</b><span>Line 9 appears intended to use the latest-finishing task \(t_{lf}\) selected in line 8. Line 17 appears intended to remove that selected task from \(T_{\mathrm{temp}}\). These are apparent notation ambiguities, not definitive corrections.</span></div>
 </div>
 <figure class="paper-figure morph-visual"><button class="zoom-button" data-alt="Algorithm 5 Assign Extra Resources pseudocode" data-image="assets/algorithm-5-extra-resources.png"><img alt="Algorithm 5 Assign Extra Resources pseudocode" src="assets/algorithm-5-extra-resources.png"/><span>Expand</span></button><figcaption>Paper Algorithm 5 · p. 29831</figcaption></figure>
 </div></div>
