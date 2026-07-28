@@ -332,7 +332,7 @@
 <div class="hero-copy">
 <p class="eyebrow morph-eyebrow"><span>IEEE Access · Volume 12 · 2024</span></p>
 <h1 class="display-title morph-title">Weighted Multi-Skill<br/><em>Project Scheduling</em></h1>
-<p class="lead morph-lead">A Greedy and Parallel Scheduling approach for reducing project makespan through proficiency-aware assignment, parallel task groups, and active reuse of free resources.</p>
+<p class="lead morph-lead">A Greedy and Parallel Scheduling approach</p>
 <div class="presenter-group">
 <div class="presenter-block morph-card">
 <p>Presented by</p>
@@ -353,26 +353,26 @@
 <section aria-hidden="true" class="slide theme-opening" data-chapter="Opening" data-title="Presentation Roadmap" id="slide-2">
 <div class="slide-heading">
 <p class="eyebrow morph-eyebrow">Presentation roadmap</p>
-<h2 class="morph-title">From the scheduling problem to the evidence.</h2>
+<h2 class="morph-title">From the Scheduling Problem to Experimental Evidence.</h2>
 </div><div class="slide-content"><div class="roadmap-grid morph-visual">
-<article aria-label="Jump to Context section" data-go="2" role="button" tabindex="0"><span>01</span><h3>Context</h3><p>RCPSP, MSRCPSP, research gap and contribution.</p></article>
-<article aria-label="Jump to Model section" data-go="5" role="button" tabindex="0"><span>02</span><h3>Model</h3><p>Task graph, weighted skills, notation, objective and constraints.</p></article>
-<article aria-label="Jump to Method section" data-go="12" role="button" tabindex="0"><span>03</span><h3>Method</h3><p>Five coordinated algorithms in the GPS scheduling loop.</p></article>
-<article aria-label="Jump to Evidence section" data-go="19" role="button" tabindex="0"><span>04</span><h3>Evidence</h3><p>Seven simulation experiments against the PSS benchmark.</p></article>
-<article aria-label="Jump to Assessment section" data-go="25" role="button" tabindex="0"><span>05</span><h3>Assessment</h3><p>Interpretation, limitations, future work and takeaways.</p></article>
+<article aria-label="Jump to Context section" data-go="2" role="button" tabindex="0"><span>01</span><h3>Background & Literature Review</h3><p>RCPSP, MSRCPSP, prior methods, research gap, and contributions.</p></article>
+<article aria-label="Jump to Model section" data-go="5" role="button" tabindex="0"><span>02</span><h3>Problem Formulation</h3><p>Task sets, precedence graph, skill matrices, decision variable, objective, and constraints.</p></article>
+<article aria-label="Jump to Method section" data-go="12" role="button" tabindex="0"><span>03</span><h3>Proposed GPS Algorithm</h3><p>Greedy best-fit allocation, parallel task groups, five sub-algorithms, and resource reallocation.</p></article>
+<article aria-label="Jump to Evidence section" data-go="19" role="button" tabindex="0"><span>04</span><h3>Simulation & Numerical Results</h3><p>Seven experiments, GPS–PSS comparison, resource wastage, and sensitivity analysis.</p></article>
+<article aria-label="Jump to Assessment section" data-go="25" role="button" tabindex="0"><span>05</span><h3>Conclusion & Critical Assessment</h3><p>Main findings, evidence scope, limitations, author-stated future work, and takeaways.</p></article>
 </div></div>
 </section>
 <section aria-hidden="true" class="slide theme-problem" data-chapter="Problem" data-title="Problem Evolution" id="slide-3">
 <div class="slide-heading">
 <p class="eyebrow morph-eyebrow">Problem evolution</p>
-<h2 class="morph-title">From scarce resources to weighted human capability.</h2>
-<p class="lead morph-lead">The paper studies software projects in which activities are linked by precedence, people possess several skills, and proficiency differs by person and skill.</p>
+<h2 class="morph-title">From Resource-Constrained Scheduling to Weighted Multi-Skill Resources.</h2>
+<p class="lead morph-lead">The paper models precedence-constrained software tasks performed by heterogeneous, multi-skilled human resources.</p>
 </div><div class="slide-content"><div class="evolution-flow morph-visual">
-<article><span>RCPSP</span><h3>Resources + precedence</h3><p>Schedule activities under renewable resource limits and dependency constraints.</p></article>
+<article><span>RCPSP</span><h3>Resource Constraints + Precedence</h3><p>Schedule project activities under limited renewable resources and task-dependency constraints.</p></article>
 <i aria-hidden="true">→</i>
-<article><span>MSRCPSP</span><h3>Skills enter the model</h3><p>Every task requires skills; every human resource masters one or more skills.</p></article>
+<article><span>MSRCPSP</span><h3>Skill Requirements Are Added</h3><p>Tasks require specific skills, while each human resource may master one or more skills.</p></article>
 <i aria-hidden="true">→</i>
-<article class="accent-card"><span>W-MSRCPSP</span><h3>Proficiency is weighted</h3><p>Skill proficiency is heterogeneous and represented by values in the interval \([0,1]\).</p></article>
+<article class="accent-card"><span>W-MSRCPSP</span><h3>Proficiency is weighted</h3><p>Each resource–skill pair receives a proficiency weight in the interval \([0,1]\).</p></article>
 </div></div>
 
 </section>
