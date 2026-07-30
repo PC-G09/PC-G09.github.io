@@ -1742,7 +1742,7 @@
   }
 
 
-  #slide-13 .slide13-dependency-lines-mobile path {
+  #slide-13 .slide13-dependency-lines-mobile path[data-edge] {
     fill: none;
 
     stroke: #8295b8;
@@ -2072,3 +2072,97 @@
 }
 
 /* GLOBAL_SLIDE_LEAD_JUSTIFY_MOBILE_END */
+
+/* SLIDE20_CORRECT_COMMON_TITLE_MOBILE_START */
+
+@media
+  (max-width: 760px),
+  (max-width: 900px) and (max-height: 500px) and (orientation: landscape) {
+
+  #slide-20 .experiment-summary > article {
+    min-width: 0 !important;
+  }
+
+
+  #slide-20 .experiment-summary > article > h3 {
+    min-width: 0 !important;
+    max-width: 100% !important;
+
+    white-space: nowrap !important;
+
+    overflow: hidden !important;
+    text-overflow: clip !important;
+
+    word-break: normal !important;
+    overflow-wrap: normal !important;
+    hyphens: none !important;
+
+    text-align: left !important;
+    text-justify: auto !important;
+  }
+}
+
+/* SLIDE20_CORRECT_COMMON_TITLE_MOBILE_END */
+
+/* SLIDES3_12_COMMON_TITLE_FIT_MOBILE_START */
+
+@media
+  (max-width: 760px),
+  (max-width: 900px) and (max-height: 500px) and (orientation: landscape) {
+
+  #slide-3 .evolution-flow > article,
+  #slide-12 .audit-grid > article {
+    min-width: 0 !important;
+  }
+
+
+  #slide-3 .evolution-flow > article > h3,
+  #slide-12 .audit-grid > article > h3 {
+    min-width: 0 !important;
+    max-width: 100% !important;
+
+    white-space: nowrap !important;
+
+    overflow: hidden !important;
+    text-overflow: clip !important;
+
+    word-break: normal !important;
+    overflow-wrap: normal !important;
+    hyphens: none !important;
+
+    text-align: left !important;
+    text-justify: auto !important;
+  }
+}
+
+/* SLIDES3_12_COMMON_TITLE_FIT_MOBILE_END */
+
+/* SLIDE13_EVENT_RULES_COMMON_TITLE_MOBILE_START */
+
+@media
+  (max-width: 760px),
+  (max-width: 900px) and (max-height: 500px) and (orientation: landscape) {
+
+  #slide-13 .event-rules > div {
+    min-width: 0 !important;
+  }
+
+
+  #slide-13 .event-rules > div > strong {
+    display: block !important;
+
+    min-width: 0 !important;
+    max-width: 100% !important;
+
+    white-space: nowrap !important;
+
+    overflow: hidden !important;
+    text-overflow: clip !important;
+
+    word-break: normal !important;
+    overflow-wrap: normal !important;
+    hyphens: none !important;
+  }
+}
+
+/* SLIDE13_EVENT_RULES_COMMON_TITLE_MOBILE_END */

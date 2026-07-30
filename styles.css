@@ -1956,7 +1956,7 @@ mjx-container[display="true"] { margin: 0 !important; }
 }
 
 
-#slide-13 .slide13-dependency-lines-desktop path {
+#slide-13 .slide13-dependency-lines-desktop path[data-edge] {
   fill: none;
 
   stroke: #8295b8;
@@ -2222,3 +2222,110 @@ mjx-container[display="true"] { margin: 0 !important; }
 }
 
 /* GLOBAL_SLIDE_LEAD_JUSTIFY_DESKTOP_END */
+
+
+
+
+
+/* SLIDE20_CORRECT_COMMON_TITLE_DESKTOP_START */
+
+/*
+  Slide 20 experiment-card titles
+
+  Card width, height and Grid columns remain controlled
+  entirely by the original site design.
+*/
+
+#slide-20 .experiment-summary > article {
+  min-width: 0 !important;
+}
+
+
+#slide-20 .experiment-summary > article > h3 {
+  min-width: 0 !important;
+  max-width: 100% !important;
+
+  white-space: nowrap !important;
+
+  overflow: hidden !important;
+  text-overflow: clip !important;
+
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+  hyphens: none !important;
+
+  text-align: left !important;
+  text-justify: auto !important;
+}
+
+/* SLIDE20_CORRECT_COMMON_TITLE_DESKTOP_END */
+
+/* SLIDES3_12_COMMON_TITLE_FIT_DESKTOP_START */
+
+/*
+  Slides 3 and 12 — constrained common card-title sizes.
+
+  Card dimensions and Grid definitions remain controlled
+  entirely by the original site stylesheet.
+*/
+
+@media (min-width: 761px) and (min-height: 501px) {
+
+  #slide-3 .evolution-flow > article,
+  #slide-12 .audit-grid > article {
+    min-width: 0 !important;
+  }
+
+
+  #slide-3 .evolution-flow > article > h3,
+  #slide-12 .audit-grid > article > h3 {
+    min-width: 0 !important;
+    max-width: 100% !important;
+
+    white-space: nowrap !important;
+
+    overflow: hidden !important;
+    text-overflow: clip !important;
+
+    word-break: normal !important;
+    overflow-wrap: normal !important;
+    hyphens: none !important;
+
+    text-align: left !important;
+    text-justify: auto !important;
+  }
+}
+
+/* SLIDES3_12_COMMON_TITLE_FIT_DESKTOP_END */
+
+/* SLIDE13_EVENT_RULES_COMMON_TITLE_DESKTOP_START */
+
+/*
+  Slide 13 Event Rules
+
+  The existing dimensions and three-column Grid remain intact.
+  JavaScript calculates one shared maximum font size.
+*/
+
+#slide-13 .event-rules > div {
+  min-width: 0 !important;
+}
+
+
+#slide-13 .event-rules > div > strong {
+  display: block !important;
+
+  min-width: 0 !important;
+  max-width: 100% !important;
+
+  white-space: nowrap !important;
+
+  overflow: hidden !important;
+  text-overflow: clip !important;
+
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+  hyphens: none !important;
+}
+
+/* SLIDE13_EVENT_RULES_COMMON_TITLE_DESKTOP_END */

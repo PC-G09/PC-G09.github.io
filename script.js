@@ -242,10 +242,10 @@
     } else if (event.key === "End") {
       event.preventDefault();
       goTo(total - 1);
-    } else if (event.key.toLowerCase() === "f") {
+    } else if ((event.code === "KeyF" || event.key.toLowerCase() === "f")) {
       event.preventDefault();
       toggleFullscreen();
-    } else if (event.key.toLowerCase() === "o") {
+    } else if ((event.code === "KeyO" || event.key.toLowerCase() === "o")) {
       event.preventDefault();
       openOverview();
     }
@@ -353,3 +353,1432 @@
     preload.src = image.src;
   });
 })();
+
+
+
+
+
+/* SLIDE20_CORRECT_COMMON_TITLE_JS_START */
+
+(() => {
+  "use strict";
+
+  const slideSelector = "#slide-20";
+
+  const summarySelector =
+    "#slide-20 .experiment-summary";
+
+  const titleSelector =
+    "#slide-20 .experiment-summary > article > h3";
+
+  const expectedTitles = [
+    "Randomized Benchmark",
+    "One-Factor-at-a-Time Sensitivity"
+  ];
+
+  let pendingFrame = 0;
+  let calculationInProgress = false;
+
+
+  function normalizeText(value) {
+    return String(value)
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+
+  function findTargetTitles() {
+    const availableTitles = Array.from(
+      document.querySelectorAll(titleSelector)
+    );
+
+    return expectedTitles.map((expectedText) => {
+      return (
+        availableTitles.find((title) => {
+          return (
+            normalizeText(title.textContent) ===
+            expectedText
+          );
+        }) || null
+      );
+    });
+  }
+
+
+  function parsePixelValue(value) {
+    const parsedValue = parseFloat(value);
+
+    return Number.isFinite(parsedValue)
+      ? parsedValue
+      : 0;
+  }
+
+
+  /*
+    عرض قابل‌استفاده داخل کارت محاسبه می‌شود.
+
+    اندازه از خود کارت خوانده می‌شود، نه از عنوان؛
+    بنابراین nowrap نمی‌تواند روی اندازه کارت اثر بگذارد.
+  */
+  function getAvailableCardWidth(card) {
+    const style = window.getComputedStyle(card);
+
+    const horizontalPadding =
+      parsePixelValue(style.paddingLeft) +
+      parsePixelValue(style.paddingRight);
+
+    const horizontalBorders =
+      parsePixelValue(style.borderLeftWidth) +
+      parsePixelValue(style.borderRightWidth);
+
+    return Math.max(
+      0,
+      card.getBoundingClientRect().width -
+        horizontalPadding -
+        horizontalBorders -
+        4
+    );
+  }
+
+
+  /*
+    یک عنصر نامرئی برای اندازه‌گیری دقیق عرض متن می‌سازیم.
+    چون position: fixed دارد، هیچ تأثیری روی Layout ندارد.
+  */
+  function createTextMeasurer() {
+    const measurer = document.createElement("span");
+
+    measurer.setAttribute("aria-hidden", "true");
+
+    Object.assign(measurer.style, {
+      position: "fixed",
+      left: "-100000px",
+      top: "-100000px",
+      width: "max-content",
+      maxWidth: "none",
+      margin: "0",
+      padding: "0",
+      border: "0",
+      visibility: "hidden",
+      pointerEvents: "none",
+      whiteSpace: "nowrap"
+    });
+
+    document.body.appendChild(measurer);
+
+    return measurer;
+  }
+
+
+  function copyTypography(source, destination) {
+    const style = window.getComputedStyle(source);
+
+    destination.style.fontFamily =
+      style.fontFamily;
+
+    destination.style.fontWeight =
+      style.fontWeight;
+
+    destination.style.fontStyle =
+      style.fontStyle;
+
+    destination.style.fontStretch =
+      style.fontStretch;
+
+    destination.style.fontVariant =
+      style.fontVariant;
+
+    destination.style.fontKerning =
+      style.fontKerning;
+
+    destination.style.fontFeatureSettings =
+      style.fontFeatureSettings;
+
+    destination.style.letterSpacing =
+      style.letterSpacing;
+
+    destination.style.textTransform =
+      style.textTransform;
+  }
+
+
+  function measureTextWidth(
+    measurer,
+    title,
+    fontSize
+  ) {
+    copyTypography(title, measurer);
+
+    measurer.textContent = normalizeText(
+      title.textContent
+    );
+
+    measurer.style.fontSize =
+      `${fontSize}px`;
+
+    return measurer
+      .getBoundingClientRect()
+      .width;
+  }
+
+
+  function fitSlide20Titles() {
+    if (calculationInProgress) {
+      return;
+    }
+
+    const slide = document.querySelector(
+      slideSelector
+    );
+
+    const summary = document.querySelector(
+      summarySelector
+    );
+
+    if (!slide || !summary) {
+      return;
+    }
+
+    const titles = findTargetTitles();
+
+    if (titles.some((title) => !title)) {
+      return;
+    }
+
+    const cards = titles.map((title) => {
+      return title.closest("article");
+    });
+
+    if (cards.some((card) => !card)) {
+      return;
+    }
+
+    calculationInProgress = true;
+
+
+    /*
+      اندازه inline قبلی پاک می‌شود تا اندازه اصلی طراحی
+      از فایل CSS خوانده شود.
+    */
+    titles.forEach((title) => {
+      title.style.removeProperty("font-size");
+    });
+
+
+    /*
+      مرورگر Layout اصلی کارت‌ها را تکمیل می‌کند.
+    */
+    void summary.offsetWidth;
+
+
+    const availableWidths = cards.map(
+      getAvailableCardWidth
+    );
+
+
+    const originalFontSizes = titles.map(
+      (title) => {
+        return parsePixelValue(
+          window
+            .getComputedStyle(title)
+            .fontSize
+        );
+      }
+    );
+
+
+    if (
+      availableWidths.some(
+        (width) => width <= 0
+      ) ||
+      originalFontSizes.some(
+        (size) => size <= 0
+      )
+    ) {
+      calculationInProgress = false;
+      return;
+    }
+
+
+    /*
+      اندازه هر دو عنوان باید یکسان باشد.
+
+      اندازه اصلی کوچک‌تر بین دو عنوان، سقف طراحی است.
+    */
+    const designMaximum = Math.min(
+      ...originalFontSizes
+    );
+
+
+    const measurer = createTextMeasurer();
+
+
+    /*
+      برای هر عنوان محاسبه می‌شود که با چه فونتی
+      در عرض واقعی کارت خودش جا می‌شود.
+    */
+    const maximumAllowedSizes = titles.map(
+      (title, index) => {
+        const measuredWidth =
+          measureTextWidth(
+            measurer,
+            title,
+            designMaximum
+          );
+
+        if (measuredWidth <= 0) {
+          return designMaximum;
+        }
+
+        return Math.min(
+          designMaximum,
+          designMaximum *
+            availableWidths[index] /
+            measuredWidth
+        );
+      }
+    );
+
+
+    /*
+      کوچک‌ترین مقدار مجاز، اندازه مشترک دو عنوان می‌شود.
+    */
+    let finalSize = Math.min(
+      designMaximum,
+      ...maximumAllowedSizes
+    );
+
+
+    /*
+      حاشیه بسیار کم برای خطای Subpixel مرورگر.
+    */
+    finalSize *= 0.996;
+
+
+    if (
+      !Number.isFinite(finalSize) ||
+      finalSize <= 0
+    ) {
+      measurer.remove();
+      calculationInProgress = false;
+      return;
+    }
+
+
+    titles.forEach((title) => {
+      title.style.fontSize =
+        `${finalSize.toFixed(2)}px`;
+    });
+
+
+    /*
+      کنترل نهایی روی عنصر واقعی.
+
+      اگر به‌دلیل گردکردن مرورگر هنوز نیم‌پیکسل
+      بیرون‌زدگی وجود داشت، فونت فقط 0.05px کم می‌شود.
+    */
+    let correctionCount = 0;
+
+    while (
+      correctionCount < 30 &&
+      titles.some((title) => {
+        return (
+          title.scrollWidth >
+          title.clientWidth + 0.5
+        );
+      })
+    ) {
+      finalSize -= 0.05;
+
+      titles.forEach((title) => {
+        title.style.fontSize =
+          `${finalSize.toFixed(2)}px`;
+      });
+
+      correctionCount += 1;
+    }
+
+
+    measurer.remove();
+    calculationInProgress = false;
+  }
+
+
+  function scheduleTitleFit() {
+    window.cancelAnimationFrame(
+      pendingFrame
+    );
+
+    pendingFrame =
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(
+          fitSlide20Titles
+        );
+      });
+  }
+
+
+  if (document.readyState === "loading") {
+    document.addEventListener(
+      "DOMContentLoaded",
+      scheduleTitleFit,
+      { once: true }
+    );
+  } else {
+    scheduleTitleFit();
+  }
+
+
+  if (
+    document.fonts &&
+    document.fonts.ready
+  ) {
+    document.fonts.ready.then(
+      scheduleTitleFit
+    );
+  }
+
+
+  if (
+    window.MathJax &&
+    window.MathJax.startup &&
+    window.MathJax.startup.promise
+  ) {
+    window.MathJax.startup.promise.then(
+      scheduleTitleFit
+    );
+  }
+
+
+  window.addEventListener(
+    "resize",
+    scheduleTitleFit,
+    { passive: true }
+  );
+
+
+  const slide20 = document.querySelector(
+    slideSelector
+  );
+
+  if (
+    slide20 &&
+    "MutationObserver" in window
+  ) {
+    const observer = new MutationObserver(
+      scheduleTitleFit
+    );
+
+    observer.observe(slide20, {
+      attributes: true,
+      attributeFilter: [
+        "class",
+        "aria-hidden"
+      ]
+    });
+  }
+
+
+  const experimentSummary =
+    document.querySelector(
+      summarySelector
+    );
+
+  if (
+    experimentSummary &&
+    "ResizeObserver" in window
+  ) {
+    const observer = new ResizeObserver(
+      scheduleTitleFit
+    );
+
+    observer.observe(experimentSummary);
+  }
+})();
+
+/* SLIDE20_CORRECT_COMMON_TITLE_JS_END */
+
+/* SLIDES3_12_COMMON_TITLE_FIT_JS_START */
+
+(() => {
+  "use strict";
+
+
+  /*
+    applySelector:
+      تمام عنوان‌هایی که باید یک اندازه شوند.
+
+    constraintSelector:
+      عنوان‌هایی که محدودیت نهایی اندازه را تعیین می‌کنند.
+  */
+  const groups = [
+    {
+      name: "slide-3",
+      slideSelector: "#slide-3",
+      containerSelector:
+        "#slide-3 .evolution-flow",
+
+      applySelector:
+        "#slide-3 .evolution-flow > article > h3",
+
+      constraintSelector:
+        "#slide-3 .evolution-flow > article > h3",
+
+      expectedApplyCount: 3,
+      expectedConstraintCount: 3
+    },
+
+    {
+      name: "slide-12",
+      slideSelector: "#slide-12",
+      containerSelector:
+        "#slide-12 .audit-grid",
+
+      applySelector:
+        "#slide-12 .audit-grid > article > h3",
+
+      /*
+        فقط دو عنوان بلند، محدودیت تک‌خطی را مشخص می‌کنند.
+        عنوان کارت اول نیز در پایان دقیقاً هم‌اندازه آن‌ها می‌شود.
+      */
+      constraintSelector:
+        "#slide-12 .audit-grid " +
+        "> article:nth-of-type(2) > h3, " +
+        "#slide-12 .audit-grid " +
+        "> article:nth-of-type(3) > h3",
+
+      expectedApplyCount: 3,
+      expectedConstraintCount: 2
+    }
+  ];
+
+
+  let pendingFrame = 0;
+  let calculationInProgress = false;
+
+
+  function parsePixelValue(value) {
+    const parsed = parseFloat(value);
+
+    return Number.isFinite(parsed)
+      ? parsed
+      : 0;
+  }
+
+
+  function normalizeText(value) {
+    return String(value)
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+
+  /*
+    عرض واقعی فضای داخلی کارت.
+
+    عرض از خود article خوانده می‌شود، نه از h3؛
+    بنابراین متن nowrap نمی‌تواند اندازه کارت را تغییر دهد.
+  */
+  function getAvailableCardWidth(card) {
+    const style = window.getComputedStyle(card);
+
+    const padding =
+      parsePixelValue(style.paddingLeft) +
+      parsePixelValue(style.paddingRight);
+
+    const borders =
+      parsePixelValue(style.borderLeftWidth) +
+      parsePixelValue(style.borderRightWidth);
+
+    return Math.max(
+      0,
+      card.getBoundingClientRect().width -
+        padding -
+        borders -
+        4
+    );
+  }
+
+
+  /*
+    عنصر اندازه‌گیری خارج از Layout سایت قرار می‌گیرد.
+  */
+  function createTextMeasurer() {
+    const measurer = document.createElement("span");
+
+    measurer.setAttribute(
+      "aria-hidden",
+      "true"
+    );
+
+    Object.assign(measurer.style, {
+      position: "fixed",
+      left: "-100000px",
+      top: "-100000px",
+
+      width: "max-content",
+      maxWidth: "none",
+
+      margin: "0",
+      padding: "0",
+      border: "0",
+
+      visibility: "hidden",
+      pointerEvents: "none",
+
+      whiteSpace: "nowrap"
+    });
+
+    document.body.appendChild(measurer);
+
+    return measurer;
+  }
+
+
+  function copyTypography(source, destination) {
+    const style = window.getComputedStyle(source);
+
+    destination.style.fontFamily =
+      style.fontFamily;
+
+    destination.style.fontWeight =
+      style.fontWeight;
+
+    destination.style.fontStyle =
+      style.fontStyle;
+
+    destination.style.fontStretch =
+      style.fontStretch;
+
+    destination.style.fontVariant =
+      style.fontVariant;
+
+    destination.style.fontKerning =
+      style.fontKerning;
+
+    destination.style.fontFeatureSettings =
+      style.fontFeatureSettings;
+
+    destination.style.letterSpacing =
+      style.letterSpacing;
+
+    destination.style.wordSpacing =
+      style.wordSpacing;
+
+    destination.style.textTransform =
+      style.textTransform;
+  }
+
+
+  function measureTextWidth(
+    measurer,
+    title,
+    fontSize
+  ) {
+    copyTypography(title, measurer);
+
+    measurer.textContent = normalizeText(
+      title.textContent
+    );
+
+    measurer.style.fontSize =
+      `${fontSize}px`;
+
+    return measurer
+      .getBoundingClientRect()
+      .width;
+  }
+
+
+  function fitOneGroup(group) {
+    const slide = document.querySelector(
+      group.slideSelector
+    );
+
+    const container = document.querySelector(
+      group.containerSelector
+    );
+
+    if (!slide || !container) {
+      return;
+    }
+
+
+    const applyTitles = Array.from(
+      document.querySelectorAll(
+        group.applySelector
+      )
+    );
+
+    const constraintTitles = Array.from(
+      document.querySelectorAll(
+        group.constraintSelector
+      )
+    );
+
+
+    if (
+      applyTitles.length !==
+        group.expectedApplyCount ||
+      constraintTitles.length !==
+        group.expectedConstraintCount
+    ) {
+      return;
+    }
+
+
+    const constraintCards =
+      constraintTitles.map((title) => {
+        return title.closest("article");
+      });
+
+
+    if (
+      constraintCards.some(
+        (card) => !card
+      )
+    ) {
+      return;
+    }
+
+
+    /*
+      اندازه‌های محاسبه‌شده قبلی حذف می‌شوند تا
+      اندازه اصلی طراحی از CSS خوانده شود.
+    */
+    applyTitles.forEach((title) => {
+      title.style.removeProperty(
+        "font-size"
+      );
+    });
+
+
+    /*
+      تکمیل Layout اصلی کارت‌ها.
+    */
+    void container.offsetWidth;
+
+
+    /*
+      سقف اندازه، کوچک‌ترین اندازه اصلی میان تمام
+      عنوان‌های همان اسلاید است.
+    */
+    const originalFontSizes =
+      applyTitles.map((title) => {
+        return parsePixelValue(
+          window
+            .getComputedStyle(title)
+            .fontSize
+        );
+      });
+
+
+    if (
+      originalFontSizes.some(
+        (size) => size <= 0
+      )
+    ) {
+      return;
+    }
+
+
+    const designMaximum = Math.min(
+      ...originalFontSizes
+    );
+
+
+    const availableWidths =
+      constraintCards.map(
+        getAvailableCardWidth
+      );
+
+
+    if (
+      availableWidths.some(
+        (width) => width <= 0
+      )
+    ) {
+      return;
+    }
+
+
+    const measurer = createTextMeasurer();
+
+
+    /*
+      برای هر عنوان محدودکننده مشخص می‌شود
+      حداکثر چه اندازه‌ای در کارت خودش جا می‌شود.
+    */
+    const permittedSizes =
+      constraintTitles.map(
+        (title, index) => {
+          const measuredWidth =
+            measureTextWidth(
+              measurer,
+              title,
+              designMaximum
+            );
+
+
+          if (measuredWidth <= 0) {
+            return designMaximum;
+          }
+
+
+          return Math.min(
+            designMaximum,
+
+            designMaximum *
+              availableWidths[index] /
+              measuredWidth
+          );
+        }
+      );
+
+
+    /*
+      کوچک‌ترین اندازه مجاز، اندازه مشترک تمام
+      عنوان‌های همان اسلاید می‌شود.
+    */
+    let finalSize = Math.min(
+      designMaximum,
+      ...permittedSizes
+    );
+
+
+    /*
+      حاشیه بسیار کم برای خطاهای Subpixel.
+    */
+    finalSize *= 0.996;
+
+
+    if (
+      !Number.isFinite(finalSize) ||
+      finalSize <= 0
+    ) {
+      measurer.remove();
+      return;
+    }
+
+
+    applyTitles.forEach((title) => {
+      title.style.fontSize =
+        `${finalSize.toFixed(2)}px`;
+    });
+
+
+    /*
+      کنترل نهایی فقط روی عنوان‌های محدودکننده.
+
+      اگر به‌علت گردکردن مرورگر هنوز بیرون‌زدگی
+      وجود داشته باشد، اندازه با گام 0.05px کم می‌شود.
+    */
+    let correctionCount = 0;
+
+    while (
+      correctionCount < 40 &&
+      constraintTitles.some((title) => {
+        return (
+          title.scrollWidth >
+          title.clientWidth + 0.5
+        );
+      })
+    ) {
+      finalSize -= 0.05;
+
+      applyTitles.forEach((title) => {
+        title.style.fontSize =
+          `${finalSize.toFixed(2)}px`;
+      });
+
+      correctionCount += 1;
+    }
+
+
+    measurer.remove();
+  }
+
+
+  function fitAllGroups() {
+    if (calculationInProgress) {
+      return;
+    }
+
+    calculationInProgress = true;
+
+    try {
+      groups.forEach(fitOneGroup);
+    } finally {
+      calculationInProgress = false;
+    }
+  }
+
+
+  function scheduleFit() {
+    window.cancelAnimationFrame(
+      pendingFrame
+    );
+
+    pendingFrame =
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(
+          fitAllGroups
+        );
+      });
+  }
+
+
+  if (document.readyState === "loading") {
+    document.addEventListener(
+      "DOMContentLoaded",
+      scheduleFit,
+      { once: true }
+    );
+  } else {
+    scheduleFit();
+  }
+
+
+  /*
+    محاسبه مجدد پس از بارگذاری فونت‌ها.
+  */
+  if (
+    document.fonts &&
+    document.fonts.ready
+  ) {
+    document.fonts.ready.then(
+      scheduleFit
+    );
+  }
+
+
+  /*
+    محاسبه مجدد پس از MathJax.
+  */
+  if (
+    window.MathJax &&
+    window.MathJax.startup &&
+    window.MathJax.startup.promise
+  ) {
+    window.MathJax.startup.promise.then(
+      scheduleFit
+    );
+  }
+
+
+  window.addEventListener(
+    "resize",
+    scheduleFit,
+    { passive: true }
+  );
+
+
+  /*
+    وقتی هر اسلاید فعال می‌شود، اندازه‌گیری تکرار می‌شود.
+  */
+  groups.forEach((group) => {
+    const slide = document.querySelector(
+      group.slideSelector
+    );
+
+    if (
+      slide &&
+      "MutationObserver" in window
+    ) {
+      const mutationObserver =
+        new MutationObserver(
+          scheduleFit
+        );
+
+      mutationObserver.observe(slide, {
+        attributes: true,
+        attributeFilter: [
+          "class",
+          "aria-hidden"
+        ]
+      });
+    }
+  });
+
+
+  /*
+    فقط تغییر عرض containerها بررسی می‌شود.
+
+    تغییر ارتفاع ناشی از فونت باعث حلقه محاسباتی نمی‌شود.
+  */
+  if ("ResizeObserver" in window) {
+    const lastWidths = new WeakMap();
+
+    const resizeObserver =
+      new ResizeObserver((entries) => {
+        let widthChanged = false;
+
+        entries.forEach((entry) => {
+          const newWidth =
+            entry.contentRect.width;
+
+          const oldWidth =
+            lastWidths.get(entry.target);
+
+          if (
+            oldWidth === undefined ||
+            Math.abs(newWidth - oldWidth) > 0.5
+          ) {
+            lastWidths.set(
+              entry.target,
+              newWidth
+            );
+
+            widthChanged = true;
+          }
+        });
+
+
+        if (widthChanged) {
+          scheduleFit();
+        }
+      });
+
+
+    groups.forEach((group) => {
+      const container =
+        document.querySelector(
+          group.containerSelector
+        );
+
+      if (container) {
+        resizeObserver.observe(container);
+      }
+    });
+  }
+})();
+
+/* SLIDES3_12_COMMON_TITLE_FIT_JS_END */
+
+/* SLIDE13_EVENT_RULES_COMMON_TITLE_JS_START */
+
+(() => {
+  "use strict";
+
+  const slideSelector = "#slide-13";
+
+  const rulesSelector =
+    "#slide-13 .event-rules";
+
+  const textSelector =
+    "#slide-13 .event-rules > div > strong";
+
+  const expectedTexts = [
+    "Highest proficiency in the required skill",
+    "Earliest-finishing task completes and releases resources",
+    "Latest-finishing task and its latest-finishing skill"
+  ];
+
+  let pendingFrame = 0;
+  let calculationInProgress = false;
+
+
+  function normalizeText(value) {
+    return String(value)
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+
+  function parsePixelValue(value) {
+    const parsed = parseFloat(value);
+
+    return Number.isFinite(parsed)
+      ? parsed
+      : 0;
+  }
+
+
+  function findTargetTexts() {
+    const candidates = Array.from(
+      document.querySelectorAll(textSelector)
+    );
+
+    return expectedTexts.map((expectedText) => {
+      return (
+        candidates.find((element) => {
+          return (
+            normalizeText(element.textContent) ===
+            expectedText
+          );
+        }) || null
+      );
+    });
+  }
+
+
+  /*
+    عرض داخلی هر سلول نوار از خود والد خوانده می‌شود.
+    بنابراین اندازه ذاتی متن nowrap روی محاسبه اثر نمی‌گذارد.
+  */
+  function getAvailableWidth(element) {
+    const cell = element.parentElement;
+
+    if (!cell) {
+      return 0;
+    }
+
+    const style = window.getComputedStyle(cell);
+
+    const horizontalPadding =
+      parsePixelValue(style.paddingLeft) +
+      parsePixelValue(style.paddingRight);
+
+    const horizontalBorders =
+      parsePixelValue(style.borderLeftWidth) +
+      parsePixelValue(style.borderRightWidth);
+
+    return Math.max(
+      0,
+      cell.getBoundingClientRect().width -
+        horizontalPadding -
+        horizontalBorders -
+        3
+    );
+  }
+
+
+  /*
+    عنصر اندازه‌گیری کاملاً خارج از Layout قرار می‌گیرد.
+  */
+  function createMeasurer() {
+    const measurer = document.createElement("span");
+
+    measurer.setAttribute("aria-hidden", "true");
+
+    Object.assign(measurer.style, {
+      position: "fixed",
+      left: "-100000px",
+      top: "-100000px",
+
+      width: "max-content",
+      maxWidth: "none",
+
+      margin: "0",
+      padding: "0",
+      border: "0",
+
+      visibility: "hidden",
+      pointerEvents: "none",
+      whiteSpace: "nowrap"
+    });
+
+    document.body.appendChild(measurer);
+
+    return measurer;
+  }
+
+
+  function copyTypography(source, destination) {
+    const style = window.getComputedStyle(source);
+
+    destination.style.fontFamily =
+      style.fontFamily;
+
+    destination.style.fontWeight =
+      style.fontWeight;
+
+    destination.style.fontStyle =
+      style.fontStyle;
+
+    destination.style.fontStretch =
+      style.fontStretch;
+
+    destination.style.fontVariant =
+      style.fontVariant;
+
+    destination.style.fontKerning =
+      style.fontKerning;
+
+    destination.style.fontFeatureSettings =
+      style.fontFeatureSettings;
+
+    destination.style.letterSpacing =
+      style.letterSpacing;
+
+    destination.style.wordSpacing =
+      style.wordSpacing;
+
+    destination.style.textTransform =
+      style.textTransform;
+  }
+
+
+  function measureTextWidth(
+    measurer,
+    source,
+    fontSize
+  ) {
+    copyTypography(source, measurer);
+
+    measurer.textContent = normalizeText(
+      source.textContent
+    );
+
+    measurer.style.fontSize =
+      `${fontSize}px`;
+
+    return measurer
+      .getBoundingClientRect()
+      .width;
+  }
+
+
+  function fitSlide13EventRuleTexts() {
+    if (calculationInProgress) {
+      return;
+    }
+
+    const slide = document.querySelector(
+      slideSelector
+    );
+
+    const rules = document.querySelector(
+      rulesSelector
+    );
+
+    if (!slide || !rules) {
+      return;
+    }
+
+    const elements = findTargetTexts();
+
+    if (elements.some((element) => !element)) {
+      return;
+    }
+
+    calculationInProgress = true;
+
+
+    /*
+      اندازه محاسبه‌شده قبلی حذف می‌شود تا اندازه اصلی
+      طراحی برای viewport فعلی خوانده شود.
+    */
+    elements.forEach((element) => {
+      element.style.removeProperty("font-size");
+    });
+
+
+    void rules.offsetWidth;
+
+
+    const originalSizes = elements.map((element) => {
+      return parsePixelValue(
+        window
+          .getComputedStyle(element)
+          .fontSize
+      );
+    });
+
+
+    const availableWidths = elements.map(
+      getAvailableWidth
+    );
+
+
+    if (
+      originalSizes.some((size) => size <= 0) ||
+      availableWidths.some((width) => width <= 0)
+    ) {
+      calculationInProgress = false;
+      return;
+    }
+
+
+    /*
+      سقف طراحی، کوچک‌ترین اندازه اصلی میان سه متن است.
+    */
+    const designMaximum = Math.min(
+      ...originalSizes
+    );
+
+
+    const measurer = createMeasurer();
+
+
+    /*
+      حداکثر اندازه مجاز برای هر متن محاسبه می‌شود.
+    */
+    const permittedSizes = elements.map(
+      (element, index) => {
+        const measuredWidth = measureTextWidth(
+          measurer,
+          element,
+          designMaximum
+        );
+
+        if (measuredWidth <= 0) {
+          return designMaximum;
+        }
+
+        return Math.min(
+          designMaximum,
+          designMaximum *
+            availableWidths[index] /
+            measuredWidth
+        );
+      }
+    );
+
+
+    /*
+      کوچک‌ترین محدودیت، اندازه مشترک هر سه متن است.
+    */
+    let finalSize = Math.min(
+      designMaximum,
+      ...permittedSizes
+    );
+
+
+    /*
+      حاشیه بسیار کم برای خطای Subpixel مرورگر.
+    */
+    finalSize *= 0.997;
+
+
+    if (
+      !Number.isFinite(finalSize) ||
+      finalSize <= 0
+    ) {
+      measurer.remove();
+      calculationInProgress = false;
+      return;
+    }
+
+
+    elements.forEach((element) => {
+      element.style.fontSize =
+        `${finalSize.toFixed(2)}px`;
+    });
+
+
+    /*
+      کنترل نهایی روی عناصر واقعی؛ بدون تغییر ابعاد باکس.
+    */
+    let correctionCount = 0;
+
+    while (
+      correctionCount < 40 &&
+      elements.some((element) => {
+        return (
+          element.scrollWidth >
+          element.clientWidth + 0.5
+        );
+      })
+    ) {
+      finalSize -= 0.05;
+
+      elements.forEach((element) => {
+        element.style.fontSize =
+          `${finalSize.toFixed(2)}px`;
+      });
+
+      correctionCount += 1;
+    }
+
+
+    measurer.remove();
+    calculationInProgress = false;
+  }
+
+
+  function scheduleFit() {
+    window.cancelAnimationFrame(
+      pendingFrame
+    );
+
+    pendingFrame =
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(
+          fitSlide13EventRuleTexts
+        );
+      });
+  }
+
+
+  if (document.readyState === "loading") {
+    document.addEventListener(
+      "DOMContentLoaded",
+      scheduleFit,
+      { once: true }
+    );
+  } else {
+    scheduleFit();
+  }
+
+
+  if (
+    document.fonts &&
+    document.fonts.ready
+  ) {
+    document.fonts.ready.then(
+      scheduleFit
+    );
+  }
+
+
+  window.addEventListener(
+    "resize",
+    scheduleFit,
+    { passive: true }
+  );
+
+
+  const slide13 = document.querySelector(
+    slideSelector
+  );
+
+  if (
+    slide13 &&
+    "MutationObserver" in window
+  ) {
+    const mutationObserver =
+      new MutationObserver(
+        scheduleFit
+      );
+
+    mutationObserver.observe(slide13, {
+      attributes: true,
+      attributeFilter: [
+        "class",
+        "aria-hidden"
+      ]
+    });
+  }
+
+
+  const eventRules = document.querySelector(
+    rulesSelector
+  );
+
+  if (
+    eventRules &&
+    "ResizeObserver" in window
+  ) {
+    let previousWidth = 0;
+
+    const resizeObserver =
+      new ResizeObserver((entries) => {
+        const currentWidth =
+          entries[0]?.contentRect.width || 0;
+
+        if (
+          Math.abs(
+            currentWidth - previousWidth
+          ) > 0.5
+        ) {
+          previousWidth = currentWidth;
+          scheduleFit();
+        }
+      });
+
+    resizeObserver.observe(eventRules);
+  }
+})();
+
+/* SLIDE13_EVENT_RULES_COMMON_TITLE_JS_END */
