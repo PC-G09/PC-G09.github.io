@@ -1594,3 +1594,631 @@ mjx-container[display="true"] { margin: 0 !important; }
   grid-column: auto;
   grid-row: auto;
 }
+
+/* PAPER_AUTHORS_SLIDE_1_DESKTOP_START */
+
+/*
+  Minimal academic author byline — slide 1
+*/
+
+#slide-1 .paper-authors {
+  width: min(880px, 92%);
+
+  margin: clamp(10px, 1.3vh, 16px) auto 0;
+  padding: 0;
+
+  color: var(--muted);
+
+  font-size: clamp(10px, 0.68vw, 12px);
+  font-weight: 400;
+  line-height: 1.55;
+
+  text-align: center;
+  letter-spacing: 0.005em;
+}
+
+
+#slide-1 .paper-authors-label {
+  margin-right: 4px;
+
+  color: var(--deep-blue);
+
+  font-size: inherit;
+  font-weight: 650;
+}
+
+
+#slide-1 .paper-authors-names {
+  color: var(--muted);
+  font-size: inherit;
+  font-weight: 400;
+}
+
+
+/*
+  Keep the presenters visually separated from the paper authors.
+*/
+#slide-1 .paper-authors + .presenter-group {
+  margin-top: clamp(16px, 2vh, 24px);
+}
+
+/* PAPER_AUTHORS_SLIDE_1_DESKTOP_END */
+
+/* SLIDE6_AOA_GRAPH_DESKTOP_START */
+
+/*
+  Slide 6 precedence graph
+
+  Restored to the original simple academic style:
+  no frame, no gradient, no shadows and no decorative effects.
+*/
+
+#slide-6 .slide6-aoa-figure {
+  width: min(100%, 1000px);
+
+  margin: clamp(14px, 1.8vh, 24px) auto 0;
+  padding: 0;
+
+  overflow: visible;
+}
+
+
+#slide-6 .slide6-aoa-canvas {
+  width: 100%;
+
+  margin: 0;
+  padding: 0;
+
+  overflow: visible;
+
+  border: 0;
+  border-radius: 0;
+
+  background: transparent;
+  box-shadow: none;
+}
+
+
+#slide-6 .slide6-aoa-svg {
+  display: block;
+
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+
+  margin: 0 auto;
+
+  overflow: visible;
+}
+
+
+#slide-6 .slide6-node {
+  fill: #c4c5c7;
+  stroke: #5e6063;
+  stroke-width: 2;
+}
+
+
+#slide-6 .slide6-node-terminal {
+  fill: #ffffff;
+}
+
+
+#slide-6 .slide6-node-text {
+  fill: #252629;
+
+  font-family:
+    "Times New Roman",
+    "STIX Two Text",
+    Georgia,
+    serif;
+
+  font-size: 34px;
+  font-weight: 400;
+}
+
+
+#slide-6 .slide6-node-subscript {
+  font-size: 19px;
+}
+
+
+#slide-6 .slide6-final-subscript {
+  font-size: 17px;
+}
+
+/* SLIDE6_AOA_GRAPH_DESKTOP_END */
+
+/* SLIDE6_GRAPH_COMPACT_SIZE_TOGGLE_START */
+
+/*
+  Compact size for slide 6 graph.
+  Removing this block restores the previous/current graph size.
+*/
+
+#slide-6 .slide6-aoa-figure {
+  width: min(84%, 840px) !important;
+  max-width: 840px !important;
+
+  margin-top: clamp(10px, 1.4vh, 18px) !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+}
+
+/* SLIDE6_GRAPH_COMPACT_SIZE_TOGGLE_END */
+
+/* SLIDE13_ALGO_FLOW_DESKTOP_START */
+
+/*
+  Slide 13 — compact dependency layout
+
+  Upper row:
+      Algorithm 4    Algorithm 3
+
+  Lower row:
+      Algorithm 5    Algorithm 2
+
+  Right:
+      Algorithm 1
+
+  The reduced container and card heights leave the existing
+  Event Rules strip untouched and fully visible.
+*/
+
+#slide-13 .slide13-algo-dependency {
+  position: relative;
+
+  width: min(100%, 1040px);
+  height: clamp(340px, 39vh, 370px);
+
+  margin: clamp(10px, 1.2vh, 16px) auto 0;
+
+  overflow: visible;
+}
+
+
+#slide-13 .slide13-algo-slot {
+  position: absolute;
+  z-index: 2;
+
+  width: 25.5%;
+}
+
+
+/* Upper-left card */
+#slide-13 .slide13-algo-slot-4 {
+  left: 0;
+  top: 0;
+}
+
+
+/* Lower-left card */
+#slide-13 .slide13-algo-slot-5 {
+  left: 0;
+  top: auto;
+  bottom: 0;
+}
+
+
+/*
+  Algorithm 3 is now aligned with Algorithm 4.
+  It also has exactly the same width.
+*/
+#slide-13 .slide13-algo-slot-3 {
+  left: 37.25%;
+  top: 0;
+  bottom: auto;
+}
+
+
+/* Algorithm 2 is aligned with Algorithm 5. */
+#slide-13 .slide13-algo-slot-2 {
+  left: 37.25%;
+  top: auto;
+  bottom: 0;
+}
+
+
+/* Final procedure remains centered on the right. */
+#slide-13 .slide13-algo-slot-1 {
+  right: 0;
+  top: 50%;
+
+  transform: translateY(-50%);
+}
+
+
+/*
+  Force a restrained and consistent card height.
+  This prevents inherited styles from making one card taller
+  and overlapping the card underneath it.
+*/
+#slide-13 .slide13-algo-slot > article {
+  width: 100% !important;
+  height: 138px !important;
+  min-height: 138px !important;
+  max-height: 138px !important;
+
+  box-sizing: border-box !important;
+
+  margin: 0 !important;
+  padding: 14px 18px !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+
+  overflow: hidden !important;
+
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.06);
+
+  box-shadow: 0 9px 24px rgba(6, 18, 29, 0.15);
+
+  transition:
+    transform 0.32s cubic-bezier(.2,.75,.2,1),
+    border-color 0.32s ease,
+    box-shadow 0.32s ease,
+    background 0.32s ease;
+}
+
+
+#slide-13 .slide13-algo-slot > article:hover {
+  transform: translateY(-3px);
+
+  border-color: rgba(85, 184, 178, 0.48);
+  background: rgba(255, 255, 255, 0.082);
+
+  box-shadow: 0 13px 30px rgba(4, 16, 27, 0.22);
+}
+
+
+/* Subtle emphasis for the final GPS procedure. */
+#slide-13 .slide13-algo-slot-1 > article {
+  border-color: rgba(85, 184, 178, 0.42);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(85, 184, 178, 0.13),
+      rgba(255, 255, 255, 0.06)
+    );
+}
+
+
+/* Algorithm number */
+#slide-13 .slide13-algo-slot article > span {
+  flex: 0 0 auto;
+
+  margin: 0 0 12px !important;
+
+  color: var(--accent-2);
+
+  font-family: var(--serif);
+  font-size: clamp(27px, 2.3vw, 33px) !important;
+  font-weight: 500;
+  line-height: 1 !important;
+}
+
+
+/* Algorithm title */
+#slide-13 .slide13-algo-slot article > h3 {
+  flex: 0 0 auto;
+
+  margin: 0 0 5px !important;
+
+  font-size: clamp(14px, 1vw, 17px) !important;
+  line-height: 1.18 !important;
+
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+}
+
+
+/* Algorithm explanation */
+#slide-13 .slide13-algo-slot article > p {
+  flex: 0 0 auto;
+
+  margin: 0 !important;
+
+  color: rgba(239, 245, 246, 0.66);
+
+  font-size: clamp(10.5px, 0.76vw, 12.5px) !important;
+  line-height: 1.34 !important;
+
+  text-align: left !important;
+  text-align-last: left !important;
+
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+}
+
+
+/* Connector layer */
+#slide-13 .slide13-dependency-lines {
+  position: absolute;
+  inset: 0;
+
+  z-index: 1;
+
+  width: 100%;
+  height: 100%;
+
+  overflow: visible;
+  pointer-events: none;
+}
+
+
+#slide-13 .slide13-dependency-lines-mobile {
+  display: none;
+}
+
+
+#slide-13 .slide13-dependency-lines-desktop path {
+  fill: none;
+
+  stroke: #8295b8;
+  stroke-width: 3;
+
+  stroke-linecap: round;
+  stroke-linejoin: round;
+
+  marker-end: url(#slide13DependencyArrow);
+}
+
+/* SLIDE13_ALGO_FLOW_DESKTOP_END */
+
+/* SLIDE13_COMPACT_CARDS_AND_BLOCK_ARROWS_DESKTOP_START */
+
+/*
+  Slide 13 refinement
+
+  Card height remains unchanged at 120px.
+  Only spacing, typography and arrow rendering are adjusted.
+*/
+
+#slide-13 .slide13-algo-dependency {
+  height: 280px !important;
+
+  margin-top: clamp(7px, 0.9vh, 11px) !important;
+}
+
+
+/* Upper row */
+#slide-13 .slide13-algo-slot-4,
+#slide-13 .slide13-algo-slot-3 {
+  top: 0 !important;
+  bottom: auto !important;
+}
+
+
+/*
+  Lower row:
+  120px card height + 40px vertical gap.
+*/
+#slide-13 .slide13-algo-slot-5,
+#slide-13 .slide13-algo-slot-2 {
+  top: 160px !important;
+  bottom: auto !important;
+}
+
+
+/* Final card remains vertically centered. */
+#slide-13 .slide13-algo-slot-1 {
+  top: 80px !important;
+
+  transform: none !important;
+}
+
+
+/*
+  Card height must not change.
+*/
+#slide-13 .slide13-algo-slot > article {
+  height: 120px !important;
+  min-height: 120px !important;
+  max-height: 120px !important;
+
+  padding: 8px 16px !important;
+
+  overflow: hidden !important;
+}
+
+
+/* Algorithm number — approximately 2px larger */
+#slide-13 .slide13-algo-slot article > span {
+  margin: 0 0 5px !important;
+
+  font-size: clamp(27px, 2.1vw, 32px) !important;
+  line-height: 1 !important;
+}
+
+
+/* Card title — approximately 2px larger */
+#slide-13 .slide13-algo-slot article > h3 {
+  margin: 0 0 3px !important;
+
+  font-size: clamp(15.5px, 1.06vw, 18px) !important;
+  line-height: 1.12 !important;
+}
+
+
+/* Card description — approximately 2px larger */
+#slide-13 .slide13-algo-slot article > p {
+  margin: 0 !important;
+
+  font-size: clamp(12px, 0.82vw, 13.7px) !important;
+  line-height: 1.25 !important;
+}
+
+
+/*
+  Rounded line ends allow the curve to continue visually
+  beneath the arrowhead, eliminating the detached appearance.
+*/
+#slide-13 .slide13-dependency-lines path {
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+}
+
+/* SLIDE13_COMPACT_CARDS_AND_BLOCK_ARROWS_DESKTOP_END */
+
+/* SLIDE25_VERTICAL_ARROWS_DESKTOP_START */
+
+/*
+  Slide 25 vertical relationship.
+
+  Original typography and colors are retained.
+  The first and last labels move only slightly.
+*/
+
+#slide-25 .center-principle {
+  place-content: center !important;
+}
+
+
+#slide-25 .slide25-vertical-flow {
+  width: 100%;
+  max-width: 100%;
+
+  display: grid;
+
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows:
+    auto
+    36px
+    auto
+    36px
+    auto;
+
+  justify-items: center;
+  align-items: center;
+  align-content: center;
+
+  margin: 0;
+  padding: 0;
+
+  text-align: center;
+}
+
+
+/* Move only slightly upward — not to the top edge. */
+#slide-25 .slide25-flow-top {
+  margin: 0 !important;
+  padding: 0 !important;
+
+  transform: translateY(-8px);
+
+  text-align: center !important;
+  white-space: nowrap;
+}
+
+
+/* Move only slightly downward — not to the bottom edge. */
+#slide-25 .slide25-flow-bottom {
+  margin: 0 !important;
+  padding: 0 !important;
+
+  transform: translateY(8px);
+
+  text-align: center !important;
+  white-space: nowrap;
+}
+
+
+/*
+  Preserve the original GPS/Reallocation size and accent color.
+  Only change its layout from horizontal to vertical.
+*/
+#slide-25 .slide25-gps-stack {
+  display: inline-flex !important;
+  flex-direction: column !important;
+
+  align-items: center !important;
+  justify-content: center !important;
+
+  width: auto !important;
+  max-width: 100% !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  transform: none !important;
+
+  text-align: center !important;
+  white-space: nowrap !important;
+}
+
+
+/*
+  The strong wrapper preserves the original accent typography
+  inherited by the arrow.
+*/
+#slide-25 .slide25-arrow-holder {
+  width: 100%;
+  height: 100%;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+
+#slide-25 .slide25-vertical-arrow {
+  position: static !important;
+
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  width: auto !important;
+  height: auto !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: auto !important;
+
+  transform: none !important;
+
+  white-space: nowrap !important;
+}
+
+/* SLIDE25_VERTICAL_ARROWS_DESKTOP_END */
+
+/* SLIDE25_GPS_COLOR_RESTORE_DESKTOP_START */
+
+/* Restore the original accent color only. */
+#slide-25 .slide25-gps-stack,
+#slide-25 .slide25-gps-stack .gps-reallocation-original-word {
+  color: var(--accent) !important;
+}
+
+/* SLIDE25_GPS_COLOR_RESTORE_DESKTOP_END */
+
+/* GLOBAL_SLIDE_LEAD_JUSTIFY_DESKTOP_START */
+
+/*
+  Justify explanatory text beneath the main slide heading.
+  Slide 1 is excluded because it has a centered cover layout.
+*/
+
+.slide:not(#slide-1) .slide-heading .lead {
+  text-align: justify !important;
+  text-align-last: left !important;
+  text-justify: inter-word !important;
+
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+  hyphens: none !important;
+}
+
+/* GLOBAL_SLIDE_LEAD_JUSTIFY_DESKTOP_END */

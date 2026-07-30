@@ -1419,3 +1419,656 @@
   }
 }
 /* MOBILE_BALANCED_TITLES_AND_PAPER_FIX_END */
+
+/* PAPER_AUTHORS_SLIDE_1_MOBILE_START */
+
+@media
+  (max-width: 760px),
+  (max-width: 900px) and (max-height: 500px) and (orientation: landscape) {
+
+  #slide-1 .paper-authors {
+    width: min(100%, 520px) !important;
+
+    margin-top: 10px !important;
+    margin-right: auto !important;
+    margin-left: auto !important;
+
+    padding: 0 6px !important;
+
+    font-size: 10px !important;
+    font-weight: 400 !important;
+    line-height: 1.5 !important;
+
+    text-align: center !important;
+    letter-spacing: 0 !important;
+  }
+
+
+  #slide-1 .paper-authors-label {
+    margin-right: 3px !important;
+
+    font-size: 10px !important;
+    font-weight: 650 !important;
+  }
+
+
+  #slide-1 .paper-authors-names {
+    font-size: 10px !important;
+    font-weight: 400 !important;
+
+    overflow-wrap: normal !important;
+    word-break: normal !important;
+  }
+
+
+  #slide-1 .paper-authors + .presenter-group {
+    margin-top: 16px !important;
+  }
+}
+
+
+@media (max-width: 390px) {
+
+  #slide-1 .paper-authors {
+    width: 100% !important;
+
+    padding-right: 2px !important;
+    padding-left: 2px !important;
+
+    font-size: 9.5px !important;
+    line-height: 1.55 !important;
+  }
+
+
+  #slide-1 .paper-authors-label,
+  #slide-1 .paper-authors-names {
+    font-size: 9.5px !important;
+  }
+}
+
+/* PAPER_AUTHORS_SLIDE_1_MOBILE_END */
+
+/* SLIDE6_AOA_GRAPH_MOBILE_START */
+
+@media
+  (max-width: 760px),
+  (max-width: 900px) and (max-height: 500px) and (orientation: landscape) {
+
+  /*
+    Scale the entire SVG proportionally so that no node or arrow
+    is cut off on mobile.
+  */
+
+  #slide-6 .slide6-aoa-figure {
+    width: 100% !important;
+    max-width: 100% !important;
+
+    margin-top: 12px !important;
+    margin-right: auto !important;
+    margin-left: auto !important;
+
+    padding: 0 !important;
+
+    overflow: visible !important;
+  }
+
+
+  #slide-6 .slide6-aoa-canvas {
+    width: 100% !important;
+    max-width: 100% !important;
+
+    padding: 0 !important;
+
+    overflow: visible !important;
+
+    border: 0 !important;
+    border-radius: 0 !important;
+
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+
+  #slide-6 .slide6-aoa-svg {
+    display: block !important;
+
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    height: auto !important;
+    max-height: none !important;
+
+    margin-right: auto !important;
+    margin-left: auto !important;
+
+    overflow: visible !important;
+  }
+}
+
+
+@media (max-width: 390px) {
+
+  #slide-6 .slide6-aoa-figure {
+    margin-top: 10px !important;
+  }
+}
+
+/* SLIDE6_AOA_GRAPH_MOBILE_END */
+
+/* SLIDE6_GRAPH_COMPACT_SIZE_MOBILE_TOGGLE_START */
+
+@media
+  (max-width: 760px),
+  (max-width: 900px) and (max-height: 500px) and (orientation: landscape) {
+
+  #slide-6 .slide6-aoa-figure {
+    width: 90% !important;
+    max-width: 620px !important;
+
+    margin-top: 9px !important;
+    margin-right: auto !important;
+    margin-left: auto !important;
+  }
+
+  #slide-6 .slide6-aoa-svg {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+  }
+}
+
+
+/*
+  روی گوشی‌های بسیار باریک، عرض کمی بیشتر می‌شود تا
+  جزئیات نودها و پیکان‌ها بیش از حد کوچک نشوند.
+*/
+@media (max-width: 390px) {
+
+  #slide-6 .slide6-aoa-figure {
+    width: 94% !important;
+  }
+}
+
+/* SLIDE6_GRAPH_COMPACT_SIZE_MOBILE_TOGGLE_END */
+
+/* SLIDE13_ALGO_FLOW_MOBILE_START */
+
+@media
+  (max-width: 760px),
+  (max-width: 900px) and (max-height: 500px) and (orientation: landscape) {
+
+  /*
+    Mobile layout:
+
+        4             5
+               3
+        2             1
+
+    Cards are reduced enough to prevent internal overlap.
+  */
+
+  #slide-13 .slide13-algo-dependency {
+    position: relative !important;
+
+    width: 100% !important;
+    max-width: 560px !important;
+    height: 670px !important;
+    min-height: 670px !important;
+
+    margin-top: 12px !important;
+    margin-right: auto !important;
+    margin-left: auto !important;
+
+    overflow: visible !important;
+  }
+
+
+  #slide-13 .slide13-algo-slot {
+    position: absolute !important;
+    z-index: 2 !important;
+
+    transform: none !important;
+  }
+
+
+  #slide-13 .slide13-algo-slot-4 {
+    left: 0 !important;
+    top: 0 !important;
+
+    width: 47% !important;
+  }
+
+
+  #slide-13 .slide13-algo-slot-5 {
+    right: 0 !important;
+    left: auto !important;
+    top: 0 !important;
+    bottom: auto !important;
+
+    width: 47% !important;
+  }
+
+
+  #slide-13 .slide13-algo-slot-3 {
+    left: 15% !important;
+    top: 190px !important;
+    bottom: auto !important;
+
+    width: 70% !important;
+  }
+
+
+  #slide-13 .slide13-algo-slot-2 {
+    left: 0 !important;
+    top: 430px !important;
+    bottom: auto !important;
+
+    width: 47% !important;
+  }
+
+
+  #slide-13 .slide13-algo-slot-1 {
+    right: 0 !important;
+    left: auto !important;
+    top: 430px !important;
+
+    width: 47% !important;
+
+    transform: none !important;
+  }
+
+
+  #slide-13 .slide13-algo-slot > article {
+    width: 100% !important;
+    height: 136px !important;
+    min-height: 136px !important;
+    max-height: 136px !important;
+
+    box-sizing: border-box !important;
+
+    margin: 0 !important;
+    padding: 13px 14px !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+
+    overflow: hidden !important;
+
+    border-radius: 15px !important;
+  }
+
+
+  #slide-13 .slide13-algo-slot article > span {
+    margin: 0 0 10px !important;
+
+    font-size: 27px !important;
+    line-height: 1 !important;
+  }
+
+
+  #slide-13 .slide13-algo-slot article > h3 {
+    margin: 0 0 5px !important;
+
+    font-size: 13px !important;
+    line-height: 1.18 !important;
+
+    overflow-wrap: normal !important;
+    word-break: normal !important;
+  }
+
+
+  #slide-13 .slide13-algo-slot article > p {
+    margin: 0 !important;
+
+    font-size: 10.5px !important;
+    line-height: 1.32 !important;
+
+    text-align: left !important;
+    text-align-last: left !important;
+
+    overflow-wrap: normal !important;
+    word-break: normal !important;
+  }
+
+
+  #slide-13 .slide13-dependency-lines-desktop {
+    display: none !important;
+  }
+
+
+  #slide-13 .slide13-dependency-lines-mobile {
+    display: block !important;
+  }
+
+
+  #slide-13 .slide13-dependency-lines-mobile path {
+    fill: none;
+
+    stroke: #8295b8;
+    stroke-width: 3.2;
+
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+    marker-end: url(#slide13DependencyArrowMobile);
+  }
+}
+
+
+@media (max-width: 390px) {
+
+  #slide-13 .slide13-algo-dependency {
+    height: 690px !important;
+    min-height: 690px !important;
+  }
+
+
+  #slide-13 .slide13-algo-slot > article {
+    height: 142px !important;
+    min-height: 142px !important;
+    max-height: 142px !important;
+
+    padding: 12px !important;
+  }
+
+
+  #slide-13 .slide13-algo-slot article > h3 {
+    font-size: 12.5px !important;
+  }
+
+
+  #slide-13 .slide13-algo-slot article > p {
+    font-size: 10px !important;
+  }
+}
+
+/* SLIDE13_ALGO_FLOW_MOBILE_END */
+
+/* SLIDE13_COMPACT_CARDS_AND_BLOCK_ARROWS_MOBILE_START */
+
+@media
+  (max-width: 760px),
+  (max-width: 900px) and (max-height: 500px) and (orientation: landscape) {
+
+  #slide-13 .slide13-algo-dependency {
+    height: 470px !important;
+    min-height: 470px !important;
+
+    margin-top: 9px !important;
+  }
+
+
+  /*
+    Top row remains at 0.
+  */
+  #slide-13 .slide13-algo-slot-4,
+  #slide-13 .slide13-algo-slot-5 {
+    top: 0 !important;
+    bottom: auto !important;
+  }
+
+
+  /*
+    Algorithm 3 moves closer to the upper cards.
+    Gap: 24px after 126px cards.
+  */
+  #slide-13 .slide13-algo-slot-3 {
+    top: 150px !important;
+    bottom: auto !important;
+  }
+
+
+  /*
+    Lower cards move upward.
+    Gap after Algorithm 3: 44px.
+  */
+  #slide-13 .slide13-algo-slot-2,
+  #slide-13 .slide13-algo-slot-1 {
+    top: 320px !important;
+    bottom: auto !important;
+  }
+
+
+  /*
+    Mobile card height remains unchanged.
+  */
+  #slide-13 .slide13-algo-slot > article {
+    height: 126px !important;
+    min-height: 126px !important;
+    max-height: 126px !important;
+
+    padding: 9px 11px !important;
+
+    overflow: hidden !important;
+  }
+
+
+  /* Algorithm number */
+  #slide-13 .slide13-algo-slot article > span {
+    margin: 0 0 5px !important;
+
+    font-size: 27px !important;
+    line-height: 1 !important;
+  }
+
+
+  /* Card title */
+  #slide-13 .slide13-algo-slot article > h3 {
+    margin: 0 0 3px !important;
+
+    font-size: 14.5px !important;
+    line-height: 1.14 !important;
+  }
+
+
+  /* Card description */
+  #slide-13 .slide13-algo-slot article > p {
+    margin: 0 !important;
+
+    font-size: 12px !important;
+    line-height: 1.24 !important;
+  }
+
+
+  #slide-13 .slide13-dependency-lines path {
+    stroke-linecap: round !important;
+    stroke-linejoin: round !important;
+  }
+}
+
+
+@media (max-width: 390px) {
+
+  #slide-13 .slide13-algo-dependency {
+    height: 490px !important;
+    min-height: 490px !important;
+  }
+
+
+  /*
+    Height remains unchanged at 130px in the existing
+    very-narrow-phone breakpoint.
+  */
+  #slide-13 .slide13-algo-slot > article {
+    height: 130px !important;
+    min-height: 130px !important;
+    max-height: 130px !important;
+
+    padding: 8px 10px !important;
+  }
+
+
+  #slide-13 .slide13-algo-slot article > span {
+    font-size: 26px !important;
+  }
+
+
+  #slide-13 .slide13-algo-slot article > h3 {
+    font-size: 13.5px !important;
+  }
+
+
+  #slide-13 .slide13-algo-slot article > p {
+    font-size: 11px !important;
+  }
+}
+
+/* SLIDE13_COMPACT_CARDS_AND_BLOCK_ARROWS_MOBILE_END */
+
+/* SLIDE25_VERTICAL_ARROWS_MOBILE_START */
+
+@media
+  (max-width: 760px),
+  (max-width: 900px) and (max-height: 500px) and (orientation: landscape) {
+
+  #slide-25 .center-principle {
+    place-content: center !important;
+  }
+
+
+  #slide-25 .slide25-vertical-flow {
+    width: 100% !important;
+    max-width: 100% !important;
+
+    display: grid !important;
+
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-rows:
+      auto
+      28px
+      auto
+      28px
+      auto !important;
+
+    justify-items: center !important;
+    align-items: center !important;
+    align-content: center !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    text-align: center !important;
+  }
+
+
+  #slide-25 .slide25-flow-top {
+    margin: 0 !important;
+    padding: 0 !important;
+
+    transform: translateY(-6px) !important;
+
+    text-align: center !important;
+    white-space: nowrap !important;
+  }
+
+
+  #slide-25 .slide25-flow-bottom {
+    margin: 0 !important;
+    padding: 0 !important;
+
+    transform: translateY(6px) !important;
+
+    text-align: center !important;
+    white-space: nowrap !important;
+  }
+
+
+  #slide-25 .slide25-gps-stack {
+    display: inline-flex !important;
+    flex-direction: column !important;
+
+    align-items: center !important;
+    justify-content: center !important;
+
+    width: auto !important;
+    max-width: 100% !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    text-align: center !important;
+    white-space: nowrap !important;
+  }
+
+
+  /*
+    Preserve the original mobile scale already defined by
+    mobile-presentation.css.
+  */
+  #slide-25 .gps-reallocation-original-position-fix.slide25-gps-stack {
+    transform: scale(.84) !important;
+  }
+
+
+  #slide-25 .slide25-arrow-holder {
+    width: 100% !important;
+    height: 100% !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+
+  #slide-25 .slide25-vertical-arrow {
+    position: static !important;
+
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    width: auto !important;
+    height: auto !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+
+    transform: none !important;
+
+    white-space: nowrap !important;
+  }
+}
+
+/* SLIDE25_VERTICAL_ARROWS_MOBILE_END */
+
+/* SLIDE25_GPS_COLOR_RESTORE_MOBILE_START */
+
+@media
+  (max-width: 760px),
+  (max-width: 900px) and (max-height: 500px) and (orientation: landscape) {
+
+  #slide-25 .slide25-gps-stack,
+  #slide-25 .slide25-gps-stack .gps-reallocation-original-word {
+    color: var(--accent) !important;
+  }
+}
+
+/* SLIDE25_GPS_COLOR_RESTORE_MOBILE_END */
+
+/* GLOBAL_SLIDE_LEAD_JUSTIFY_MOBILE_START */
+
+@media
+  (max-width: 760px),
+  (max-width: 900px) and (max-height: 500px) and (orientation: landscape) {
+
+  .slide:not(#slide-1) .slide-heading .lead {
+    text-align: justify !important;
+    text-align-last: left !important;
+    text-justify: inter-word !important;
+
+    word-break: normal !important;
+    overflow-wrap: normal !important;
+    hyphens: none !important;
+  }
+}
+
+/* GLOBAL_SLIDE_LEAD_JUSTIFY_MOBILE_END */
