@@ -1305,3 +1305,117 @@
   }
 }
 /* MOBILE_HEADER_AND_TITLE_ALIGNMENT_END */
+
+/* MOBILE_BALANCED_TITLES_AND_PAPER_FIX_START */
+@media
+  (max-width: 760px),
+  (max-width: 900px) and (max-height: 500px) and (orientation: landscape) {
+
+  /*
+    Keep the exact title text, but balance line lengths visually.
+    No justification and no stretched word spacing.
+  */
+  .slide:not(#slide-1) .slide-heading h2,
+  .slide:not(#slide-1) .algorithm-copy h2 {
+    width: 100% !important;
+    max-width: none !important;
+
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+
+    text-align: left !important;
+    text-align-last: auto !important;
+    text-justify: auto !important;
+
+    white-space: normal !important;
+    word-break: normal !important;
+    overflow-wrap: normal !important;
+    hyphens: none !important;
+
+    text-wrap: balance !important;
+  }
+
+  .slide:not(#slide-1) .slide-heading h2::after,
+  .slide:not(#slide-1) .algorithm-copy h2::after {
+    content: none !important;
+    display: none !important;
+  }
+
+  /*
+    Mobile-only Paper button cleanup.
+    Hide every original child and render exactly one clean word.
+  */
+  .paper-link {
+    width: 52px !important;
+    min-width: 52px !important;
+    max-width: 52px !important;
+
+    height: 44px !important;
+    min-height: 44px !important;
+    max-height: 44px !important;
+
+    display: grid !important;
+    place-items: center !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    font-size: 0 !important;
+    line-height: 0 !important;
+    letter-spacing: 0 !important;
+    text-indent: 0 !important;
+    white-space: nowrap !important;
+  }
+
+  .paper-link > * {
+    display: none !important;
+  }
+
+  .paper-link::before {
+    content: "Paper" !important;
+
+    position: static !important;
+    inset: auto !important;
+    transform: none !important;
+
+    display: block !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    color: inherit !important;
+    font-size: 10px !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+    letter-spacing: 0 !important;
+    text-indent: 0 !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+  }
+
+  .paper-link::after {
+    content: none !important;
+    display: none !important;
+  }
+}
+
+@media
+  (max-width: 900px)
+  and (max-height: 500px)
+  and (orientation: landscape) {
+
+  .paper-link {
+    width: 48px !important;
+    min-width: 48px !important;
+    max-width: 48px !important;
+
+    height: 38px !important;
+    min-height: 38px !important;
+    max-height: 38px !important;
+  }
+
+  .paper-link::before {
+    font-size: 9px !important;
+  }
+}
+/* MOBILE_BALANCED_TITLES_AND_PAPER_FIX_END */
