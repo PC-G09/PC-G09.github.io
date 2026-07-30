@@ -1653,7 +1653,7 @@ mjx-container[display="true"] { margin: 0 !important; }
   no frame, no gradient, no shadows and no decorative effects.
 */
 
-#slide-6 .slide6-aoa-figure {
+#slide-8 .slide6-aoa-figure {
   width: min(100%, 1000px);
 
   margin: clamp(14px, 1.8vh, 24px) auto 0;
@@ -1663,7 +1663,7 @@ mjx-container[display="true"] { margin: 0 !important; }
 }
 
 
-#slide-6 .slide6-aoa-canvas {
+#slide-8 .slide6-aoa-canvas {
   width: 100%;
 
   margin: 0;
@@ -1679,7 +1679,7 @@ mjx-container[display="true"] { margin: 0 !important; }
 }
 
 
-#slide-6 .slide6-aoa-svg {
+#slide-8 .slide6-aoa-svg {
   display: block;
 
   width: 100%;
@@ -1692,19 +1692,19 @@ mjx-container[display="true"] { margin: 0 !important; }
 }
 
 
-#slide-6 .slide6-node {
+#slide-8 .slide6-node {
   fill: #c4c5c7;
   stroke: #5e6063;
   stroke-width: 2;
 }
 
 
-#slide-6 .slide6-node-terminal {
+#slide-8 .slide6-node-terminal {
   fill: #ffffff;
 }
 
 
-#slide-6 .slide6-node-text {
+#slide-8 .slide6-node-text {
   fill: #252629;
 
   font-family:
@@ -1718,12 +1718,12 @@ mjx-container[display="true"] { margin: 0 !important; }
 }
 
 
-#slide-6 .slide6-node-subscript {
+#slide-8 .slide6-node-subscript {
   font-size: 19px;
 }
 
 
-#slide-6 .slide6-final-subscript {
+#slide-8 .slide6-final-subscript {
   font-size: 17px;
 }
 
@@ -1736,7 +1736,7 @@ mjx-container[display="true"] { margin: 0 !important; }
   Removing this block restores the previous/current graph size.
 */
 
-#slide-6 .slide6-aoa-figure {
+#slide-8 .slide6-aoa-figure {
   width: min(84%, 840px) !important;
   max-width: 840px !important;
 
@@ -1765,7 +1765,7 @@ mjx-container[display="true"] { margin: 0 !important; }
   Event Rules strip untouched and fully visible.
 */
 
-#slide-13 .slide13-algo-dependency {
+#slide-15 .slide13-algo-dependency {
   position: relative;
 
   width: min(100%, 1040px);
@@ -1777,7 +1777,7 @@ mjx-container[display="true"] { margin: 0 !important; }
 }
 
 
-#slide-13 .slide13-algo-slot {
+#slide-15 .slide13-algo-slot {
   position: absolute;
   z-index: 2;
 
@@ -1786,14 +1786,14 @@ mjx-container[display="true"] { margin: 0 !important; }
 
 
 /* Upper-left card */
-#slide-13 .slide13-algo-slot-4 {
+#slide-15 .slide13-algo-slot-4 {
   left: 0;
   top: 0;
 }
 
 
 /* Lower-left card */
-#slide-13 .slide13-algo-slot-5 {
+#slide-15 .slide13-algo-slot-5 {
   left: 0;
   top: auto;
   bottom: 0;
@@ -1804,7 +1804,7 @@ mjx-container[display="true"] { margin: 0 !important; }
   Algorithm 3 is now aligned with Algorithm 4.
   It also has exactly the same width.
 */
-#slide-13 .slide13-algo-slot-3 {
+#slide-15 .slide13-algo-slot-3 {
   left: 37.25%;
   top: 0;
   bottom: auto;
@@ -1812,7 +1812,7 @@ mjx-container[display="true"] { margin: 0 !important; }
 
 
 /* Algorithm 2 is aligned with Algorithm 5. */
-#slide-13 .slide13-algo-slot-2 {
+#slide-15 .slide13-algo-slot-2 {
   left: 37.25%;
   top: auto;
   bottom: 0;
@@ -1820,7 +1820,7 @@ mjx-container[display="true"] { margin: 0 !important; }
 
 
 /* Final procedure remains centered on the right. */
-#slide-13 .slide13-algo-slot-1 {
+#slide-15 .slide13-algo-slot-1 {
   right: 0;
   top: 50%;
 
@@ -1833,7 +1833,7 @@ mjx-container[display="true"] { margin: 0 !important; }
   This prevents inherited styles from making one card taller
   and overlapping the card underneath it.
 */
-#slide-13 .slide13-algo-slot > article {
+#slide-15 .slide13-algo-slot > article {
   width: 100% !important;
   height: 138px !important;
   min-height: 138px !important;
@@ -1865,7 +1865,7 @@ mjx-container[display="true"] { margin: 0 !important; }
 }
 
 
-#slide-13 .slide13-algo-slot > article:hover {
+#slide-15 .slide13-algo-slot > article:hover {
   transform: translateY(-3px);
 
   border-color: rgba(85, 184, 178, 0.48);
@@ -1876,7 +1876,7 @@ mjx-container[display="true"] { margin: 0 !important; }
 
 
 /* Subtle emphasis for the final GPS procedure. */
-#slide-13 .slide13-algo-slot-1 > article {
+#slide-15 .slide13-algo-slot-1 > article {
   border-color: rgba(85, 184, 178, 0.42);
 
   background:
@@ -1889,7 +1889,7 @@ mjx-container[display="true"] { margin: 0 !important; }
 
 
 /* Algorithm number */
-#slide-13 .slide13-algo-slot article > span {
+#slide-15 .slide13-algo-slot article > span {
   flex: 0 0 auto;
 
   margin: 0 0 12px !important;
@@ -1904,7 +1904,7 @@ mjx-container[display="true"] { margin: 0 !important; }
 
 
 /* Algorithm title */
-#slide-13 .slide13-algo-slot article > h3 {
+#slide-15 .slide13-algo-slot article > h3 {
   flex: 0 0 auto;
 
   margin: 0 0 5px !important;
@@ -1918,7 +1918,7 @@ mjx-container[display="true"] { margin: 0 !important; }
 
 
 /* Algorithm explanation */
-#slide-13 .slide13-algo-slot article > p {
+#slide-15 .slide13-algo-slot article > p {
   flex: 0 0 auto;
 
   margin: 0 !important;
@@ -1937,7 +1937,7 @@ mjx-container[display="true"] { margin: 0 !important; }
 
 
 /* Connector layer */
-#slide-13 .slide13-dependency-lines {
+#slide-15 .slide13-dependency-lines {
   position: absolute;
   inset: 0;
 
@@ -1951,12 +1951,12 @@ mjx-container[display="true"] { margin: 0 !important; }
 }
 
 
-#slide-13 .slide13-dependency-lines-mobile {
+#slide-15 .slide13-dependency-lines-mobile {
   display: none;
 }
 
 
-#slide-13 .slide13-dependency-lines-desktop path[data-edge] {
+#slide-15 .slide13-dependency-lines-desktop path[data-edge] {
   fill: none;
 
   stroke: #8295b8;
@@ -1979,7 +1979,7 @@ mjx-container[display="true"] { margin: 0 !important; }
   Only spacing, typography and arrow rendering are adjusted.
 */
 
-#slide-13 .slide13-algo-dependency {
+#slide-15 .slide13-algo-dependency {
   height: 280px !important;
 
   margin-top: clamp(7px, 0.9vh, 11px) !important;
@@ -1987,8 +1987,8 @@ mjx-container[display="true"] { margin: 0 !important; }
 
 
 /* Upper row */
-#slide-13 .slide13-algo-slot-4,
-#slide-13 .slide13-algo-slot-3 {
+#slide-15 .slide13-algo-slot-4,
+#slide-15 .slide13-algo-slot-3 {
   top: 0 !important;
   bottom: auto !important;
 }
@@ -1998,15 +1998,15 @@ mjx-container[display="true"] { margin: 0 !important; }
   Lower row:
   120px card height + 40px vertical gap.
 */
-#slide-13 .slide13-algo-slot-5,
-#slide-13 .slide13-algo-slot-2 {
+#slide-15 .slide13-algo-slot-5,
+#slide-15 .slide13-algo-slot-2 {
   top: 160px !important;
   bottom: auto !important;
 }
 
 
 /* Final card remains vertically centered. */
-#slide-13 .slide13-algo-slot-1 {
+#slide-15 .slide13-algo-slot-1 {
   top: 80px !important;
 
   transform: none !important;
@@ -2016,7 +2016,7 @@ mjx-container[display="true"] { margin: 0 !important; }
 /*
   Card height must not change.
 */
-#slide-13 .slide13-algo-slot > article {
+#slide-15 .slide13-algo-slot > article {
   height: 120px !important;
   min-height: 120px !important;
   max-height: 120px !important;
@@ -2028,7 +2028,7 @@ mjx-container[display="true"] { margin: 0 !important; }
 
 
 /* Algorithm number — approximately 2px larger */
-#slide-13 .slide13-algo-slot article > span {
+#slide-15 .slide13-algo-slot article > span {
   margin: 0 0 5px !important;
 
   font-size: clamp(27px, 2.1vw, 32px) !important;
@@ -2037,7 +2037,7 @@ mjx-container[display="true"] { margin: 0 !important; }
 
 
 /* Card title — approximately 2px larger */
-#slide-13 .slide13-algo-slot article > h3 {
+#slide-15 .slide13-algo-slot article > h3 {
   margin: 0 0 3px !important;
 
   font-size: clamp(15.5px, 1.06vw, 18px) !important;
@@ -2046,7 +2046,7 @@ mjx-container[display="true"] { margin: 0 !important; }
 
 
 /* Card description — approximately 2px larger */
-#slide-13 .slide13-algo-slot article > p {
+#slide-15 .slide13-algo-slot article > p {
   margin: 0 !important;
 
   font-size: clamp(12px, 0.82vw, 13.7px) !important;
@@ -2058,7 +2058,7 @@ mjx-container[display="true"] { margin: 0 !important; }
   Rounded line ends allow the curve to continue visually
   beneath the arrowhead, eliminating the detached appearance.
 */
-#slide-13 .slide13-dependency-lines path {
+#slide-15 .slide13-dependency-lines path {
   stroke-linecap: round !important;
   stroke-linejoin: round !important;
 }
@@ -2074,12 +2074,12 @@ mjx-container[display="true"] { margin: 0 !important; }
   The first and last labels move only slightly.
 */
 
-#slide-25 .center-principle {
+#slide-27 .center-principle {
   place-content: center !important;
 }
 
 
-#slide-25 .slide25-vertical-flow {
+#slide-27 .slide25-vertical-flow {
   width: 100%;
   max-width: 100%;
 
@@ -2105,7 +2105,7 @@ mjx-container[display="true"] { margin: 0 !important; }
 
 
 /* Move only slightly upward — not to the top edge. */
-#slide-25 .slide25-flow-top {
+#slide-27 .slide25-flow-top {
   margin: 0 !important;
   padding: 0 !important;
 
@@ -2117,7 +2117,7 @@ mjx-container[display="true"] { margin: 0 !important; }
 
 
 /* Move only slightly downward — not to the bottom edge. */
-#slide-25 .slide25-flow-bottom {
+#slide-27 .slide25-flow-bottom {
   margin: 0 !important;
   padding: 0 !important;
 
@@ -2132,7 +2132,7 @@ mjx-container[display="true"] { margin: 0 !important; }
   Preserve the original GPS/Reallocation size and accent color.
   Only change its layout from horizontal to vertical.
 */
-#slide-25 .slide25-gps-stack {
+#slide-27 .slide25-gps-stack {
   display: inline-flex !important;
   flex-direction: column !important;
 
@@ -2156,7 +2156,7 @@ mjx-container[display="true"] { margin: 0 !important; }
   The strong wrapper preserves the original accent typography
   inherited by the arrow.
 */
-#slide-25 .slide25-arrow-holder {
+#slide-27 .slide25-arrow-holder {
   width: 100%;
   height: 100%;
 
@@ -2169,7 +2169,7 @@ mjx-container[display="true"] { margin: 0 !important; }
 }
 
 
-#slide-25 .slide25-vertical-arrow {
+#slide-27 .slide25-vertical-arrow {
   position: static !important;
 
   display: inline-flex !important;
@@ -2197,8 +2197,8 @@ mjx-container[display="true"] { margin: 0 !important; }
 /* SLIDE25_GPS_COLOR_RESTORE_DESKTOP_START */
 
 /* Restore the original accent color only. */
-#slide-25 .slide25-gps-stack,
-#slide-25 .slide25-gps-stack .gps-reallocation-original-word {
+#slide-27 .slide25-gps-stack,
+#slide-27 .slide25-gps-stack .gps-reallocation-original-word {
   color: var(--accent) !important;
 }
 
@@ -2236,12 +2236,12 @@ mjx-container[display="true"] { margin: 0 !important; }
   entirely by the original site design.
 */
 
-#slide-20 .experiment-summary > article {
+#slide-22 .experiment-summary > article {
   min-width: 0 !important;
 }
 
 
-#slide-20 .experiment-summary > article > h3 {
+#slide-22 .experiment-summary > article > h3 {
   min-width: 0 !important;
   max-width: 100% !important;
 
@@ -2272,13 +2272,13 @@ mjx-container[display="true"] { margin: 0 !important; }
 @media (min-width: 761px) and (min-height: 501px) {
 
   #slide-3 .evolution-flow > article,
-  #slide-12 .audit-grid > article {
+  #slide-14 .audit-grid > article {
     min-width: 0 !important;
   }
 
 
   #slide-3 .evolution-flow > article > h3,
-  #slide-12 .audit-grid > article > h3 {
+  #slide-14 .audit-grid > article > h3 {
     min-width: 0 !important;
     max-width: 100% !important;
 
@@ -2307,12 +2307,12 @@ mjx-container[display="true"] { margin: 0 !important; }
   JavaScript calculates one shared maximum font size.
 */
 
-#slide-13 .event-rules > div {
+#slide-15 .event-rules > div {
   min-width: 0 !important;
 }
 
 
-#slide-13 .event-rules > div > strong {
+#slide-15 .event-rules > div > strong {
   display: block !important;
 
   min-width: 0 !important;
@@ -2329,3 +2329,285 @@ mjx-container[display="true"] { margin: 0 !important; }
 }
 
 /* SLIDE13_EVENT_RULES_COMMON_TITLE_DESKTOP_END */
+
+/* LITERATURE_TABLE_SLIDES_DESKTOP_START */
+
+/*
+  Two literature-review evidence tables.
+  Desktop and laptop layout.
+*/
+
+.literature-table-slide .slide-heading {
+  width: 100%;
+  max-width: 1320px;
+
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: clamp(12px, 1.8vh, 24px);
+}
+
+
+.literature-table-slide .slide-heading h2 {
+  max-width: 1320px;
+
+  margin-bottom: 0;
+
+  font-size: clamp(34px, 3.55vw, 58px);
+  line-height: 1.02;
+}
+
+
+.literature-table-slide .slide-content {
+  justify-content: center;
+
+  padding-top: clamp(4px, .8vh, 10px);
+}
+
+
+.literature-table-shell {
+  width: min(100%, 1500px);
+
+  margin-right: auto;
+  margin-left: auto;
+}
+
+
+.literature-table-card {
+  width: 100%;
+
+  overflow: hidden;
+
+  border: 1px solid rgba(16, 40, 58, .16);
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, .72);
+
+  box-shadow: var(--shadow);
+}
+
+
+.literature-review-table {
+  width: 100%;
+
+  border-collapse: separate;
+  border-spacing: 0;
+
+  table-layout: fixed;
+
+  color: var(--ink);
+}
+
+
+.literature-review-table .literature-col-study {
+  width: 17%;
+}
+
+
+.literature-review-table .literature-col-method {
+  width: 19%;
+}
+
+
+.literature-review-table .literature-col-objective {
+  width: 36%;
+}
+
+
+.literature-review-table .literature-col-limitation {
+  width: 28%;
+}
+
+
+.literature-review-table th,
+.literature-review-table td {
+  overflow-wrap: anywhere;
+  word-break: normal;
+
+  text-align: left;
+  text-align-last: left;
+
+  vertical-align: middle;
+}
+
+
+.literature-review-table thead th {
+  padding:
+    clamp(13px, 1.45vh, 18px)
+    clamp(13px, 1.15vw, 19px);
+
+  border-right:
+    1px solid
+    rgba(255, 255, 255, .28);
+
+  color: #f4f7f8;
+
+  background:
+    linear-gradient(
+      105deg,
+      #08263b 0%,
+      #0c354c 100%
+    );
+
+  font-size: clamp(12px, .92vw, 15px);
+  font-weight: 700;
+  line-height: 1.22;
+
+  letter-spacing: .005em;
+}
+
+
+.literature-review-table thead th:last-child {
+  border-right: 0;
+}
+
+
+.literature-review-table tbody td {
+  padding:
+    clamp(13px, 1.55vh, 20px)
+    clamp(13px, 1.15vw, 19px);
+
+  border-top:
+    1px solid
+    rgba(16, 40, 58, .12);
+
+  border-right:
+    1px solid
+    rgba(16, 40, 58, .11);
+
+  background:
+    rgba(255, 255, 255, .62);
+
+  font-size: clamp(12px, .9vw, 15px);
+  line-height: 1.36;
+
+  transition:
+    background .28s ease,
+    color .28s ease;
+}
+
+
+.literature-review-table tbody tr:first-child td {
+  border-top: 0;
+}
+
+
+.literature-review-table tbody td:last-child {
+  border-right: 0;
+}
+
+
+.literature-review-table tbody tr:nth-child(odd) td {
+  background:
+    rgba(225, 235, 239, .72);
+}
+
+
+.literature-review-table tbody td:first-child {
+  color: var(--deep-blue);
+
+  font-weight: 700;
+}
+
+
+.literature-review-table tbody tr:hover td {
+  background:
+    rgba(85, 184, 178, .13);
+}
+
+
+@media
+  (max-width: 1100px)
+  and (min-width: 761px) {
+
+  .literature-table-slide .slide-heading h2 {
+    font-size:
+      clamp(32px, 4.25vw, 47px);
+  }
+
+
+  .literature-review-table thead th,
+  .literature-review-table tbody td {
+    padding-right: 11px;
+    padding-left: 11px;
+
+    font-size: 12px;
+  }
+}
+
+
+@media
+  (max-height: 820px)
+  and (min-width: 761px) {
+
+  .literature-table-slide {
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+
+
+  .literature-table-slide .slide-heading {
+    margin-bottom: 8px;
+  }
+
+
+  .literature-table-slide .slide-heading h2 {
+    font-size:
+      clamp(31px, 3.35vw, 47px);
+  }
+
+
+  .literature-review-table thead th {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+
+  .literature-review-table tbody td {
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    font-size:
+      clamp(11px, .84vw, 13px);
+
+    line-height: 1.28;
+  }
+}
+
+/* LITERATURE_TABLE_SLIDES_DESKTOP_END */
+
+/* LITERATURE_TABLE_ALIGNMENT_TUNING_START */
+
+/*
+  Requested literature-table refinements:
+  - Center all columns.
+  - Increase Method width by 5 percentage points.
+  - Reduce Objective width by the same amount.
+*/
+
+.literature-review-table .literature-col-study {
+  width: 17%;
+}
+
+
+.literature-review-table .literature-col-method {
+  width: 24%;
+}
+
+
+.literature-review-table .literature-col-objective {
+  width: 31%;
+}
+
+
+.literature-review-table .literature-col-limitation {
+  width: 28%;
+}
+
+
+.literature-review-table th,
+.literature-review-table td {
+  text-align: center;
+  text-align-last: center;
+}
+
+/* LITERATURE_TABLE_ALIGNMENT_TUNING_END */

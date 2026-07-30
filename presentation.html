@@ -100,7 +100,7 @@
   ابعاد و محل والد اصلی دست‌نخورده باقی می‌ماند.
 */
 
-#slide-25 .gps-reallocation-original-position-fix {
+#slide-27 .gps-reallocation-original-position-fix {
     display: inline-grid !important;
 
     grid-template-columns:
@@ -132,7 +132,7 @@
 
 /* باکس فقط دور دو کلمه */
 
-#slide-25 .gps-reallocation-original-box {
+#slide-27 .gps-reallocation-original-box {
     display: inline-flex !important;
     flex-direction: column !important;
 
@@ -166,7 +166,7 @@
 
 /* GPS و reallocation دقیقا زیر هم */
 
-#slide-25 .gps-reallocation-original-word {
+#slide-27 .gps-reallocation-original-word {
     display: block !important;
 
     width: 100% !important;
@@ -189,7 +189,7 @@
 
 /* فلش‌ها در مرکز عمودی باکس */
 
-#slide-25 .gps-reallocation-original-arrow {
+#slide-27 .gps-reallocation-original-arrow {
     display: inline-flex !important;
 
     align-items: center !important;
@@ -217,11 +217,11 @@
 
 /* نزدیک شدن نوک فلش‌ها به دو سمت باکس */
 
-#slide-25 .gps-reallocation-original-arrow-left {
+#slide-27 .gps-reallocation-original-arrow-left {
     margin-right: -0.03em !important;
 }
 
-#slide-25 .gps-reallocation-original-arrow-right {
+#slide-27 .gps-reallocation-original-arrow-right {
     margin-left: -0.03em !important;
 }
 
@@ -233,7 +233,7 @@
   و نامرئی کردن کادر، بدون تغییر موقعیت فعلی فلش‌ها.
 */
 
-#slide-25 .gps-reallocation-original-box {
+#slide-27 .gps-reallocation-original-box {
     display: inline-flex !important;
     flex-direction: column !important;
 
@@ -268,7 +268,7 @@
   هر دو کلمه اندازه اصلی عنصر Backup را به ارث می‌برند.
 */
 
-#slide-25 .gps-reallocation-original-word {
+#slide-27 .gps-reallocation-original-word {
     display: block !important;
 
     width: auto !important;
@@ -365,10 +365,10 @@
 <h2 class="morph-title">From the Scheduling Problem to Experimental Evidence</h2>
 </div><div class="slide-content"><div class="roadmap-grid morph-visual">
 <article aria-label="Jump to Context section" data-go="2" role="button" tabindex="0"><span>01</span><h3>Background &amp; Literature Review</h3><p>RCPSP, MSRCPSP, prior methods, research gap, and contributions.</p></article>
-<article aria-label="Jump to Model section" data-go="5" role="button" tabindex="0"><span>02</span><h3>Problem Formulation</h3><p>Task sets, precedence graph, skill matrices, decision variable, objective, and constraints.</p></article>
-<article aria-label="Jump to Method section" data-go="12" role="button" tabindex="0"><span>03</span><h3>Proposed GPS Algorithm</h3><p>Greedy best-fit allocation, parallel task groups, five sub-algorithms, and resource reallocation.</p></article>
-<article aria-label="Jump to Evidence section" data-go="19" role="button" tabindex="0"><span>04</span><h3>Simulation &amp; Numerical Results</h3><p>Seven experiments, GPS–PSS comparison, resource wastage, and sensitivity analysis.</p></article>
-<article aria-label="Jump to Assessment section" data-go="25" role="button" tabindex="0"><span>05</span><h3>Conclusion &amp; Critical Assessment</h3><p>Main findings, evidence scope, limitations, author-stated future work, and takeaways.</p></article>
+<article aria-label="Jump to Model section" data-go="7" role="button" tabindex="0"><span>02</span><h3>Problem Formulation</h3><p>Task sets, precedence graph, skill matrices, decision variable, objective, and constraints.</p></article>
+<article aria-label="Jump to Method section" data-go="14" role="button" tabindex="0"><span>03</span><h3>Proposed GPS Algorithm</h3><p>Greedy best-fit allocation, parallel task groups, five sub-algorithms, and resource reallocation.</p></article>
+<article aria-label="Jump to Evidence section" data-go="21" role="button" tabindex="0"><span>04</span><h3>Simulation &amp; Numerical Results</h3><p>Seven experiments, GPS–PSS comparison, resource wastage, and sensitivity analysis.</p></article>
+<article aria-label="Jump to Assessment section" data-go="27" role="button" tabindex="0"><span>05</span><h3>Conclusion &amp; Critical Assessment</h3><p>Main findings, evidence scope, limitations, author-stated future work, and takeaways.</p></article>
 </div></div>
 </section>
 <section aria-hidden="true" class="slide theme-problem" data-chapter="Problem" data-title="Problem Evolution" id="slide-3">
@@ -403,7 +403,311 @@
 </div>
 </div></div>
 </section>
-<section aria-hidden="true" class="slide theme-problem" data-chapter="Problem" data-title="Research Contribution" id="slide-5">
+<!-- LITERATURE_TABLE_SLIDES_HTML_START -->
+
+<section
+  aria-hidden="true"
+  class="slide theme-problem literature-table-slide"
+  data-chapter="Problem"
+  data-title="Exact and Heuristic Studies"
+  id="slide-5">
+
+  <div class="slide-heading compact-heading">
+    <p class="eyebrow morph-eyebrow">
+      Literature review · exact and heuristic studies
+    </p>
+
+    <h2 class="morph-title">
+      Exact and Heuristic Studies Expand the Context
+    </h2>
+  </div>
+
+  <div class="slide-content">
+    <div class="literature-table-shell morph-visual">
+      <div class="literature-table-card">
+
+        <table
+          aria-label="Exact and heuristic studies in the literature review"
+          class="literature-review-table">
+
+          <colgroup>
+            <col class="literature-col-study"/>
+            <col class="literature-col-method"/>
+            <col class="literature-col-objective"/>
+            <col class="literature-col-limitation"/>
+          </colgroup>
+
+          <thead>
+            <tr>
+              <th scope="col">Study</th>
+              <th scope="col">Method</th>
+              <th scope="col">
+                Objective / modeled features
+              </th>
+              <th scope="col">
+                Stated limitation
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <tr>
+              <td data-label="Study">
+                Mirnezami et al. [17]
+              </td>
+
+              <td data-label="Method">
+                Multi-objective MILP
+              </td>
+
+              <td data-label="Objective / modeled features">
+                Makespan, resource cost, risk;
+                preemption and uncertainty
+              </td>
+
+              <td data-label="Stated limitation">
+                High computational complexity
+              </td>
+            </tr>
+
+            <tr>
+              <td data-label="Study">
+                Fuzzy MILP [36]
+              </td>
+
+              <td data-label="Method">
+                MILP + fuzzy programming
+              </td>
+
+              <td data-label="Objective / modeled features">
+                Duration, cost, quality;
+                overlap and rework
+              </td>
+
+              <td data-label="Stated limitation">
+                High computational complexity
+              </td>
+            </tr>
+
+            <tr>
+              <td data-label="Study">
+                Cui et al. [21]
+              </td>
+
+              <td data-label="Method">
+                VNS heuristic
+              </td>
+
+              <td data-label="Objective / modeled features">
+                Multi-project, multi-mode,
+                multi-skill R&amp;D allocation
+              </td>
+
+              <td data-label="Stated limitation">
+                Constant ability coefficient
+              </td>
+            </tr>
+
+            <tr>
+              <td data-label="Study">
+                Nigar et al. [19]
+              </td>
+
+              <td data-label="Method">
+                Dynamic heuristic
+              </td>
+
+              <td data-label="Objective / modeled features">
+                New employee addition;
+                budget, time, concurrent projects
+              </td>
+
+              <td data-label="Stated limitation">
+                Omits slack and requirement cancellation
+              </td>
+            </tr>
+
+            <tr>
+              <td data-label="Study">
+                Haroune et al. [20]
+              </td>
+
+              <td data-label="Method">
+                Goal programming + greedy/local/tabu
+              </td>
+
+              <td data-label="Objective / modeled features">
+                Shared multi-skill employees;
+                task-load constraints
+              </td>
+
+              <td data-label="Stated limitation">
+                No project/task precedence
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section
+  aria-hidden="true"
+  class="slide theme-problem literature-table-slide"
+  data-chapter="Problem"
+  data-title="Metaheuristic Studies"
+  id="slide-6">
+
+  <div class="slide-heading compact-heading">
+    <p class="eyebrow morph-eyebrow">
+      Literature review · metaheuristic studies
+    </p>
+
+    <h2 class="morph-title">
+      Metaheuristics Add Flexibility and Assumptions
+    </h2>
+  </div>
+
+  <div class="slide-content">
+    <div class="literature-table-shell morph-visual">
+      <div class="literature-table-card">
+
+        <table
+          aria-label="Metaheuristic studies in the literature review"
+          class="literature-review-table">
+
+          <colgroup>
+            <col class="literature-col-study"/>
+            <col class="literature-col-method"/>
+            <col class="literature-col-objective"/>
+            <col class="literature-col-limitation"/>
+          </colgroup>
+
+          <thead>
+            <tr>
+              <th scope="col">Study</th>
+              <th scope="col">Method</th>
+              <th scope="col">
+                Objective / modeled features
+              </th>
+              <th scope="col">
+                Stated limitation
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <tr>
+              <td data-label="Study">
+                Chen et al. [33]
+              </td>
+
+              <td data-label="Method">
+                HH-FGP
+              </td>
+
+              <td data-label="Objective / modeled features">
+                Stochastic multi-project scheduling
+                with non-identical machines
+              </td>
+
+              <td data-label="Stated limitation">
+                Paper presents a different stochastic setting
+              </td>
+            </tr>
+
+            <tr>
+              <td data-label="Study">
+                Ma et al. [29]
+              </td>
+
+              <td data-label="Method">
+                Tabu search
+              </td>
+
+              <td data-label="Objective / modeled features">
+                Robust schedule with multi-skilled
+                resources and skill changes
+              </td>
+
+              <td data-label="Stated limitation">
+                Skill-switching cost omitted
+              </td>
+            </tr>
+
+            <tr>
+              <td data-label="Study">
+                Snauwaert et al. [9]
+              </td>
+
+              <td data-label="Method">
+                Factor study
+              </td>
+
+              <td data-label="Objective / modeled features">
+                Skill proficiency, workforce size,
+                multi-skilled resources
+              </td>
+
+              <td data-label="Stated limitation">
+                Deterministic; no stochastic dimension
+              </td>
+            </tr>
+
+            <tr>
+              <td data-label="Study">
+                Wang et al. [23]
+              </td>
+
+              <td data-label="Method">
+                GA-PR / dynamic optimization
+              </td>
+
+              <td data-label="Objective / modeled features">
+                Uncertain availability;
+                reallocation from idle resources
+              </td>
+
+              <td data-label="Stated limitation">
+                Homogeneous resources
+              </td>
+            </tr>
+
+            <tr>
+              <td data-label="Study">
+                Li et al. [24]
+              </td>
+
+              <td data-label="Method">
+                MODJaya
+              </td>
+
+              <td data-label="Objective / modeled features">
+                Makespan and cost;
+                efficient multi-objective search
+              </td>
+
+              <td data-label="Stated limitation">
+                Single-resource task assignments
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LITERATURE_TABLE_SLIDES_HTML_END -->
+<section aria-hidden="true" class="slide theme-problem" data-chapter="Problem" data-title="Research Contribution" id="slide-7">
 <div class="slide-heading">
 <p class="eyebrow morph-eyebrow">Research objective and contribution</p>
 <h2 class="morph-title">Minimizing Makespan Through Smarter Resource Allocation</h2>
@@ -414,7 +718,7 @@
 <article><span>04</span><h3>Freed-resource reuse</h3><p>When the earliest-finishing task completes, release and reassign its resources to the remaining tasks in the same parallel group.</p></article>
 </div><div class="one-line-claim morph-card"><span>Central claim</span><strong>Weighted skill matching and resource reuse reduce project makespan.</strong></div></div>
 </section>
-<section aria-hidden="true" class="slide theme-model" data-chapter="Model" data-title="Project Model" id="slide-6">
+<section aria-hidden="true" class="slide theme-model" data-chapter="Model" data-title="Project Model" id="slide-8">
 <div class="slide-heading">
 <p class="eyebrow morph-eyebrow">Problem setup</p>
 <h2 class="morph-title">Project Tasks Are Modeled Through a Directed Precedence Graph</h2>
@@ -521,7 +825,7 @@
 <div>\[|T|=|T_1|+|T_2|+\cdots+|T_q|=n,\qquad T_i\cap T_j=\varnothing\quad(i\ne j).\]</div>
 </div></div>
 </section>
-<section aria-hidden="true" class="slide theme-model" data-chapter="Model" data-title="Core Notation I" id="slide-7">
+<section aria-hidden="true" class="slide theme-model" data-chapter="Model" data-title="Core Notation I" id="slide-9">
 <div class="slide-heading compact-heading">
 <p class="eyebrow morph-eyebrow">Notation · sets and task state</p>
 <h2 class="morph-title">Core Symbols Used by the Formulation and Algorithms</h2>
@@ -542,7 +846,7 @@
 <article><b>\(C_{T_{\parallel}}\)</b><span>Total time spent on tasks in parallel subset \(T_{\parallel}\)</span></article>
 </div></div>
 </section>
-<section aria-hidden="true" class="slide theme-model" data-chapter="Model" data-title="Core Notation II" id="slide-8">
+<section aria-hidden="true" class="slide theme-model" data-chapter="Model" data-title="Core Notation II" id="slide-10">
 <div class="slide-heading compact-heading">
 <p class="eyebrow morph-eyebrow">Notation · resources and timing</p>
 <h2 class="morph-title">Assignment, Proficiency and Event-Time Symbols</h2>
@@ -562,7 +866,7 @@
 <article><b>\(RS\)</b><span>Resource–skill matrix</span></article>
 </div></div>
 </section>
-<section aria-hidden="true" class="slide theme-model" data-chapter="Model" data-title="Matrices and Assignment" id="slide-9">
+<section aria-hidden="true" class="slide theme-model" data-chapter="Model" data-title="Matrices and Assignment" id="slide-11">
 <div class="slide-heading">
 <p class="eyebrow morph-eyebrow">Model inputs and decision variable</p>
 <h2 class="morph-title">Two Matrices Represent Task Requirements and Heterogeneous Resource Proficiency</h2>
@@ -583,7 +887,7 @@
 <p><b>Feasibility condition:</b> \(r_k\in R,\;t_i\in T,\;s_l\in S_{t_i}\cap S^{r_k}\).</p>
 </div></div>
 </section>
-<section aria-hidden="true" class="slide theme-model" data-chapter="Model" data-title="Objective and Constraints I" id="slide-10">
+<section aria-hidden="true" class="slide theme-model" data-chapter="Model" data-title="Objective and Constraints I" id="slide-12">
 <div class="slide-heading compact-heading">
 <p class="eyebrow morph-eyebrow">Mathematical Formulation · Objective and Constraints (2)–(4)</p>
 <h2 class="morph-title">Minimize the Project Completion Time</h2>
@@ -596,7 +900,7 @@
 </div>
 </div></div>
 </section>
-<section aria-hidden="true" class="slide theme-model" data-chapter="Model" data-title="Objective and Constraints II" id="slide-11">
+<section aria-hidden="true" class="slide theme-model" data-chapter="Model" data-title="Objective and Constraints II" id="slide-13">
 <div class="slide-heading compact-heading">
 <p class="eyebrow morph-eyebrow">Mathematical Formulation · Constraints (5)–(9)</p>
 <h2 class="morph-title">Feasibility, Non-Negativity, Compatibility and Finish Time</h2>
@@ -608,7 +912,7 @@
 <aside><b>Model-reading note</b><p>Equations (6) and (8) are typographically ambiguous in the published paper. The interpretations shown here follow the accompanying prose.</p></aside>
 </div></div>
 </section>
-<section aria-hidden="true" class="slide theme-model" data-chapter="Model" data-title="Notation and Reporting Ambiguities" id="slide-12">
+<section aria-hidden="true" class="slide theme-model" data-chapter="Model" data-title="Notation and Reporting Ambiguities" id="slide-14">
 <div class="slide-heading">
 <p class="eyebrow morph-eyebrow">Notation and reporting check</p>
 <h2 class="morph-title">Three Notation and Reporting Ambiguities Are Handled Explicitly</h2>
@@ -618,7 +922,7 @@
 <article><span>03</span><h3>Figure Numbers Follow the Actual Captions</h3><p>The results prose refers to Figures 7 and 8 for Experiments 6 and 7. The corresponding plots are Figure 8 for task duration and Figure 9 for resource demand. This presentation uses the caption-based numbering.</p></article>
 </div></div>
 </section>
-<section aria-hidden="true" class="slide theme-method" data-chapter="Method" data-title="GPS Architecture" id="slide-13">
+<section aria-hidden="true" class="slide theme-method" data-chapter="Method" data-title="GPS Architecture" id="slide-15">
 <div class="slide-heading">
 <p class="eyebrow morph-eyebrow">GPS framework</p>
 <h2 class="morph-title">Five Algorithms Form One Coordinated GPS Framework</h2>
@@ -678,7 +982,7 @@
 <div><small>Surplus target</small><strong>Latest-finishing task and its latest-finishing skill</strong></div>
 </div></div>
 </section>
-<section aria-hidden="true" class="slide theme-method" data-chapter="Method" data-title="Algorithm 1: GPS" id="slide-14">
+<section aria-hidden="true" class="slide theme-method" data-chapter="Method" data-title="Algorithm 1: GPS" id="slide-16">
 <div class="slide-heading algorithm-heading"><p class="eyebrow morph-eyebrow">Algorithm 1 · Top-Level Orchestrator</p><h2 class="morph-title">GPS Generates Parallel Task Groups, Schedules Each Group, and Accumulates Makespan</h2></div><div class="slide-content"><div class="algorithm-slide">
 <div class="algorithm-copy">
 <ol class="step-list morph-card"><li>Generate the array of parallel executable task groups.</li><li>Skip groups containing the dummy start or end task.</li><li>Sort tasks by finishing time, earliest first.</li><li>Schedule the selected group and add its completion time to the makespan.</li></ol>
@@ -687,7 +991,7 @@
 <figure class="paper-figure morph-visual"><button class="zoom-button" data-alt="Algorithm 1 GPS pseudocode" data-image="assets/algorithm-1-gps.png"><img alt="Algorithm 1 GPS pseudocode" src="assets/algorithm-1-gps.png"/><span>Expand</span></button><figcaption>Paper Algorithm 1 · p. 29830</figcaption></figure>
 </div></div>
 </section>
-<section aria-hidden="true" class="slide theme-method" data-chapter="Method" data-title="Algorithm 2: Parallel Groups" id="slide-15">
+<section aria-hidden="true" class="slide theme-method" data-chapter="Method" data-title="Algorithm 2: Parallel Groups" id="slide-17">
 <div class="slide-heading algorithm-heading"><p class="eyebrow morph-eyebrow">Algorithm 2 · Create Parallel Tasks Groups</p><h2 class="morph-title">Repeatedly Group Tasks with No Unresolved Predecessors</h2></div><div class="slide-content"><div class="algorithm-slide">
 <div class="algorithm-copy">
 <ol class="step-list morph-card"><li>Scan all tasks remaining in \(T\).</li><li>Select tasks that are not the right endpoint of any remaining precedence edge.</li><li>Add all selected tasks to the current parallel group.</li><li>Remove the selected tasks and their outgoing edges, then repeat.</li></ol>
@@ -696,7 +1000,7 @@
 <figure class="paper-figure morph-visual"><button class="zoom-button" data-alt="Algorithm 2 Create Parallel Tasks Groups pseudocode" data-image="assets/algorithm-2-parallel-groups.png"><img alt="Algorithm 2 Create Parallel Tasks Groups pseudocode" src="assets/algorithm-2-parallel-groups.png"/><span>Expand</span></button><figcaption>Paper Algorithm 2 · p. 29830</figcaption></figure>
 </div></div>
 </section>
-<section aria-hidden="true" class="slide theme-method" data-chapter="Method" data-title="Algorithm 3: Schedule Subset" id="slide-16">
+<section aria-hidden="true" class="slide theme-method" data-chapter="Method" data-title="Algorithm 3: Schedule Subset" id="slide-18">
 <div class="slide-heading algorithm-heading"><p class="eyebrow morph-eyebrow">Algorithm 3 · Schedule Tasks Subset</p><h2 class="morph-title">The Scheduler Advances from One Earliest-Completion Event to the Next</h2></div><div class="slide-content"><div class="algorithm-slide">
 <div class="algorithm-copy">
 <ol class="step-list morph-card"><li>Assign resources to tasks that are unscheduled or do not satisfy the required time condition.</li><li>Call Algorithm 5 to allocate any remaining resources to scheduled tasks.</li><li>Identify the earliest-finishing task, mark it complete, and release its resources.</li><li>Update completed effort and elapsed time for the remaining running tasks.</li></ol>
@@ -705,7 +1009,7 @@
 <figure class="paper-figure morph-visual"><button class="zoom-button" data-alt="Algorithm 3 Schedule Tasks Subset pseudocode" data-image="assets/algorithm-3-schedule-subset.png"><img alt="Algorithm 3 Schedule Tasks Subset pseudocode" src="assets/algorithm-3-schedule-subset.png"/><span>Expand</span></button><figcaption>Paper Algorithm 3 · p. 29831</figcaption></figure>
 </div></div>
 </section>
-<section aria-hidden="true" class="slide theme-method" data-chapter="Method" data-title="Algorithm 4: Assign Resources" id="slide-17">
+<section aria-hidden="true" class="slide theme-method" data-chapter="Method" data-title="Algorithm 4: Assign Resources" id="slide-19">
 <div class="slide-heading algorithm-heading"><p class="eyebrow morph-eyebrow">Algorithm 4 · Assign Resources</p><h2 class="morph-title">For Each Required Skill, Repeatedly Assign the Highest-Proficiency Available Resource</h2></div><div class="slide-content"><div class="algorithm-slide">
 <div class="algorithm-copy">
 <ol class="step-list morph-card"><li>Process every skill required by task \(t_i\).</li><li>Select the available resource with the highest proficiency in the current skill.</li><li>Assign the resource and recompute the skill-specific finishing time.</li><li>Continue until \(F_{t_i s_l}\le d_{t_i}\); if no matching resource exists, release the task’s assigned resources and return false.</li></ol>
@@ -714,7 +1018,7 @@
 <figure class="paper-figure morph-visual"><button class="zoom-button" data-alt="Algorithm 4 Assign Resources pseudocode" data-image="assets/algorithm-4-assign-resources.png"><img alt="Algorithm 4 Assign Resources pseudocode" src="assets/algorithm-4-assign-resources.png"/><span>Expand</span></button><figcaption>Paper Algorithm 4 · p. 29831</figcaption></figure>
 </div></div>
 </section>
-<section aria-hidden="true" class="slide theme-method" data-chapter="Method" data-title="Algorithm 5: Extra Resources" id="slide-18">
+<section aria-hidden="true" class="slide theme-method" data-chapter="Method" data-title="Algorithm 5: Extra Resources" id="slide-20">
 <div class="slide-heading algorithm-heading"><p class="eyebrow morph-eyebrow">Algorithm 5 · AssignExtraResources</p><h2 class="morph-title">Assign Surplus Resources to the Latest-Finishing Task and Skill</h2></div><div class="slide-content"><div class="algorithm-slide">
 <div class="algorithm-copy">
 <ol class="step-list morph-card"><li>Remove tasks that received no initial resource assignment.</li><li>Select the latest-finishing task among the scheduled tasks.</li><li>Identify the latest-finishing skill of the selected task.</li><li>Assign a compatible available resource to that skill and repeat.</li></ol>
@@ -724,7 +1028,7 @@
 <figure class="paper-figure morph-visual"><button class="zoom-button" data-alt="Algorithm 5 Assign Extra Resources pseudocode" data-image="assets/algorithm-5-extra-resources.png"><img alt="Algorithm 5 Assign Extra Resources pseudocode" src="assets/algorithm-5-extra-resources.png"/><span>Expand</span></button><figcaption>Paper Algorithm 5 · p. 29831</figcaption></figure>
 </div></div>
 </section>
-<section aria-hidden="true" class="slide theme-method" data-chapter="Method" data-title="Resource Reallocation Logic" id="slide-19">
+<section aria-hidden="true" class="slide theme-method" data-chapter="Method" data-title="Resource Reallocation Logic" id="slide-21">
 <div class="slide-heading">
 <p class="eyebrow morph-eyebrow">Why GPS can reduce parallel-group completion time</p>
 <h2 class="morph-title">Each Completion Event Triggers Resource Reallocation</h2>
@@ -736,7 +1040,7 @@
 <div class="timeline-after"><strong>After resource release</strong><div class="track"><span style="--x:0%;--w:46%">Task A ✓ Completed</span><span style="--x:0%;--w:78%">Task B — Continues</span><span style="--x:0%;--w:82%">Task C + Released Resource</span></div><p>Released resources accelerate the latest-finishing task.</p></div>
 </div><div class="logic-chain morph-card"><span>Earliest-finishing task completes</span><i>→</i><span>Resources are released</span><i>→</i><span>Task progress is updated</span><i>→</i><span>Latest-finishing task is accelerated</span></div></div>
 </section>
-<section aria-hidden="true" class="slide theme-evidence" data-chapter="Evidence" data-title="Experimental Design" id="slide-20">
+<section aria-hidden="true" class="slide theme-evidence" data-chapter="Evidence" data-title="Experimental Design" id="slide-22">
 <div class="slide-heading compact-heading">
 <p class="eyebrow morph-eyebrow">Simulation setup</p>
 <h2 class="morph-title">Seven Experiments, 50 Project Instances Each</h2>
@@ -750,7 +1054,7 @@
 </div>
 </div></div>
 </section>
-<section aria-hidden="true" class="slide theme-evidence" data-chapter="Evidence" data-title="Random-Project Results" id="slide-21">
+<section aria-hidden="true" class="slide theme-evidence" data-chapter="Evidence" data-title="Random-Project Results" id="slide-23">
 <div class="slide-heading compact-heading">
 <p class="eyebrow morph-eyebrow">Experiment 1 · Random Projects</p>
 <h2 class="morph-title">GPS Achieves a Lower Average Makespan and Reduces Resource Wastage</h2>
@@ -766,25 +1070,25 @@
 </div>
 </div><p class="result-note"><b>Interpretation:</b> Lower free-resource levels indicate higher resource utilization. The paper also reports undefined “average completion gap” values of 9.80 days for GPS and 2.88 days for PSS; the direct mean difference is \(58.96-50.42=8.54\) days.</p></div>
 </section>
-<section aria-hidden="true" class="slide theme-evidence" data-chapter="Evidence" data-title="Tasks and Skills" id="slide-22">
+<section aria-hidden="true" class="slide theme-evidence" data-chapter="Evidence" data-title="Tasks and Skills" id="slide-24">
 <div class="slide-heading compact-heading"><p class="eyebrow morph-eyebrow">Sensitivity Results · Experiments 2 and 3</p><h2 class="morph-title">More Tasks Increase Both Makespans; More Required Skills Narrow the GPS Advantage</h2></div><div class="slide-content"><div class="comparison-figures morph-visual">
 <figure><button class="zoom-button" data-alt="Figure 4 impact of number of tasks" data-image="assets/figure-4-tasks.png"><img alt="Figure 4 impact of number of tasks" src="assets/figure-4-tasks.png"/><span>Expand</span></button><figcaption><b>Number of Tasks</b><span>Both makespans increase at similar rates, while GPS remains consistently lower.</span></figcaption></figure>
 <figure><button class="zoom-button" data-alt="Figure 5 impact of required skills" data-image="assets/figure-5-skills.png"><img alt="Figure 5 impact of required skills" src="assets/figure-5-skills.png"/><span>Expand</span></button><figcaption><b>Skills Required per Task</b><span>More required skills leave fewer surplus resources, narrowing the GPS–PSS gap.</span></figcaption></figure>
 </div></div>
 </section>
-<section aria-hidden="true" class="slide theme-evidence" data-chapter="Evidence" data-title="Resources and Complexity" id="slide-23">
+<section aria-hidden="true" class="slide theme-evidence" data-chapter="Evidence" data-title="Resources and Complexity" id="slide-25">
 <div class="slide-heading compact-heading"><p class="eyebrow morph-eyebrow">Sensitivity Results · Experiments 4 and 5</p><h2 class="morph-title">More Available Resources Benefit GPS; Graph Complexity Narrows the GPS–PSS Gap</h2></div><div class="slide-content"><div class="comparison-figures morph-visual">
 <figure><button class="zoom-button" data-alt="Figure 6 impact of available resources" data-image="assets/figure-6-resources.png"><img alt="Figure 6 impact of available resources" src="assets/figure-6-resources.png"/><span>Expand</span></button><figcaption><b>Available Resources</b><span>GPS makespan decreases faster because it actively uses surplus resources.</span></figcaption></figure>
 <figure><button class="zoom-button" data-alt="Figure 7 impact of graph complexity" data-image="assets/figure-7-complexity.png"><img alt="Figure 7 impact of graph complexity" src="assets/figure-7-complexity.png"/><span>Expand</span></button><figcaption><b>Graph Complexity</b><span>Higher graph complexity limits parallel opportunities and narrows the GPS–PSS gap.</span></figcaption></figure>
 </div></div>
 </section>
-<section aria-hidden="true" class="slide theme-evidence" data-chapter="Evidence" data-title="Duration and Demand" id="slide-24">
+<section aria-hidden="true" class="slide theme-evidence" data-chapter="Evidence" data-title="Duration and Demand" id="slide-26">
 <div class="slide-heading compact-heading"><p class="eyebrow morph-eyebrow">Sensitivity Results · Experiments 6 and 7</p><h2 class="morph-title">Wider Task Durations Strengthen GPS; Higher Resource Demand Narrows Its Advantage</h2></div><div class="slide-content"><div class="comparison-figures morph-visual">
 <figure><button class="zoom-button" data-alt="Figure 8 impact of task duration" data-image="assets/figure-8-duration.png"><img alt="Figure 8 impact of task duration" src="assets/figure-8-duration.png"/><span>Expand</span></button><figcaption><b>Task-Duration Range</b><span>Wider duration ranges create more opportunities to reuse resources from earlier-finishing tasks.</span></figcaption></figure>
 <figure><button class="zoom-button" data-alt="Figure 9 impact of required resources per skill" data-image="assets/figure-9-resource-demand.png"><img alt="Figure 9 impact of required resources per skill" src="assets/figure-9-resource-demand.png"/><span>Expand</span></button><figcaption><b>Resources Required per Skill</b><span>Higher resource requirements leave fewer surplus resources, narrowing the GPS–PSS gap.</span></figcaption></figure>
 </div></div>
 </section>
-<section aria-hidden="true" class="slide theme-evidence" data-chapter="Evidence" data-title="When GPS Works Best" id="slide-25">
+<section aria-hidden="true" class="slide theme-evidence" data-chapter="Evidence" data-title="When GPS Works Best" id="slide-27">
 <div class="slide-heading">
 <p class="eyebrow morph-eyebrow">Synthesis of Experimental Evidence</p>
 <h2 class="morph-title">GPS Gains Most When the Schedule Offers Reallocation Opportunities</h2>
@@ -832,7 +1136,7 @@
 <div class="wins-column narrow"><h3>Advantage Narrows When…</h3><ul><li>Fewer resources are available.</li><li>More skills are required per task.</li><li>More resources are required per skill.</li><li>Graph complexity is higher.</li><li>Task durations are more similar.</li></ul></div>
 </div></div>
 </section>
-<section aria-hidden="true" class="slide theme-assessment" data-chapter="Assessment" data-title="Critical Assessment" id="slide-26">
+<section aria-hidden="true" class="slide theme-assessment" data-chapter="Assessment" data-title="Critical Assessment" id="slide-28">
 <div class="slide-heading">
 <p class="eyebrow morph-eyebrow">Critical Assessment</p>
 <h2 class="morph-title">Promising Simulation Results, but Validation Remains Limited</h2>
@@ -845,7 +1149,7 @@
 <article class="limit"><span>Limitation</span><h3>Notation and Reporting Ambiguities</h3><p>Several definitions, formulas, algorithm lines, and figure references require careful interpretation, as noted earlier.</p></article>
 </div></div>
 </section>
-<section aria-hidden="true" class="slide theme-assessment" data-chapter="Assessment" data-title="Conclusion" id="slide-27">
+<section aria-hidden="true" class="slide theme-assessment" data-chapter="Assessment" data-title="Conclusion" id="slide-29">
 <div class="slide-heading">
 <p class="eyebrow morph-eyebrow">Conclusion</p>
 <h2 class="morph-title">Use Proficiency. Preserve Parallelism. Reuse Capacity</h2>
@@ -859,7 +1163,7 @@
 <div class="future-line morph-card"><b>Author-Stated Future Work</b><span>Extend resource allocation with additional factors and constraints, and further improve the GPS method.</span></div>
 </div></div>
 </section>
-<section aria-hidden="true" class="slide theme-closing" data-chapter="Closing" data-title="Questions" id="slide-28">
+<section aria-hidden="true" class="slide theme-closing" data-chapter="Closing" data-title="Questions" id="slide-30">
 <div class="closing-slide">
 <div class="closing-mark morph-visual"><span class="logo-slot logo-slot-large"><img alt="University logo" onerror="this.hidden=true; this.parentElement.classList.add('is-missing')" src="logo.png"/><span aria-hidden="true" class="logo-fallback">G09</span></span></div>
 <p class="eyebrow morph-eyebrow">Group G09 · Project Control</p>
@@ -881,7 +1185,7 @@
 </div>
 <footer aria-label="Presentation controls" class="bottom-frame">
 <div class="presenter-line"><span>Presented by</span><strong>Ghazal Zolfi Moselo</strong><i>·</i><strong>MohammadMahdi Montazeri Hedesh</strong></div>
-<div class="slide-counter"><strong id="slide-current">01</strong><span>/</span><span id="slide-total">28</span></div>
+<div class="slide-counter"><strong id="slide-current">01</strong><span>/</span><span id="slide-total">30</span></div>
 <div class="navigation-controls navigation-controls-compact">
 <button id="overview-button" title="Slide overview (O)" type="button"><span>O</span> Overview</button>
 <button id="fullscreen-button" title="Fullscreen (F)" type="button"><span>F</span> Fullscreen</button>
