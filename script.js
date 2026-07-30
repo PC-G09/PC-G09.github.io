@@ -363,13 +363,13 @@
 (() => {
   "use strict";
 
-  const slideSelector = "#slide-20";
+  const slideSelector = "#slide-22";
 
   const summarySelector =
-    "#slide-20 .experiment-summary";
+    "#slide-22 .experiment-summary";
 
   const titleSelector =
-    "#slide-20 .experiment-summary > article > h3";
+    "#slide-22 .experiment-summary > article > h3";
 
   const expectedTitles = [
     "Randomized Benchmark",
@@ -829,22 +829,18 @@
     },
 
     {
-      name: "slide-12",
-      slideSelector: "#slide-12",
+      name: "slide-14",
+      slideSelector: "#slide-14",
       containerSelector:
-        "#slide-12 .audit-grid",
+        "#slide-14 .audit-grid",
 
       applySelector:
-        "#slide-12 .audit-grid > article > h3",
+        "#slide-14 .audit-grid > article > h3",
 
-      /*
-        فقط دو عنوان بلند، محدودیت تک‌خطی را مشخص می‌کنند.
-        عنوان کارت اول نیز در پایان دقیقاً هم‌اندازه آن‌ها می‌شود.
-      */
       constraintSelector:
-        "#slide-12 .audit-grid " +
+        "#slide-14 .audit-grid " +
         "> article:nth-of-type(2) > h3, " +
-        "#slide-12 .audit-grid " +
+        "#slide-14 .audit-grid " +
         "> article:nth-of-type(3) > h3",
 
       expectedApplyCount: 3,
@@ -1360,13 +1356,13 @@
 (() => {
   "use strict";
 
-  const slideSelector = "#slide-13";
+  const slideSelector = "#slide-15";
 
   const rulesSelector =
-    "#slide-13 .event-rules";
+    "#slide-15 .event-rules";
 
   const textSelector =
-    "#slide-13 .event-rules > div > strong";
+    "#slide-15 .event-rules > div > strong";
 
   const expectedTexts = [
     "Highest proficiency in the required skill",
